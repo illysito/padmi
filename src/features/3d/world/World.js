@@ -5,7 +5,7 @@ import { createPlane } from '../components/plane.js'
 import { createLight } from '../components/point_light.js'
 import { createScene } from '../components/scene.js'
 import { Loop } from '../systems/Loop.js'
-import { createRenderer } from '../systems/renderer.js'
+import { createRenderer } from '../systems/Renderer.js'
 import { Resizer } from '../systems/Resizer.js'
 
 let camera
