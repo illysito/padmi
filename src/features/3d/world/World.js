@@ -24,7 +24,7 @@ class World {
     // adding canvas element to the webflow container
     container.append(renderer.domElement)
 
-    // INITS!!!!
+    // INITS!!!!!
     this.initPlane()
     this.initBall()
     this.initLights()
