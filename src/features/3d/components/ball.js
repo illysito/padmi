@@ -16,7 +16,8 @@ import {
   from 'three'
 
 function createBall() {
-  const size = 0.6
+  const size = window.innerWidth / 1800
+  console.log(size)
   // const limit = 0.9
   // let x_direction = false
   // let y_direction = false
@@ -26,10 +27,10 @@ function createBall() {
   // MATERIAL
   const ball_material = new MeshPhysicalMaterial({
     color: 0xffeedd,
-    transmission: 2.8, // Fully transmissive (glass-like)
+    transmission: 1.8, // Fully transmissive (glass-like)
     thickness: 0.4, // Thickness of the object (affects refraction)
     ior: 1.2, // Index of refraction (glass-like effect)
-    roughness: 0.1, // Lower roughness for a clearer surface
+    roughness: 0.25, // Lower roughness for a clearer surface
     metalness: 0.0,
     reflectivity: 0.3,
     // clearcoat: 0,

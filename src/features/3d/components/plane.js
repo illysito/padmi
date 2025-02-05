@@ -22,7 +22,7 @@ async function createPlane(shader_index) {
   const canvasW = renderedCanvas.width
   const canvasH = renderedCanvas.height
   const aspect = canvasW / canvasH
-  const planeH = 4
+  const planeH = 4.8
   const planeW = planeH * aspect
 
   //prettier-ignore

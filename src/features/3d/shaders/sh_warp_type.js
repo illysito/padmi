@@ -91,7 +91,7 @@ void main() {
   // FLOW NORMAL
 
   strength = smoothstep(0.4, radius, dist);
-  strength = smoothstep(0.2, 10.8, strength);
+  strength = smoothstep(0.2, 8.0, strength);
 
   static_strength = smoothstep(0.3, static_radius, static_dist);
   static_strength = smoothstep(0.2, 5.8, static_strength);
