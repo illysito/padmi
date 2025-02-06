@@ -5,14 +5,17 @@ import './styles/style.css'
 
 // MAIN! //
 const body = document.body
-const container = document.querySelector('.scene-container')
+const world_container = document.querySelector('.world-container')
 const cursor = document.querySelector('.cursor')
 let mouseX = 0
 let mouseY = 0
 
 function runHomeFunctions() {
   console.log('hey!')
-  world(container, 0)
+  // handleHeroShader()
+  if (world_container) {
+    world(world_container, 0)
+  }
   buttons()
 }
 

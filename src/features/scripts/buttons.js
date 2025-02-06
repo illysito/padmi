@@ -10,7 +10,7 @@ function buttons() {
 
     gsap.to(but, {
       scale: 0.95,
-      duration: 0.6,
+      duration: 0.3,
       backgroundColor: '#8b81e4',
     })
 
@@ -22,8 +22,8 @@ function buttons() {
 
     gsap.to(but_text, {
       color: '#e5e7e1',
-      duration: 0.4,
-      ease: 'power3.inOut',
+      duration: 0.1,
+      ease: 'power2.inOut',
     })
   }
 
@@ -34,7 +34,7 @@ function buttons() {
 
     gsap.to(but, {
       scale: 1.0,
-      duration: 0.6,
+      duration: 0.3,
       backgroundColor: '#ceff05',
     })
 
@@ -46,8 +46,8 @@ function buttons() {
 
     gsap.to(but_text, {
       color: '#0a0b0b',
-      duration: 0.4,
-      ease: 'power3.inOut',
+      duration: 0.1,
+      ease: 'power2.inOut',
     })
   }
 

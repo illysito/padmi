@@ -1,4 +1,6 @@
 const warp_type_frag = `
+precision highp float;
+
 #define NUM_OCTAVES 5
 
 uniform sampler2D u_texture;
@@ -11,7 +13,7 @@ varying vec2 vUv;
 
 uniform vec2 u_prevMouse;
 
-float rand(vec2 n) { 
+float rand(vec2 n) {
 	return fract(sin(dot(n, vec2(12.9898, 4.1414))) * 43758.5453);
 }
 
@@ -19,7 +21,7 @@ float noise(vec2 p){
 	vec2 ip = floor(p);
 	vec2 u = fract(p);
 	u = u*u*(3.0-2.0*u);
-	
+
 	float res = mix(
 		mix(rand(ip),rand(ip+vec2(1.0,0.0)),u.x),
 		mix(rand(ip+vec2(0.0,1.0)),rand(ip+vec2(1.0,1.0)),u.x),u.y);
@@ -41,7 +43,7 @@ float fbm(vec2 x) {
 }
 
 void main() {
-  
+
   // COORDINATES
 
   vec2 coords = vUv;
@@ -107,7 +109,7 @@ void main() {
   vec2 distortion = vec2(
     sin(0.5 * prevMouse.x - 2.1 * x + 2.2 * y),
     cos(0.5 * prevMouse.y + 2.1 * x - 2.8 * y)
-  ); 
+  );
 
   vec2 static_distortion = vec2(
     sin(0.5 * point.x - 2.1 * x + 2.2 * y),
@@ -151,6 +153,22 @@ void main() {
   gl_FragColor = color;
 }
 `
+
+// const warp_type_frag = `
+// #ifdef GL_ES
+// precision highp float;
+// #endif
+
+// uniform float u_time;
+// uniform sampler2D u_texture;
+
+// varying vec2 v_texcoord;
+
+// void main() {
+//   vec4 color = texture2D(u_texture, vUv);
+//   gl_FragColor = color;
+// }
+// `
 
 const warp_type_vertex = `
 varying vec2 vUv;

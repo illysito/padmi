@@ -1,6 +1,7 @@
 import { createBall } from '../components/ball.js'
 import { createCamera } from '../components/camera.js'
 // import { createDirLight } from '../components/directional_light.js'
+import { createPaddle } from '../components/paddle.js'
 import { createPlane } from '../components/plane.js'
 import { createLight } from '../components/point_light.js'
 import { createScene } from '../components/scene.js'
@@ -26,7 +27,8 @@ class World {
 
     // INITS!!!!!
     this.initPlane()
-    this.initBall()
+    // this.initBall()
+    this.initPaddle()
     this.initLights()
 
     const resizer = new Resizer(container, camera, renderer)
@@ -52,6 +54,12 @@ class World {
     const ball = createBall()
     scene.add(ball)
     loop.updatables.push(ball)
+  }
+
+  async initPaddle() {
+    const paddle = await createPaddle()
+    scene.add(paddle)
+    loop.updatables.push(paddle)
   }
 
   initLights() {
