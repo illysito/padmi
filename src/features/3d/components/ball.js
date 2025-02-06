@@ -33,9 +33,7 @@ function createBall() {
     roughness: 0.25, // Lower roughness for a clearer surface
     metalness: 0.0,
     reflectivity: 0.3,
-    // clearcoat: 0,
-    // clearcoatRoughness: 0.1,
-    // sheen: 100,
+    transmissionSamples: 5,
     side: DoubleSide,
   })
   console.log(ball_material)

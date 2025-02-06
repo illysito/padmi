@@ -9,11 +9,11 @@ function createLight(x, y, z, i, color) {
   light.castShadow = false
   // const helper = new PointLightHelper(light, 1, 0xff0000)
 
-  light.tick = (delta) => {
-    console.log('light tick & delta = ' + delta)
-    // light.position.x += (targetX - light.position.x) * 0.05 * delta
-    // light.position.x += (targetZ - light.position.y) * 0.05 * delta
-  }
+  // light.tick = (delta) => {
+  //   console.log('light tick & delta = ' + delta)
+  //   // light.position.x += (targetX - light.position.x) * 0.05 * delta
+  //   // light.position.x += (targetZ - light.position.y) * 0.05 * delta
+  // }
 
   // return { light, helper }
   return light

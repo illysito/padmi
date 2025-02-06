@@ -57,7 +57,7 @@ class World {
   initLights() {
     const light = createLight(-2, 2, 5, 20, 0xfffbf6)
     scene.add(light)
-    loop.updatables.push(light)
+    // loop.updatables.push(light)
   }
 
   // 2. Render the scene

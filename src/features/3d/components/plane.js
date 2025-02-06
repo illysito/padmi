@@ -10,6 +10,7 @@ import { warp_type_frag, warp_type_vertex } from '../shaders/sh_warp_type.js'
 
 async function createPlane(shader_index) {
   const template = document.getElementById('scene__template')
+  // const scale = 1.0 //50% res
   const renderedCanvas = await html2canvas(template, {
     backgroundColor: 'rgba(10, 11, 11)',
     width: template.offsetWidth,
@@ -17,6 +18,7 @@ async function createPlane(shader_index) {
   })
 
   const texture = new CanvasTexture(renderedCanvas)
+  texture.anisotropy = 1
   texture.needsUpdate = true
 
   const canvasW = renderedCanvas.width
@@ -69,24 +71,31 @@ async function createPlane(shader_index) {
     // console.log('ticking' + uniforms.u_time)
   }
 
+  let ticking = false
   window.addEventListener('mousemove', (event) => {
-    //prettier-ignore
-    const mouseX = gsap.utils.mapRange(0, window.innerWidth, 0.0, 1.0, event.clientX)
-    //prettier-ignore
-    const mouseY = gsap.utils.mapRange(0, window.innerHeight, 0.0, 1.0, event.pageY)
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        //prettier-ignore
+        const mouseX = gsap.utils.mapRange(0, window.innerWidth, 0.0, 1.0, event.clientX)
+        //prettier-ignore
+        const mouseY = gsap.utils.mapRange(0, window.innerHeight, 0.0, 1.0, event.clientY)
 
-    const inertiaFactor = 0.99
-    //prettier-ignore
-    const inertiaMouseX = gsap.utils.interpolate(prevMouse.x, mouseX, inertiaFactor)
-    //prettier-ignore
-    const inertiaMouseY = gsap.utils.interpolate(prevMouse.y, mouseY, inertiaFactor)
+        const inertiaFactor = 0.99
+        //prettier-ignore
+        const inertiaMouseX = gsap.utils.interpolate(prevMouse.x, mouseX, inertiaFactor)
+        //prettier-ignore
+        const inertiaMouseY = gsap.utils.interpolate(prevMouse.y, mouseY, inertiaFactor)
 
-    uniforms.u_prevMouse.value.set(inertiaMouseX, inertiaMouseY)
-    uniforms.u_mouseX.value = inertiaMouseX
-    uniforms.u_mouseY.value = inertiaMouseY
+        uniforms.u_prevMouse.value.set(inertiaMouseX, inertiaMouseY)
+        uniforms.u_mouseX.value = inertiaMouseX
+        uniforms.u_mouseY.value = inertiaMouseY
 
-    // uniforms.u_prevMouse.value.set(inertiaMouseX, inertiaMouseY)
-    prevMouse.set(inertiaMouseX, inertiaMouseY)
+        prevMouse.set(inertiaMouseX, inertiaMouseY)
+
+        ticking = false
+      })
+      ticking = true
+    }
   })
 
   // async function updateTexture() {
