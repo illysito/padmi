@@ -23,7 +23,7 @@ function createBall() {
   // let y_direction = false
   // GEOMETRY
   // const geometry = new SphereGeometry(size, 64, 64)
-  const geometry = new TorusGeometry(size, 0.6, 32 * size, 100 * size)
+  const geometry = new TorusGeometry(size, size, 32 * size, 100 * size)
   // MATERIAL
   const ball_material = new MeshPhysicalMaterial({
     color: 0xffeedd,

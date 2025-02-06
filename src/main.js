@@ -1,4 +1,5 @@
 import world from './features/3d/world/universe'
+import buttons from './features/scripts/buttons'
 
 import './styles/style.css'
 
@@ -12,6 +13,7 @@ let mouseY = 0
 function runHomeFunctions() {
   console.log('hey!')
   world(container, 0)
+  buttons()
 }
 
 if (body.classList.contains('body__home')) runHomeFunctions()
