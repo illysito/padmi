@@ -1,5 +1,6 @@
 import world from './features/3d/world/universe'
 import buttons from './features/scripts/buttons'
+import hero_parallax from './features/scripts/hero_parallax'
 
 import './styles/style.css'
 
@@ -17,6 +18,7 @@ function runHomeFunctions() {
     world(world_container, 0)
   }
   buttons()
+  hero_parallax()
 }
 
 if (body.classList.contains('body__home')) runHomeFunctions()

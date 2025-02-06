@@ -40,8 +40,8 @@ function createPaddle() {
       let rotationalSpeedX = 0
 
       // Constants for acceleration, deceleration, and damping
-      const maxSpeed = 0.1 // Maximum rotational speed
-      const acceleration = 0.5 // How quickly the object accelerates to its maximum speed
+      const maxSpeed = 0.05 // Maximum rotational speed
+      const acceleration = 0.25 // How quickly the object accelerates to its maximum speed
       const damping = 0.9 // How quickly it slows down when the mouse stops moving
 
       let paddleRotationX = 0
@@ -69,7 +69,7 @@ function createPaddle() {
         const deltaX = currentMouseX - lastMouseX
 
         // If there is movement, update rotational speed
-        if (Math.abs(deltaX) > 1) {
+        if (Math.abs(deltaX) > 6) {
           rotationalSpeedX += deltaX * acceleration
 
           // Cap the rotational speed to a maximum value
@@ -81,12 +81,12 @@ function createPaddle() {
         lastMouseX = currentMouseX
       })
 
-      window.addEventListener('scroll', () => {
-        //prettier-ignore
-        // const scrollY = gsap.utils.mapRange(0, window.innerHeight, 0, 100.0, window.scrollY)
-        const scale = 0.02
-        paddleRotationX -= window.scrollY * toRad * scale
-      })
+      // window.addEventListener('scroll', () => {
+      //   //prettier-ignore
+      //   // const scrollY = gsap.utils.mapRange(0, window.innerHeight, 0, 100.0, window.scrollY)
+      //   const scale = 0.005
+      //   paddle.position.y -= window.scrollY * toRad * scale
+      // })
       // Resolve the promise with the loaded group
       resolve(paddle)
     })
