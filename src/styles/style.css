@@ -21,7 +21,77 @@
   background-color: rgb(228, 137, 193);
 }
 
-#texture-container {
-  width: 100%;
-  height: 100svh;
+/*DARK MODE*/
+
+/* Backgrounds */
+
+body,
+.scene-overlay {
+  background-color: #0a0b0b;
+  transition: background-color 0.8s ease;
+}
+
+.nav-container {
+  background-color: #0a0b0b88;
+  backdrop-filter: hue-rotate(180deg) blur(15px);
+  transition: background-color 0.8s ease;
+}
+
+
+/* Text */
+.is--button-text,
+.is--button-text-hidden {
+  color: #0a0b0b;
+  transition: background-color 0.8s ease;
+}
+
+.h1,
+.h4,
+.claim-heading {
+  color: #e5e7e1;
+  transition: background-color 0.8s ease;
+}
+
+.span--bold {
+  color: #ceff05;
+  transition: background-color 0.8s ease;
+}
+
+/*LIGHT MODE*/
+
+/* Backgrounds */
+body.light-mode {
+  background-color: #e5e7e1;
+  transition: background-color 0.8s ease;
+}
+
+body.light-mode .scene-overlay {
+  background-color: #e5e7e1;
+  transition: background-color 0.8s ease;
+}
+
+body.light-mode .nav-container {
+  background-color: #e5e7e188;
+  backdrop-filter: hue-rotate(180deg) blur(15px);
+  transition: background-color 0.8s ease;
+}
+
+
+/* Text */
+body.light-mode .is--button-text,
+body.light-mode .is--button-text-hidden {
+  color: #e5e7e1;
+  transition: background-color 0.8s ease;
+}
+
+body.light-mode .h1,
+body.light-mode .h4,
+body.light-mode .claim-heading {
+  color: #0a0b0b;
+  transition: background-color 0.8s ease;
+}
+
+body.light-mode .span--bold {
+  color: #8b81e4;
+  transition: background-color 0.8s ease;
 }

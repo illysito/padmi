@@ -7,7 +7,7 @@ function createRenderer() {
     preserveDrawingBuffer: true,
   })
   renderer.physicallyCorrectLights = true
-  renderer.setClearColor(0x000000, 0)
+  // renderer.setClearColor(0x000000, 0)
 
   return renderer
 }

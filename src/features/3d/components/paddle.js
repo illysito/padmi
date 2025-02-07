@@ -15,6 +15,7 @@ function createPaddle() {
           // Apply material to each mesh in the model
           child.material = new MeshPhysicalMaterial({
             color: 0xffeedd,
+            // color: 0xcbcbcd,
             transmission: 1.8,
             thickness: 0.4,
             ior: 1.2,
@@ -71,9 +72,8 @@ function createPaddle() {
         // If there is movement, update rotational speed
         if (Math.abs(deltaX) > 6) {
           rotationalSpeedX += deltaX * acceleration
-
           // Cap the rotational speed to a maximum value
-          //prettier-ignore
+          // prettier-ignore
           rotationalSpeedX = Math.min(Math.max(rotationalSpeedX, -maxSpeed), maxSpeed)
         }
 

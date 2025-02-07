@@ -17,7 +17,7 @@ function buttons() {
       gsap.to(button, {
         scale: 0.95,
         duration: 0.2,
-        backgroundColor: '#0a0b0b',
+        backgroundColor: '#ffffff00',
       })
 
       gsap.to(splitText.chars, {

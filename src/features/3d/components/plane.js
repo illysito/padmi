@@ -9,15 +9,28 @@ import { color_shift_frag, color_shift_vertex } from '../shaders/sh_color_shift.
 import { warp_type_frag, warp_type_vertex } from '../shaders/sh_warp_type.js'
 
 async function createPlane(shader_index) {
-  const template = document.getElementById('scene__template')
-  // const scale = 1.0 //50% res
-  const renderedCanvas = await html2canvas(template, {
-    backgroundColor: 'rgba(10, 11, 11)',
-    width: template.offsetWidth,
-    height: template.offsetHeight,
-  })
+  async function updateCanvasTexture(template, isLightMode) {
+    //prettier-ignore
+    console.log(isLightMode)
+    //prettier-ignore
+    const backgroundColor = isLightMode === true ? 'rgba(229, 231, 225)' : 'rgba(10, 11, 11)';
+    // const backgroundColor = 'rgba(0,0,0,0.1)'
+    const renderedCanvas = await html2canvas(template, {
+      backgroundColor: backgroundColor,
+      width: template.offsetWidth,
+      height: template.offsetHeight,
+    })
 
-  const texture = new CanvasTexture(renderedCanvas)
+    return { renderedCanvas, texture: new CanvasTexture(renderedCanvas) }
+  }
+
+  // const darkModeButton = document.querySelector('.darkmode-button')
+
+  const template = document.getElementById('scene__template')
+  let isLightMode = false
+  //prettier-ignore
+  let { renderedCanvas, texture } = await updateCanvasTexture(template, isLightMode)
+
   texture.anisotropy = 1
   texture.needsUpdate = true
 
@@ -59,6 +72,27 @@ async function createPlane(shader_index) {
     fragmentShader,
   })
 
+  function handleModes() {
+    isLightMode = !isLightMode
+    localStorage.setItem('lightMode', isLightMode)
+    // Toggle the dark-mode class on the body
+    //prettier-ignore
+    updateCanvasTexture(template, isLightMode).then(({ texture: updatedTexture }) => {
+      gsap.to(uniforms.u_texture.value, {
+        duration: 2.8,
+        ease: 'cubic-bezier(0.25, 0.1, 0.25, 1.0)', // Choose your preferred easing
+        onUpdate: () => {
+          // Update the texture on each animation frame
+          uniforms.u_texture.value = updatedTexture
+        },
+        onStart: () => {
+          updatedTexture.anisotropy = 1
+          updatedTexture.needsUpdate = true
+        },
+      })
+    })
+  }
+
   // const meshMaterial = new MeshBasicMaterial({ map: texture })
   // console.log(meshMaterial)
 
@@ -71,6 +105,8 @@ async function createPlane(shader_index) {
     // console.log('ticking' + uniforms.u_time)
   }
 
+  document.addEventListener('darkModeToggled', handleModes)
+
   let ticking = false
   window.addEventListener('mousemove', (event) => {
     if (!ticking) {
@@ -78,7 +114,7 @@ async function createPlane(shader_index) {
         //prettier-ignore
         const mouseX = gsap.utils.mapRange(0, window.innerWidth, 0.0, 1.0, event.clientX)
         //prettier-ignore
-        const mouseY = gsap.utils.mapRange(0, window.innerHeight, 0.0, 1.0, event.clientY)
+        const mouseY = gsap.utils.mapRange(0, window.innerHeight, 0.0, 1.0, event.pageY)
 
         const inertiaFactor = 0.99
         //prettier-ignore
