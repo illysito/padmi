@@ -58,9 +58,10 @@ function hero() {
   })
 
   gsap.to(button, {
-    scaleY: 1,
-    duration: 1.2,
-    ease: 'power2.inOut',
+    scale: 1,
+    opacity: 1,
+    duration: 2,
+    ease: 'power2.out',
   })
 
   // PARALLAX
