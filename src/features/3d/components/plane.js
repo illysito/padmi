@@ -9,12 +9,12 @@ import { color_shift_frag, color_shift_vertex } from '../shaders/sh_color_shift.
 import { warp_type_frag, warp_type_vertex } from '../shaders/sh_warp_type.js'
 
 async function createPlane(shader_index) {
-  async function updateCanvasTexture(template, isLightMode) {
+  async function updateCanvasTexture(template) {
     //prettier-ignore
-    console.log(isLightMode)
+    // console.log(isLightMode)
     //prettier-ignore
-    const backgroundColor = isLightMode === true ? 'rgba(229, 231, 225)' : 'rgba(10, 11, 11)';
-    // const backgroundColor = 'rgba(0,0,0,0.1)'
+    // const backgroundColor = isLightMode === true ? 'rgba(229, 231, 225)' : 'rgba(10, 11, 11)';
+    const backgroundColor = 'rgba(10,11,11,0.0)'
     const renderedCanvas = await html2canvas(template, {
       backgroundColor: backgroundColor,
       width: template.offsetWidth,
@@ -33,6 +33,7 @@ async function createPlane(shader_index) {
 
   texture.anisotropy = 1
   texture.needsUpdate = true
+  texture.premultiplyAlpha = true
 
   const canvasW = renderedCanvas.width
   const canvasH = renderedCanvas.height
@@ -116,7 +117,7 @@ async function createPlane(shader_index) {
         //prettier-ignore
         const mouseY = gsap.utils.mapRange(0, window.innerHeight, 0.0, 1.0, event.pageY)
 
-        const inertiaFactor = 0.99
+        const inertiaFactor = 1
         //prettier-ignore
         const inertiaMouseX = gsap.utils.interpolate(prevMouse.x, mouseX, inertiaFactor)
         //prettier-ignore

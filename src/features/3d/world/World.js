@@ -1,10 +1,12 @@
 import { createBall } from '../components/ball.js'
 import { createCamera } from '../components/camera.js'
+import { createGradPlane } from '../components/gradient_plane.js'
 // import { createDirLight } from '../components/directional_light.js'
 import { createPaddle } from '../components/paddle.js'
 import { createPlane } from '../components/plane.js'
 import { createLight } from '../components/point_light.js'
 import { createScene } from '../components/scene.js'
+import { createText } from '../components/text.js'
 import { Loop } from '../systems/Loop.js'
 import { createRenderer } from '../systems/Renderer.js'
 import { Resizer } from '../systems/Resizer.js'
@@ -26,10 +28,12 @@ class World {
     container.append(renderer.domElement)
 
     // INITS!!!!!
-    this.initPlane()
+    // this.initPlane()
+    // this.initGradPlane()
+    // this.initText()
     // this.initBall()
-    this.initPaddle()
-    this.initLights()
+    // this.initPaddle()
+    // this.initLights()
 
     const resizer = new Resizer(container, camera, renderer)
     resizer.onResize = () => {
@@ -50,6 +54,13 @@ class World {
     this.render()
   }
 
+  initGradPlane() {
+    const gradPlane = createGradPlane()
+    scene.add(gradPlane)
+    loop.updatables.push(gradPlane)
+    this.render()
+  }
+
   initBall() {
     const ball = createBall()
     scene.add(ball)
@@ -62,8 +73,14 @@ class World {
     loop.updatables.push(paddle)
   }
 
+  async initText() {
+    const type = await createText('Play smarter.', 0, 0, 0)
+    scene.add(type)
+    // loop.updatables.push(type)
+  }
+
   initLights() {
-    const light = createLight(-2, 2, 5, 20, 0xfffbf6)
+    const light = createLight(-2, 2, 3, 20, 0xfffbf6)
     scene.add(light)
     // loop.updatables.push(light)
   }

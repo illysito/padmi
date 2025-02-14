@@ -20,17 +20,18 @@ function createBall() {
   console.log(size)
   // GEOMETRY
   // const geometry = new SphereGeometry(size, 64, 64)
-  const geometry = new TorusGeometry(size, size, 32 * size, 100 * size)
+  const geometry = new TorusGeometry(2 * size, 2 * size, 32 * size, 100 * size)
   // MATERIAL
   const ball_material = new MeshPhysicalMaterial({
-    color: 0xffeedd,
+    color: 0xffddee,
     transmission: 1.8,
-    thickness: 0.4,
+    thickness: 2.4,
     ior: 1.2,
     roughness: 0.25,
-    metalness: 0.0,
+    metalness: 1.9,
     reflectivity: 0.3,
     side: DoubleSide,
+    // transparent: true,
   })
   console.log(ball_material)
 
@@ -189,7 +190,7 @@ function createBall() {
   //   seamMesh.rotation.x = Math.PI / 2
   // GROUP
   const ballGroup = new Group()
-  ball.position.z = 2
+  ball.position.z = -20
   ballGroup.add(ball) // Main ball
   // ballGroup.add(seamMesh)
   // LOOP

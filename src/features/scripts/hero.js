@@ -10,8 +10,12 @@ function hero() {
   const nav_container = document.querySelector('.nav-container')
   const claim = document.querySelector('.claim-heading')
   const button = document.querySelectorAll('.button')
+  const badge = document.querySelectorAll('.app-badge')
   const world_container = document.querySelector('.world-container')
   const splitClaim = new SplitType(claim, { types: 'lines' })
+  // to secretly fade out
+  const template = document.querySelector('.scene-template')
+  const overlay = document.querySelector('.scene-overlay')
 
   // SPLIT
   splitClaim.lines.forEach((line) => {
@@ -41,6 +45,18 @@ function hero() {
     filter: 'blur(0px)',
     duration: 1.9,
     ease: 'power2.inOut',
+    onComplete: () => {
+      gsap.to(template, {
+        opacity: 1,
+        duration: 0.3,
+        onComplete: () => {
+          gsap.to(overlay, {
+            opacity: 0,
+            duration: 0.3,
+          })
+        },
+      })
+    },
   })
 
   gsap.to(claim, {
@@ -62,6 +78,13 @@ function hero() {
     opacity: 1,
     duration: 2,
     ease: 'power2.out',
+  })
+
+  gsap.to(badge, {
+    scale: 1,
+    opacity: 1,
+    duration: 4,
+    ease: 'power2.inOut',
   })
 
   // PARALLAX

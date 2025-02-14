@@ -1,5 +1,10 @@
 // import gsap from 'gsap'
-import { MeshPhysicalMaterial, DoubleSide } from 'three'
+//prettier-ignore
+import {
+  MeshPhysicalMaterial,
+  DoubleSide,
+  Color,
+} from 'three'
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js'
 
 function createPaddle() {
@@ -15,11 +20,15 @@ function createPaddle() {
           // Apply material to each mesh in the model
           child.material = new MeshPhysicalMaterial({
             color: 0xffeedd,
-            // color: 0xcbcbcd,
+            // color: 0x2255ffdd,
+            // emissive: new Color(0x220088), // Or any desired color
+            emissive: new Color(0xfffbf6),
+            // emissive: new Color(0xcebbff),
+            emissiveIntensity: 0.1,
             transmission: 1.8,
-            thickness: 0.4,
-            ior: 1.2,
-            roughness: 0.25,
+            thickness: 1.8,
+            ior: 1.5,
+            roughness: 0.2,
             metalness: 0.0,
             reflectivity: 0.3,
             side: DoubleSide,
@@ -29,7 +38,8 @@ function createPaddle() {
       // INITIAL SET UP
 
       // SCALE
-      paddle.scale.set(0.2, 0.2, 0.2)
+      const scale = 0.23
+      paddle.scale.set(scale, scale, scale)
 
       // POSITION
       paddle.position.z = 2

@@ -87,13 +87,13 @@ void main() {
 
   // if (dist < radius) {
   //   strength = smoothstep(0.0, radius, dist);
-  //   strength = smoothstep(0.2, 5.8, strength);
+  //   strength = smoothstep(0.2, 3.8, strength);
   // }
 
   // FLOW NORMAL
 
   strength = smoothstep(0.4, radius, dist);
-  strength = smoothstep(0.2, 8.0, strength);
+  strength = smoothstep(0.2, 7.0, strength); ////// ESTA ES LA LINEA CREMA!!
 
   static_strength = smoothstep(0.3, static_radius, static_dist);
   static_strength = smoothstep(0.2, 5.8, static_strength);
@@ -107,8 +107,8 @@ void main() {
   y = floor(coords.y * blocks) / blocks + 0.15 * sin(u_time);
 
   vec2 distortion = vec2(
-    sin(0.5 * prevMouse.x - 2.1 * x + 2.2 * y),
-    cos(0.5 * prevMouse.y + 2.1 * x - 2.8 * y)
+    sin(0.5 * u_mouse.x - 2.1 * x + 2.2 * y),
+    cos(0.5 * u_mouse.y + 2.1 * x - 2.8 * y)
   );
 
   vec2 static_distortion = vec2(
@@ -133,15 +133,15 @@ void main() {
 
   float separation_factor = mix(0.0, 0.025, strength);
 
-  vec4 redChannel = texture2D(u_texture, coords - distortion + vec2(separation_factor, separation_factor));
+  vec4 redChannel = texture2D(u_texture, coords - distortion + 0.0 * vec2(separation_factor, separation_factor));
   redChannel.g = 0.0;
   redChannel.b = 0.0;
 
-  vec4 greenChannel = texture2D(u_texture, coords - distortion - 0.5 * vec2(separation_factor, separation_factor));
+  vec4 greenChannel = texture2D(u_texture, coords - distortion - 0.0 * 0.5 * vec2(separation_factor, separation_factor));
   greenChannel.r = 0.0;
   greenChannel.b = 0.0;
 
-  vec4 blueChannel = texture2D(u_texture, coords - distortion + 2.0 * vec2(separation_factor, separation_factor));
+  vec4 blueChannel = texture2D(u_texture, coords - distortion + 0.0 * 2.0 * vec2(separation_factor, separation_factor));
   blueChannel.r = 0.0;
   blueChannel.g = 0.0;
 
@@ -150,7 +150,7 @@ void main() {
   // coords -= static_distortion;
   // vec4 color = texture2D(u_texture, coords - distortion);
   vec4 color = redChannel + greenChannel + blueChannel;
-  gl_FragColor = color;
+   gl_FragColor = color;
 }
 `
 

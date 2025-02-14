@@ -95,3 +95,9 @@ body.light-mode .span--bold {
   color: #8b81e4;
   transition: background-color 0.8s ease;
 }
+
+#bg-mouse {
+  /* border: 1px solid blue; */
+  width: 300px;
+  height: 300px;
+}
