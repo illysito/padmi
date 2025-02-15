@@ -32,7 +32,7 @@ function createGradPlane() {
   const mesh = new Mesh(geometry, material)
 
   mesh.rotation.x = 114 * (Math.PI / 180)
-  mesh.position.z = 8.0
+  mesh.position.z = 8.5
   // mesh.position.z = -10
   mesh.position.y = 0.1
 
