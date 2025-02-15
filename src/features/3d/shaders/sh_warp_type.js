@@ -93,14 +93,14 @@ void main() {
   // FLOW NORMAL
 
   strength = smoothstep(0.4, radius, dist);
-  strength = smoothstep(0.2, 7.0, strength); ////// ESTA ES LA LINEA CREMA!!
+  strength = smoothstep(0.2, 6.0, strength); ////// ESTA ES LA LINEA CREMA!!
 
   static_strength = smoothstep(0.3, static_radius, static_dist);
   static_strength = smoothstep(0.2, 5.8, static_strength);
 
   // DIVIDING IN BLOCKS
 
-  float blocks = 0.1;
+  float blocks = 12.1;
   float x = coords.x;
   float y = coords.y;
   x = floor(coords.x * asp * blocks) / (asp * blocks);

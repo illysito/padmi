@@ -1,29 +1,29 @@
 import { createCamera } from '../components/camera.js'
 import { createGradPlane } from '../components/gradient_plane.js'
 import { createScene } from '../components/scene.js'
-import { Loop } from '../systems/Loop.js'
+import { Loop_2 } from '../systems/Loop_2.js'
 import { createRenderer } from '../systems/Renderer.js'
 import { Resizer } from '../systems/Resizer.js'
 
-let camera
-let scene
-let renderer
-let loop
+// let camera
+// let scene
+// let renderer
+// let loop
 
 class World_2 {
   // 1. Create an instance of the World app
   constructor(container) {
-    camera = createCamera()
-    scene = createScene()
-    renderer = createRenderer()
-    loop = new Loop(camera, scene, renderer)
+    this.camera = createCamera()
+    this.scene = createScene()
+    this.renderer = createRenderer()
+    this.loop = new Loop_2(this.camera, this.scene, this.renderer)
     // adding canvas element to the webflow container
-    container.append(renderer.domElement)
+    container.append(this.renderer.domElement)
 
     this.initGradPlane()
     console.log('plane started!')
 
-    const resizer = new Resizer(container, camera, renderer)
+    const resizer = new Resizer(container, this.camera, this.renderer)
     resizer.onResize = () => {
       this.render()
     }
@@ -31,22 +31,22 @@ class World_2 {
 
   initGradPlane() {
     const gradPlane = createGradPlane()
-    scene.add(gradPlane)
-    loop.updatables.push(gradPlane)
+    this.scene.add(gradPlane)
+    this.loop.updatables.push(gradPlane)
     this.render()
   }
 
   // 2. Render the scene
   render() {
-    renderer.render(scene, camera)
+    this.renderer.render(this.scene, this.camera)
   }
 
   start() {
-    loop.start()
+    this.loop.start()
   }
 
   stop() {
-    loop.stop()
+    this.loop.stop()
   }
 }
 

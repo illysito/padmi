@@ -6,18 +6,23 @@ gsap.registerPlugin(ScrollTrigger)
 
 function hero() {
   // ELEMENTS
+  const h1 = document.querySelectorAll('.h1')
+  const h2 = document.querySelectorAll('.h2')
   const hero_section = document.querySelector('.scene__section')
   const nav_container = document.querySelector('.nav-container')
   const claim = document.querySelector('.claim-heading')
   const button = document.querySelectorAll('.button')
   const badge = document.querySelectorAll('.app-badge')
   const world_container = document.querySelector('.world-container')
-  const splitClaim = new SplitType(claim, { types: 'lines' })
   // to secretly fade out
   const template = document.querySelector('.scene-template')
   const overlay = document.querySelector('.scene-overlay')
 
   // SPLIT
+  const splitClaim = new SplitType(claim, { types: 'lines' })
+  // const splitH1 = new SplitType(h1, { types: 'chars' })
+  const splitH2 = new SplitType(h2, { types: 'chars' })
+
   splitClaim.lines.forEach((line) => {
     const wrapper = document.createElement('div')
     wrapper.style.overflow = 'hidden'
@@ -27,6 +32,36 @@ function hero() {
     wrapper.appendChild(line)
   })
 
+  // gsap.from(splitH1.chars, {
+  //   yPercent: -100,
+  //   scaleY: 0.01,
+  //   duration: 1.6,
+  //   stagger: 0.08,
+  //   ease: 'power3.out',
+  // })
+
+  // splitH1.chars.forEach((char) => {
+  //   gsap.to(char, {
+  //     yPercent: 100,
+  //     stagger: 0.1,
+  //     duration: 1.6,
+  //     ease: 'power3.inOut',
+  //   })
+  // })
+
+  gsap.from(h1, {
+    yPercent: -100,
+    scaleY: 0.01,
+    duration: 1.6,
+    stagger: 0.1,
+    ease: 'power3.out',
+  })
+
+  gsap.to(splitH2.chars, {
+    yPercent: 100,
+    duration: 0.8,
+    stagger: 0.1,
+  })
   // INTRO ANIMATION
   gsap.to(nav_container, {
     opacity: 1,
@@ -47,7 +82,7 @@ function hero() {
     ease: 'power2.inOut',
     onComplete: () => {
       gsap.to(template, {
-        opacity: 1,
+        opacity: 0, // PONER Y QUITAR OVERLAY NEGRO
         duration: 0.3,
         onComplete: () => {
           gsap.to(overlay, {

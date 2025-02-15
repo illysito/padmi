@@ -14,7 +14,8 @@ async function createPlane(shader_index) {
     // console.log(isLightMode)
     //prettier-ignore
     // const backgroundColor = isLightMode === true ? 'rgba(229, 231, 225)' : 'rgba(10, 11, 11)';
-    const backgroundColor = 'rgba(10,11,11,0.0)'
+    const backgroundColor = 'rgba(0,0,1,0.001)'
+    // const backgroundColor = null
     const renderedCanvas = await html2canvas(template, {
       backgroundColor: backgroundColor,
       width: template.offsetWidth,
@@ -71,6 +72,7 @@ async function createPlane(shader_index) {
     uniforms,
     vertexShader,
     fragmentShader,
+    // transparent: true,
   })
 
   function handleModes() {

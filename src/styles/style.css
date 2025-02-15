@@ -33,7 +33,7 @@ body,
 
 .nav-container {
   background-color: #0a0b0b88;
-  backdrop-filter: hue-rotate(180deg) blur(15px);
+  backdrop-filter: hue-rotate(20deg) blur(15px);
   transition: background-color 0.8s ease;
 }
 
@@ -46,7 +46,11 @@ body,
 }
 
 .h1,
-.h4,
+.h4 {
+  color: #ceff05;
+  transition: background-color 0.8s ease;
+}
+
 .claim-heading {
   color: #e5e7e1;
   transition: background-color 0.8s ease;

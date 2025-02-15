@@ -113,7 +113,7 @@ void main() {
   vec4 color1 = rgb(vec4(255.0, 249.0, 244.0, 255.0));
   vec4 color2 = rgb(vec4(0.0, 0.0, 1.0, 0.5));
   vec4 color3 = rgb(vec4(1.0, 0.0, 1.0, 1.0));
-  vec4 color4 = rgb(vec4(1.0, 0.0, 1.0, 1.0));
+  vec4 color4 = rgb(vec4(20.0, 100.0, 20.0, 1.0));
 
   vec4 grad1 = mix(color1, color2, 2.5 * uv.x + 0.0 * noise);
   vec4 grad2 = mix(color3, color4, 2.5 * uv.x + 0.0 * noise);
@@ -125,7 +125,7 @@ void main() {
   vertexColor.w = 0.85;
   vec4 outColor = mix(color, vertexColor, 4.0 * uv.x);
   gl_FragColor = vertexColor;
-  // gl_FragColor = outColor;
+  gl_FragColor = outColor;
   // gl_FragColor = color;
 }
 `
@@ -227,11 +227,18 @@ void main() {
 
   vUv = uv;
 
-  vColor = rgb(vec4(120.0, 0.0, 255.0, 255.0));
+  vec4 black = vec4(0.0, 0.0, 0.0, 1.0);
+  vColor = rgb(vec4(119.0, 100.0, 228.0, 255.0)); // LILA
+  // vColor = rgb(vec4(175.0, 255.0, 10.0, 255.0)); // VERDE
+  // vColor = rgb(vec4(255.0, 251.0, 248.0, 255.0)); // BLANCO
   vColor.r += 0.15 * u_mouseX * u_mouseY;
 
   vec2 noiseCoord = vUv * vec2(3.0, 4.0);
   float noise = snoise(vec3(vec2(noiseCoord.x * 0.002 * u_time, noiseCoord.y * 0.001 * u_time), 0.85 * u_time));
+  // noise = 1.0;
+
+  // vColor = mix(black, vColor, 0.4 * noise);
+  vColor *= 0.65 * noise;
 
   float incline = uv.x * 0.5 * 0.01 * sin(u_time);
   float offset = incline * mix(-0.25, 0.25, uv.y);

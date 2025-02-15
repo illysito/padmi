@@ -2,7 +2,7 @@
 //prettier-ignore
 import {
   MeshPhysicalMaterial,
-  DoubleSide,
+  // DoubleSide,
   Color,
 } from 'three'
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js'
@@ -19,26 +19,26 @@ function createPaddle() {
         if (child.isMesh) {
           // Apply material to each mesh in the model
           child.material = new MeshPhysicalMaterial({
-            color: 0xffeedd,
-            // color: 0x2255ffdd,
-            // emissive: new Color(0x220088), // Or any desired color
-            emissive: new Color(0xfffbf6),
-            // emissive: new Color(0xcebbff),
-            emissiveIntensity: 0.1,
-            transmission: 1.8,
-            thickness: 1.8,
-            ior: 1.5,
-            roughness: 0.2,
-            metalness: 0.0,
-            reflectivity: 0.3,
-            side: DoubleSide,
+            color: new Color(0xffffff), // Keep it white or very light
+            // emissive: new Color(0x000000), // No emissive for glass
+            // emissiveIntensity: 0.0, // Emissive isn't needed for glass
+
+            transmission: 1.0, // Ensures light passes through
+            thickness: 2.0, // Standard thickness (adjust if needed)
+            ior: 1.5, // Real glass has an IOR of ~1.5
+            roughness: 0.03, // Lower = shinier glass
+            metalness: 0.0, // Glass isn't metallic
+            reflectivity: 0.4, // High reflectivity for a glossy effect
+
+            // side: DoubleSide, // Ensure both sides render properly
+            // transparent: false, // Essential for transmission to work
           })
         }
       })
       // INITIAL SET UP
 
       // SCALE
-      const scale = 0.23
+      const scale = 0.15
       paddle.scale.set(scale, scale, scale)
 
       // POSITION
