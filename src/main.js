@@ -5,7 +5,7 @@ import buttons from './features/scripts/buttons'
 import claim from './features/scripts/claim'
 // import dark_mode from './features/scripts/darkmode'
 import hero from './features/scripts/hero'
-import menu from './features/scripts/menu'
+// import menu from './features/scripts/menu'
 // import mouse from './features/scripts/mouse'
 
 import './styles/style.css'
@@ -25,7 +25,7 @@ function runHomeFunctions() {
   // }
   buttons()
   hero()
-  menu()
+  // menu()
   claim()
 }
 
