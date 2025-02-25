@@ -7,12 +7,12 @@ import {
 } from 'three'
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js'
 
-function createPaddle() {
+function createObject() {
   return new Promise((resolve) => {
     const loader = new OBJLoader()
     //prettier-ignore
-    const url = 'https://raw.githubusercontent.com/illysito/padmi/refs/heads/main/objPaddle.obj' // PADDLE
-    // const url = 'https://raw.githubusercontent.com/illysito/padmi/refs/heads/main/tennisball.obj' // IPHONE
+    // const url = 'https://raw.githubusercontent.com/illysito/padmi/refs/heads/main/objPaddle.obj' // PADDLE
+    const url = 'https://raw.githubusercontent.com/illysito/padmi/refs/heads/main/iPhone_6.obj' // OBJECT
 
     loader.load(url, (paddle) => {
       paddle.traverse((child) => {
@@ -20,13 +20,13 @@ function createPaddle() {
           // Apply material to each mesh in the model
           child.material = new MeshPhysicalMaterial({
             color: new Color(0xffffff), // Keep it white or very light
-            emissive: new Color(0xfffbf6), // No emissive for glass
-            emissiveIntensity: 0.05, // Emissive isn't needed for glass
+            // emissive: new Color(0xfffbf6), // No emissive for glass
+            // emissiveIntensity: 0.1, // Emissive isn't needed for glass
 
             transmission: 1.0, // Ensures light passes through
-            thickness: 2.0, // Standard thickness (adjust if needed)
-            ior: 1.5, // Real glass has an IOR of ~1.5
-            roughness: 0.013, // Lower = shinier glass
+            thickness: 0.2, // Standard thickness (adjust if needed)
+            ior: 0.5, // Real glass has an IOR of ~1.5
+            roughness: 0.0, // Lower = shinier glass
             metalness: 0.0, // Glass isn't metallic
             reflectivity: 0.4, // High reflectivity for a glossy effect
 
@@ -38,11 +38,11 @@ function createPaddle() {
       // INITIAL SET UP
 
       // SCALE
-      const scale = 0.15
+      const scale = 10
       paddle.scale.set(scale, scale, scale)
 
       // POSITION
-      paddle.position.z = 2
+      paddle.position.z = 5
 
       // ROTATION
       let toRad = Math.PI / 180
@@ -103,4 +103,4 @@ function createPaddle() {
   })
 }
 
-export { createPaddle }
+export { createObject }

@@ -45,8 +45,7 @@ body,
   transition: background-color 0.8s ease;
 }
 
-.h1,
-.h4 {
+.h1 {
   color: #ceff05;
   transition: background-color 0.8s ease;
 }

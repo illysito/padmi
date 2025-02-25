@@ -1,6 +1,7 @@
 import { createBall } from '../components/ball.js'
 import { createCamera } from '../components/camera.js'
 import { createGradPlane } from '../components/gradient_plane.js'
+import { createObject } from '../components/object.js'
 // import { createDirLight } from '../components/directional_light.js'
 import { createPaddle } from '../components/paddle.js'
 import { createPlane } from '../components/plane.js'
@@ -33,6 +34,7 @@ class World {
     // this.initText()
     // this.initBall()
     this.initPaddle()
+    // this.initObject()
     this.initLights()
 
     console.log(container)
@@ -74,6 +76,12 @@ class World {
     this.loop.updatables.push(paddle)
   }
 
+  async initObject() {
+    const object = await createObject()
+    this.scene.add(object)
+    this.loop.updatables.push(object)
+  }
+
   async initText() {
     const type = await createText('Play smarter.', 0, 0, 0)
     this.scene.add(type)
@@ -93,10 +101,12 @@ class World {
 
   start() {
     this.loop.start()
+    console.log('World has resumed')
   }
 
   stop() {
     this.loop.stop()
+    console.log('World has stopped')
   }
 }
 

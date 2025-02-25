@@ -34,8 +34,8 @@ function claim() {
 
   gsap.from([downloadClaim.lines, splitClaim.lines], {
     yPercent: 100,
-    duration: 1.2,
-    ease: 'power1.inOut',
+    duration: 0.8,
+    ease: 'power1.out',
     stagger: 0.2,
     scrollTrigger: {
       trigger: claim,

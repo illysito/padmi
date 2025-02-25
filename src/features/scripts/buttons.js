@@ -24,7 +24,7 @@ function buttons() {
         yPercent: -100,
         color: '#cbcbcd',
         duration: 0.4,
-        ease: 'power1.inOut',
+        ease: 'power1.out',
         stagger: stag,
       })
 
@@ -32,7 +32,7 @@ function buttons() {
         yPercent: -100,
         color: '#cbcbcd',
         duration: 0.4,
-        ease: 'power1.inOut',
+        ease: 'power1.out',
         stagger: stag,
       })
     }
@@ -42,7 +42,7 @@ function buttons() {
         yPercent: 0,
         color: '#0a0b0b',
         duration: 0.4,
-        ease: 'power2.inOut',
+        ease: 'power2.out',
         stagger: stag,
       })
 
@@ -50,7 +50,7 @@ function buttons() {
         yPercent: 0,
         color: '#0a0b0b',
         duration: 0.4,
-        ease: 'power2.inOut',
+        ease: 'power2.out',
         stagger: stag,
       })
 
