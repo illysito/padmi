@@ -9,6 +9,8 @@ function split() {
   const claim = document.querySelector('.claim-heading-2')
   const p_claim = document.querySelector('.p-claim')
   const card_heading = document.querySelectorAll('.card-heading')
+  const card_p = document.querySelectorAll('.card-p')
+  const bento = document.querySelector('.bento')
   // const download = document.querySelector('.download-heading')
   // to secretly fade out
   // const downloadClaim = new SplitType(download, { types: 'lines' })
@@ -48,7 +50,7 @@ function split() {
     },
   })
 
-  //HEADINGS
+  //CARD HEADINGS
   card_heading.forEach((heading) => {
     const splitCardHeading = new SplitType(heading, { types: 'lines' })
 
@@ -67,12 +69,23 @@ function split() {
       ease: 'power1.out',
       stagger: 0.2,
       scrollTrigger: {
-        trigger: card_heading,
-        start: 'top 99%',
-        end: 'top 85%',
+        trigger: bento,
+        start: 'top 90%',
+        end: 'top 80%',
         markers: false,
       },
     })
+  })
+
+  const p = Array.from(card_p)
+  gsap.to(p, {
+    opacity: 1,
+    duration: 2,
+    scrollTrigger: {
+      trigger: bento,
+      start: 'top 85%',
+      markers: false,
+    },
   })
   // downloadClaim.lines.forEach((line) => {
   //   const wrapper = document.createElement('div')
