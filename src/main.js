@@ -18,20 +18,12 @@ const body = document.body
 const world_container = document.querySelector('.world-container')
 const world_2_container = document.querySelector('.world-2-container')
 
-function isDesktop() {
-  //prettier-ignore
-  return window.innerWidth >= 991 && !/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
-}
-
 function runHomeFunctions() {
   // bg_shader()
   // mouse()
   console.log('hey!')
   // if (world_container) {
-  if (isDesktop()) {
-    world(world_container, 0)
-    console.log('isDesktop: ' + isDesktop())
-  }
+  world(world_container, 0)
   world_2(world_2_container)
   // }
   buttons()

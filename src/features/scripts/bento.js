@@ -1,6 +1,10 @@
 import { gsap } from 'gsap'
 
 function bento() {
+  function isDesktop() {
+    //prettier-ignore
+    return window.innerWidth >= 991
+  }
   const boxes = document.querySelectorAll('.bento_box')
 
   function hoverIn(event) {
@@ -58,11 +62,12 @@ function bento() {
       duration: 0.4,
     })
   }
-
-  boxes.forEach((box) => {
-    box.addEventListener('mouseenter', hoverIn)
-    box.addEventListener('mouseleave', hoverOut)
-  })
+  if (isDesktop()) {
+    boxes.forEach((box) => {
+      box.addEventListener('mouseenter', hoverIn)
+      box.addEventListener('mouseleave', hoverOut)
+    })
+  }
 }
 
 export default bento
