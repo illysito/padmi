@@ -1,10 +1,13 @@
 import world from './features/3d/world/universe'
 import world_2 from './features/3d/world/universe_2'
+import bento from './features/scripts/bento'
 // import bg_shader from './features/script_shaders/bg_shader_handler'
 import buttons from './features/scripts/buttons'
-import claim from './features/scripts/claim'
 // import dark_mode from './features/scripts/darkmode'
 import hero from './features/scripts/hero'
+import horizontal from './features/scripts/horizontal'
+import parallax from './features/scripts/parallax'
+import split from './features/scripts/split'
 // import menu from './features/scripts/menu'
 // import mouse from './features/scripts/mouse'
 
@@ -26,7 +29,10 @@ function runHomeFunctions() {
   buttons()
   hero()
   // menu()
-  claim()
+  split()
+  parallax()
+  bento()
+  horizontal()
 }
 
 // dark_mode()

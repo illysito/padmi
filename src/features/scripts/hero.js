@@ -125,6 +125,7 @@ function hero() {
   // PARALLAX
   gsap.to(hero_section, {
     y: 40,
+    scale: 0.9,
     scrollTrigger: {
       trigger: hero_section,
       start: 'bottom 98%',

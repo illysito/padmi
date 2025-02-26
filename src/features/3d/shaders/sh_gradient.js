@@ -110,10 +110,19 @@ void main() {
   float noise = snoise(vec3(uv.x * 0.8 * u_time, uv.y * 0.9 * u_time, u_time));
   float grain = rand(uv);
 
+  // DARK MODE
+
   vec4 color1 = rgb(vec4(255.0, 249.0, 244.0, 255.0));
   vec4 color2 = rgb(vec4(0.0, 0.0, 1.0, 0.5));
   vec4 color3 = rgb(vec4(1.0, 0.0, 1.0, 1.0));
   vec4 color4 = rgb(vec4(20.0, 100.0, 20.0, 1.0));
+
+  // LIGHT MODE
+
+  // vec4 color1 = rgb(vec4(255.0, 249.0, 244.0, 255.0));
+  // vec4 color2 = rgb(vec4(255.0, 255.0, 251.0, 255.5));
+  // vec4 color3 = rgb(vec4(255.0, 255.0, 251.0, 255.0));
+  // vec4 color4 = rgb(vec4(119.0, 100.0, 228.0, 255.0));
 
   vec4 grad1 = mix(color1, color2, 2.5 * uv.x + 0.0 * noise);
   vec4 grad2 = mix(color3, color4, 2.5 * uv.x + 0.0 * noise);
@@ -227,7 +236,12 @@ void main() {
 
   vUv = uv;
 
-  vec4 black = vec4(0.0, 0.0, 0.0, 1.0);
+  // DARK MODE
+  vec4 base = vec4(0.0, 0.0, 0.0, 1.0);
+
+  // LIGHT MODE
+  // vec4 base = vec4(0.89, 0.9, 0.88, 1.0);
+
   vColor = rgb(vec4(119.0, 100.0, 228.0, 255.0)); // LILA
   // vColor = rgb(vec4(175.0, 255.0, 10.0, 255.0)); // VERDE
   // vColor = rgb(vec4(255.0, 251.0, 248.0, 255.0)); // BLANCO
@@ -235,10 +249,13 @@ void main() {
 
   vec2 noiseCoord = vUv * vec2(3.0, 4.0);
   float noise = snoise(vec3(vec2(noiseCoord.x * 0.002 * u_time, noiseCoord.y * 0.001 * u_time), 0.85 * u_time));
+  // noise = abs(noise);
   // noise = 1.0;
 
-  // vColor = mix(black, vColor, 0.4 * noise);
-  vColor *= 0.65 * noise;
+  // vColor = mix(base, vColor, 0.4 * noise);
+  vColor *= 0.65 * noise; // original: 0.65
+  // vColor = mix(vColor, base, noise);
+  // vColor = clamp(vColor, vec4(0.1), vec4(1.0));
 
   float incline = uv.x * 0.5 * 0.01 * sin(u_time);
   float offset = incline * mix(-0.25, 0.25, uv.y);

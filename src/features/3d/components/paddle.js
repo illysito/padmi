@@ -5,16 +5,18 @@ import {
   // DoubleSide,
   Color,
 } from 'three'
-import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 
 function createPaddle() {
   return new Promise((resolve) => {
-    const loader = new OBJLoader()
+    const loader = new GLTFLoader()
     //prettier-ignore
-    const url = 'https://raw.githubusercontent.com/illysito/padmi/refs/heads/main/objPaddle.obj' // PADDLE
+    const url = 'https://cdn.jsdelivr.net/gh/illysito/padmi@main/objPaddle.glb' // PADDLE
+
     // const url = 'https://raw.githubusercontent.com/illysito/padmi/refs/heads/main/tennisball.obj' // IPHONE
 
-    loader.load(url, (paddle) => {
+    loader.load(url, (gltf) => {
+      const paddle = gltf.scene
       paddle.traverse((child) => {
         if (child.isMesh) {
           // Apply material to each mesh in the model
