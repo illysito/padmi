@@ -19,7 +19,8 @@ const world_container = document.querySelector('.world-container')
 const world_2_container = document.querySelector('.world-2-container')
 
 function isDesktop() {
-  return window.innerWidth >= 991
+  //prettier-ignore
+  return window.innerWidth >= 991 && !/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
 }
 
 function runHomeFunctions() {
@@ -29,7 +30,7 @@ function runHomeFunctions() {
   // if (world_container) {
   if (isDesktop()) {
     world(world_container, 0)
-    console.log('isDesktop: ' + isDesktop)
+    console.log('isDesktop: ' + isDesktop())
   }
   world_2(world_2_container)
   // }
