@@ -70,8 +70,8 @@ function split() {
       stagger: 0.2,
       scrollTrigger: {
         trigger: bento,
-        start: 'top 90%',
-        end: 'top 80%',
+        start: 'top 80%',
+        end: 'top 60%',
         markers: false,
       },
     })
@@ -80,10 +80,10 @@ function split() {
   const p = Array.from(card_p)
   gsap.to(p, {
     opacity: 1,
-    duration: 2,
+    duration: 2.5,
     scrollTrigger: {
       trigger: bento,
-      start: 'top 85%',
+      start: 'top 65%',
       markers: false,
     },
   })

@@ -1,3 +1,4 @@
+//LEGACY IMPORTS
 import { createBall } from '../components/ball.js'
 import { createCamera } from '../components/camera.js'
 import { createGradPlane } from '../components/gradient_plane.js'
@@ -27,6 +28,7 @@ class World {
     this.shader_index = shader_index
     // adding canvas element to the webflow container
     container.append(this.renderer.domElement)
+    //prettier-ignore
 
     // INITS!!!!!
     // this.initGradPlane()
@@ -37,7 +39,7 @@ class World {
     // this.initObject()
     this.initLights()
 
-    console.log(container)
+    //prettier-ignore
     const resizer = new Resizer(container, this.camera, this.renderer)
     resizer.onResize = () => {
       this.render()
@@ -97,6 +99,7 @@ class World {
   // 2. Render the scene
   render() {
     this.renderer.render(this.scene, this.camera)
+    // this.composer.render()
   }
 
   start() {

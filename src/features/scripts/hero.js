@@ -13,6 +13,7 @@ function hero() {
   if (isDesktop()) {
     const h1 = document.querySelectorAll('.h1')
     const h2 = document.querySelectorAll('.h2')
+    const hero = document.querySelector('.hero')
     const hero_section = document.querySelector('.scene__section')
     const nav_container = document.querySelector('.nav-container')
     const claim = document.querySelector('.claim-heading')
@@ -136,6 +137,16 @@ function hero() {
         start: 'bottom 98%',
         end: 'bottom 50%',
         scrub: 2,
+        markers: false,
+      },
+    })
+    gsap.to(hero, {
+      autoAlpha: 0,
+      scrollTrigger: {
+        trigger: hero,
+        start: 'bottom 98%',
+        end: 'bottom 30%',
+        scrub: 1,
         markers: false,
       },
     })

@@ -1,6 +1,10 @@
 import { World } from './World.js' // cambiar la ruta si fuera necesario
 
 function world(container, shader_index) {
+  const trigger = document.querySelector('.claim')
+  let hasClaimBeenObserved = false // Track if claim has been observed
+  let lastScrollY = window.scrollY // Track the last scroll position
+
   function isDesktop() {
     //prettier-ignore
     return window.innerWidth >= 991
@@ -9,21 +13,33 @@ function world(container, shader_index) {
   if (isDesktop()) {
     const world = new World(container, shader_index)
     // 2. Render the scene
-    // world.start()
+    world.start()
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            world.start() // Resume rendering when visible
+            console.log('ya!')
+            if (!hasClaimBeenObserved) {
+              world.stop() // Stop the loop when claim is observed
+              hasClaimBeenObserved = true
+            }
           } else {
-            world.stop() // Pause rendering when out of view
+            if (window.scrollY < lastScrollY) {
+              // Scrolled upwards, resume the loop
+              world.start() // Start the loop again when scrolling up
+              hasClaimBeenObserved = false // Reset the flag
+            }
           }
         })
       },
-      { threshold: 0.4 } // Adjust threshold for sensitivity
+      { threshold: 0.8 } // Adjust threshold for sensitivity
     )
 
-    observer.observe(container)
+    observer.observe(trigger)
+
+    window.addEventListener('scroll', () => {
+      lastScrollY = window.scrollY
+    })
   }
 }
 

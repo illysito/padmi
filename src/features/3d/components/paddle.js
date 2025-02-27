@@ -22,16 +22,18 @@ function createPaddle() {
           // Apply material to each mesh in the model
           child.material = new MeshPhysicalMaterial({
             color: new Color(0xffffff), // Keep it white or very light
-            emissive: new Color(0xfffbf6), // No emissive for glass
-            emissiveIntensity: 0.05, // Emissive isn't needed for glass
+            emissive: new Color(0x5511f6), // No emissive for glass
+            // emissive: new Color(0xffffff), // No emissive for glass
+            emissiveIntensity: 0.5, // Emissive isn't needed for glass
 
             transmission: 1.0, // Ensures light passes through
             thickness: 2.0, // Standard thickness (adjust if needed)
             ior: 1.5, // Real glass has an IOR of ~1.5
             roughness: 0.013, // Lower = shinier glass
             metalness: 0.0, // Glass isn't metallic
+            // roughness: 0.53, // Lower = shinier glass
+            // metalness: 0.5, // Glass isn't metallic
             reflectivity: 0.4, // High reflectivity for a glossy effect
-
             // side: DoubleSide, // Ensure both sides render properly
             // transparent: false, // Essential for transmission to work
           })
