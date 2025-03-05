@@ -2,6 +2,7 @@ import maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 
 function map() {
+  const map_wrapper = document.querySelector('.map')
   const map = new maplibregl.Map({
     container: 'map', // ID of your HTML element
     style: `https://api.maptiler.com/maps/5af093ac-6e4a-49cb-b247-bd629a603481/style.json?key=OFwEOATP6EiKKl7TcWZ6`,
@@ -62,6 +63,16 @@ function map() {
   }
   // Load markers on the map
   loadMarkers()
+
+  map_wrapper.addEventListener('mouseenter', () => {
+    // console.log('scroll should stop')
+    document.body.classList.add('stop-scrolling')
+  })
+
+  map_wrapper.addEventListener('mouseleave', () => {
+    // console.log('scroll should resume')
+    document.body.classList.remove('stop-scrolling')
+  })
 }
 
 export default map
