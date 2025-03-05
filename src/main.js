@@ -6,6 +6,8 @@ import buttons from './features/scripts/buttons'
 // import dark_mode from './features/scripts/darkmode'
 import hero from './features/scripts/hero'
 import horizontal from './features/scripts/horizontal'
+import map from './features/scripts/map'
+import nav from './features/scripts/nav'
 import parallax from './features/scripts/parallax'
 import split from './features/scripts/split'
 // import menu from './features/scripts/menu'
@@ -24,9 +26,7 @@ function runHomeFunctions() {
   console.log('hey!')
   // if (world_container) {
   world(world_container, 0)
-  world_2(world_2_container)
   // }
-  buttons()
   hero()
   // menu()
   split()
@@ -35,6 +35,17 @@ function runHomeFunctions() {
   horizontal()
 }
 
+function runWhereFunctions() {
+  map()
+}
+
+function runGeneralFunctions() {
+  world_2(world_2_container)
+  nav()
+  buttons()
+}
 // dark_mode()
 
+runGeneralFunctions()
 if (body.classList.contains('body__home')) runHomeFunctions()
+if (body.classList.contains('body__where')) runWhereFunctions()

@@ -25,6 +25,7 @@
     "glslCanvas": "^0.2.6",
     "gsap": "^3.12.7",
     "html2canvas": "^1.4.1",
+    "maplibre-gl": "^5.2.0",
     "split-type": "^0.3.4",
     "three": "^0.173.0"
   }

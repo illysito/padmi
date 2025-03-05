@@ -15,9 +15,9 @@ function hero() {
     const h2 = document.querySelectorAll('.h2')
     const hero = document.querySelector('.hero')
     const hero_section = document.querySelector('.scene__section')
-    const nav_container = document.querySelector('.nav-container')
+    // const nav_container = document.querySelector('.nav-container')
     const claim = document.querySelector('.claim-heading')
-    const button = document.querySelectorAll('.button')
+    // const button = document.querySelectorAll('.button')
     const badge = document.querySelectorAll('.app-badge')
     const world_container = document.querySelector('.world-container')
     // to secretly fade out
@@ -69,11 +69,11 @@ function hero() {
       stagger: 0.1,
     })
     // INTRO ANIMATION
-    gsap.to(nav_container, {
-      opacity: 1,
-      duration: 1.5,
-      ease: 'power2.inOut',
-    })
+    // gsap.to(nav_container, {
+    //   opacity: 1,
+    //   duration: 1.5,
+    //   ease: 'power2.inOut',
+    // })
 
     gsap.from(world_container, {
       scale: 0.8,
@@ -114,12 +114,12 @@ function hero() {
       stagger: 0.2,
     })
 
-    gsap.to(button, {
-      scale: 1,
-      opacity: 1,
-      duration: 2,
-      ease: 'power2.out',
-    })
+    // gsap.to(button, {
+    //   scale: 1,
+    //   opacity: 1,
+    //   duration: 2,
+    //   ease: 'power2.out',
+    // })
 
     gsap.to(badge, {
       scale: 1,

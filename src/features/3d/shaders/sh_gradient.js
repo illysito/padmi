@@ -135,6 +135,7 @@ void main() {
   vec4 outColor = mix(color, vertexColor, 4.0 * uv.x);
   gl_FragColor = vertexColor;
   gl_FragColor = outColor;
+  // gl_FragColor = vec4(uv, 0.0, 1.0);
   // gl_FragColor = color;
 }
 `
@@ -242,6 +243,7 @@ void main() {
   // LIGHT MODE
   // vec4 base = vec4(0.89, 0.9, 0.88, 1.0);
 
+  // vColor = vec4(0.5, 0.5, 0.5, 1.0); // GRIS
   vColor = rgb(vec4(119.0, 100.0, 228.0, 255.0)); // LILA
   // vColor = rgb(vec4(175.0, 255.0, 10.0, 255.0)); // VERDE
   // vColor = rgb(vec4(255.0, 251.0, 248.0, 255.0)); // BLANCO
