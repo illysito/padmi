@@ -52,10 +52,41 @@ function map() {
           return
         }
 
-        new maplibregl.Marker()
+        new maplibregl.Marker({
+          element: createCustomImageMarker(), // Function to create an image marker
+        })
           .setLngLat([lng, lat])
-          .setPopup(new maplibregl.Popup().setText(name)) // Show name on click
+          .setPopup(
+            new maplibregl.Popup({ className: 'popup', offset: [0, -28] }) // Add custom class
+              .setHTML(`<div class="popup-content">${name}</div>`)
+          )
           .addTo(map)
+
+        // Function to create an image marker
+        function createCustomImageMarker() {
+          const marker = document.createElement('div')
+          marker.className = 'custom-marker'
+          //prettier-ignore
+          marker.style.backgroundImage = 'url(https://raw.githubusercontent.com/illysito/padmi/main/map_marker.png)'
+          marker.style.width = '30px'
+          marker.style.height = '41px'
+          marker.style.backgroundSize = 'cover'
+
+          marker.addEventListener('click', () => {
+            // Animate the map zooming out to the marker's coordinates
+            map.flyTo({
+              center: [lng, lat], // Set the center to the marker's location
+              zoom: 18, // Set the zoom level to a low level for zooming out (you can adjust this as needed)
+              speed: 2, // Animation speed (1 is standard)
+              curve: 2, // Animation curve (1 is standard)
+              easing(t) {
+                return t // Linear easing (you can change it for different effects)
+              },
+            })
+          })
+
+          return marker
+        }
       })
     } catch (error) {
       console.error('Error loading Google Sheets data:', error)

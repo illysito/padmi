@@ -3,6 +3,59 @@
   overflow: hidden;
 }
 
+.map {
+  width: calc(100% + 8px);
+  height: calc(100% + 8px)
+    /* Forces an extra pixel to fill the gap */
+}
+
+.popup {
+  /* transform: translateY(-300px); */
+  background-color: #0a0b0bdd;
+  padding: 0px;
+}
+
+.popup-content {
+  color: #ceff05;
+  font-size: 1.4em;
+  /* line-height: 1em; */
+  text-align: center;
+  margin: 8px;
+  margin-top: 0;
+  padding: 0px;
+  /* transform: translateY(-300px); */
+}
+
+.maplibregl-popup {
+  display: flex;
+  flex-direction: column;
+  /* Stack elements vertically */
+  justify-content: flex-start;
+  align-items: center;
+  background-color: #0a0b0bdd;
+  border: solid #ceff05 1px;
+  max-width: 200px;
+  min-height: 30px;
+  border-radius: 8px;
+  padding: 0px;
+  line-height: 1em;
+}
+
+.maplibregl-popup-content {
+  background: transparent;
+  box-shadow: none;
+  padding: 0px;
+  margin: 0px;
+}
+
+.maplibregl-popup-tip {
+  visibility: hidden;
+}
+
+.maplibregl-popup-close-button {
+  visibility: hidden;
+}
+
 /*DARK MODE*/
 
 /* Backgrounds */
