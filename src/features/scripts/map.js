@@ -1,3 +1,4 @@
+import gsap from 'gsap'
 import maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 
@@ -7,7 +8,7 @@ function map() {
     container: 'map', // ID of your HTML element
     style: `https://api.maptiler.com/maps/5af093ac-6e4a-49cb-b247-bd629a603481/style.json?key=OFwEOATP6EiKKl7TcWZ6`,
     center: [-3.70256, 40.4165], // Longitude, Latitude (Madrid)
-    zoom: 14, // Adjust the zoom level
+    zoom: 10, // Adjust the zoom level
     attributionControl: false,
   })
 
@@ -103,6 +104,41 @@ function map() {
   map_wrapper.addEventListener('mouseleave', () => {
     // console.log('scroll should resume')
     document.body.classList.remove('stop-scrolling')
+  })
+
+  // HEADINGS
+
+  const court_heading = document.querySelectorAll('.court-heading')
+  const court = document.querySelectorAll('.court')
+  gsap.to(court_heading, {
+    opacity: 1,
+    yPercent: -100,
+    duration: 1.4,
+  })
+
+  function hoverIn(event) {
+    const wrapper = event.currentTarget
+    const h = wrapper.firstElementChild
+    const hidden_h = h.nextElementSibling
+    gsap.to([h, hidden_h], {
+      yPercent: -200,
+      duration: 0.4,
+    })
+  }
+
+  function hoverOut(event) {
+    const wrapper = event.currentTarget
+    const h = wrapper.firstElementChild
+    const hidden_h = h.nextElementSibling
+    gsap.to([h, hidden_h], {
+      yPercent: -100,
+      duration: 0.4,
+    })
+  }
+
+  court.forEach((court) => {
+    court.addEventListener('mouseover', hoverIn)
+    court.addEventListener('mouseleave', hoverOut)
   })
 }
 
