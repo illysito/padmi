@@ -17,6 +17,7 @@ function hero() {
     const hero_section = document.querySelector('.scene__section')
     // const nav_container = document.querySelector('.nav-container')
     const claim = document.querySelector('.claim-heading')
+    const download = document.querySelector('.download-heading')
     // const button = document.querySelectorAll('.button')
     const badge = document.querySelectorAll('.app-badge')
     const world_container = document.querySelector('.world-container')
@@ -121,7 +122,7 @@ function hero() {
     //   ease: 'power2.out',
     // })
 
-    gsap.to(badge, {
+    gsap.to([badge, download], {
       scale: 1,
       opacity: 1,
       duration: 4,
