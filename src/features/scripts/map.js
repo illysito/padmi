@@ -3,6 +3,11 @@ import maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 
 function map() {
+  // MOBILE CHECK
+
+  function isMobile() {
+    return window.innerWidth <= 320
+  }
   // CONSTANTS
 
   const court_heading = document.querySelectorAll('.court-heading')
@@ -139,6 +144,12 @@ function map() {
   // FLY
 
   function fly(index) {
+    if (isMobile()) {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth', // Optional: adds smooth scrolling
+      })
+    }
     markers.forEach((marker) => {
       marker.getPopup().remove()
     })
