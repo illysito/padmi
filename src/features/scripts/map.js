@@ -6,8 +6,9 @@ function map() {
   // MOBILE CHECK
 
   function isMobile() {
-    return window.innerWidth <= 320
+    return window.innerWidth <= 568
   }
+  console.log(isMobile())
   // CONSTANTS
 
   const court_heading = document.querySelectorAll('.court-heading')
