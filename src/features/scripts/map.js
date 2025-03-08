@@ -3,7 +3,14 @@ import maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 
 function map() {
+  // CONSTANTS
+
+  const court_heading = document.querySelectorAll('.court-heading')
+  const courts = document.querySelectorAll('.court')
   const map_wrapper = document.querySelector('.map')
+
+  // MAP RENDERING INIT
+
   const map = new maplibregl.Map({
     container: 'map', // ID of your HTML element
     style: `https://api.maptiler.com/maps/5af093ac-6e4a-49cb-b247-bd629a603481/style.json?key=OFwEOATP6EiKKl7TcWZ6`,
@@ -11,6 +18,10 @@ function map() {
     zoom: 10, // Adjust the zoom level
     attributionControl: false,
   })
+
+  // FETCH DATA
+
+  // LOAD MARKERS
 
   async function loadMarkers() {
     //prettier-ignore
@@ -34,18 +45,17 @@ function map() {
         let name = columns[0]?.trim().replace(/"/g, '')
         let stringLng = columns[1]?.trim().replace(',', '.').replace(/"/g, '')
         let stringLat = columns[2]?.trim().replace(',', '.').replace(/"/g, '')
-        console.log(`Longitude: ${stringLng}, Latitude: ${stringLat}`)
-        console.log('Type of Longitude:', typeof stringLng)
-        console.log('Type of Latitude:', typeof stringLat)
         if (!stringLng || !stringLat) {
           console.log('Longitude or Latitude is empty or invalid')
         } else {
           lng = parseFloat(stringLng)
           lat = parseFloat(stringLat)
-          console.log('Parsed Longitude:', lng, 'Parsed Latitude:', lat)
+          // console.log(`Longitude: ${stringLng}, Latitude: ${stringLat}`)
+          // console.log('Type of Longitude:', typeof stringLng)
+          // console.log('Type of Latitude:', typeof stringLat)
+          // console.log('Parsed Longitude:', lng, 'Parsed Latitude:', lat)
+          // console.log(`Raw row data: "${row}"`)
         }
-
-        console.log(`Raw row data: "${row}"`)
 
         if (isNaN(lat) || isNaN(lng)) {
           //prettier-ignore
@@ -77,7 +87,7 @@ function map() {
             // Animate the map zooming out to the marker's coordinates
             map.flyTo({
               center: [lng, lat], // Set the center to the marker's location
-              zoom: 18, // Set the zoom level to a low level for zooming out (you can adjust this as needed)
+              zoom: 16, // Set the zoom level to a low level for zooming out (you can adjust this as needed)
               speed: 2, // Animation speed (1 is standard)
               curve: 2, // Animation curve (1 is standard)
               easing(t) {
@@ -93,7 +103,6 @@ function map() {
       console.error('Error loading Google Sheets data:', error)
     }
   }
-  // Load markers on the map
   loadMarkers()
 
   map_wrapper.addEventListener('mouseenter', () => {
@@ -106,14 +115,36 @@ function map() {
     document.body.classList.remove('stop-scrolling')
   })
 
-  // HEADINGS
+  // FLY
 
-  const court_heading = document.querySelectorAll('.court-heading')
-  const court = document.querySelectorAll('.court')
+  function fly(index) {
+    console.log('court')
+    // const courtsArray = Array.from(courts)
+    console.log(index)
+    map.flyTo({
+      center: [-3, 40 + 0.1 * index], // Set the center to the marker's location
+      zoom: 16, // Set the zoom level to a low level for zooming out (you can adjust this as needed)
+      speed: 2, // Animation speed (1 is standard)
+      curve: 2, // Animation curve (1 is standard)
+      easing(t) {
+        return t // Linear easing (you can change it for different effects)
+      },
+    })
+  }
+
+  // INITIAL ANIMATIONS
+
   gsap.to(court_heading, {
     opacity: 1,
     yPercent: -100,
     duration: 1.4,
+  })
+
+  gsap.to(map_wrapper, {
+    opacity: 1,
+    scale: 1,
+    duration: 1.8,
+    ease: 'power2.inOut',
   })
 
   function hoverIn(event) {
@@ -136,9 +167,12 @@ function map() {
     })
   }
 
-  court.forEach((court) => {
+  // EVENT LISTENING
+
+  courts.forEach((court, index) => {
     court.addEventListener('mouseover', hoverIn)
     court.addEventListener('mouseleave', hoverOut)
+    court.addEventListener('click', () => fly(index))
   })
 }
 
