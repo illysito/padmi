@@ -8,6 +8,10 @@ function map() {
   const court_heading = document.querySelectorAll('.court-heading')
   const courts = document.querySelectorAll('.court')
   const map_wrapper = document.querySelector('.map')
+  const names = []
+  const lats = []
+  const longs = []
+  const markers = []
 
   // MAP RENDERING INIT
 
@@ -20,13 +24,9 @@ function map() {
   })
 
   // FETCH DATA
-
-  // LOAD MARKERS
-
-  async function loadMarkers() {
+  async function fetchData() {
     //prettier-ignore
     const url = 'https://docs.google.com/spreadsheets/d/1vrx1C923eENudXx2PKNoUil72SChqlNxk3bscbVd2Y8/gviz/tq?tqx=out:csv'
-
     try {
       const response = await fetch(url)
       const data = await response.text()
@@ -62,48 +62,69 @@ function map() {
           console.warn(`Skipping row ${index + 1}: Invalid lat/lng values`, { name, lng, lat })
           return
         }
-
-        new maplibregl.Marker({
-          element: createCustomImageMarker(), // Function to create an image marker
-        })
-          .setLngLat([lng, lat])
-          .setPopup(
-            new maplibregl.Popup({ className: 'popup', offset: [0, -28] }) // Add custom class
-              .setHTML(`<div class="popup-content">${name}</div>`)
-          )
-          .addTo(map)
-
-        // Function to create an image marker
-        function createCustomImageMarker() {
-          const marker = document.createElement('div')
-          marker.className = 'custom-marker'
-          //prettier-ignore
-          marker.style.backgroundImage = 'url(https://raw.githubusercontent.com/illysito/padmi/main/map_marker.png)'
-          marker.style.width = '30px'
-          marker.style.height = '41px'
-          marker.style.backgroundSize = 'cover'
-
-          marker.addEventListener('click', () => {
-            // Animate the map zooming out to the marker's coordinates
-            map.flyTo({
-              center: [lng, lat], // Set the center to the marker's location
-              zoom: 16, // Set the zoom level to a low level for zooming out (you can adjust this as needed)
-              speed: 2, // Animation speed (1 is standard)
-              curve: 2, // Animation curve (1 is standard)
-              easing(t) {
-                return t // Linear easing (you can change it for different effects)
-              },
-            })
-          })
-
-          return marker
-        }
+        lats[index] = lat
+        longs[index] = lng
+        names[index] = name
       })
     } catch (error) {
       console.error('Error loading Google Sheets data:', error)
     }
   }
-  loadMarkers()
+
+  // LOAD MARKERS
+
+  function loadMarkers() {
+    lats.forEach((lat, i) => {
+      let latitude = lats[i]
+      let longitude = longs[i]
+      // console.log(latitude, longitude)
+      const marker = new maplibregl.Marker({
+        element: createCustomImageMarker(), // Function to create an image marker
+      })
+        .setLngLat([longitude, latitude])
+        .setPopup(
+          new maplibregl.Popup({ className: 'popup', offset: [0, -28] }) // Add custom class
+            .setHTML(`<div class="popup-content">${names[i]}</div>`)
+        )
+        .addTo(map)
+      markers.push(marker)
+      // Function to create an image marker
+      function createCustomImageMarker() {
+        const marker = document.createElement('div')
+        marker.className = 'custom-marker'
+        //prettier-ignore
+        marker.style.backgroundImage = 'url(https://raw.githubusercontent.com/illysito/padmi/main/map_marker.png)'
+        marker.style.width = '30px'
+        marker.style.height = '41px'
+        marker.style.backgroundSize = 'cover'
+
+        marker.addEventListener('click', () => {
+          // Animate the map zooming out to the marker's coordinates
+          map.flyTo({
+            center: [longitude, latitude], // Set the center to the marker's location
+            zoom: 16, // Set the zoom level to a low level for zooming out (you can adjust this as needed)
+            speed: 2, // Animation speed (1 is standard)
+            curve: 2, // Animation curve (1 is standard)
+            easing(t) {
+              return t // Linear easing (you can change it for different effects)
+            },
+          })
+        })
+        return marker
+      }
+    })
+  }
+
+  // ASYNC INITIALIZATION
+  async function init() {
+    await fetchData()
+    // console.log(lats)
+    // console.log(longs)
+    // console.log(markers)
+    loadMarkers()
+  }
+
+  init()
 
   map_wrapper.addEventListener('mouseenter', () => {
     // console.log('scroll should stop')
@@ -118,18 +139,24 @@ function map() {
   // FLY
 
   function fly(index) {
-    console.log('court')
+    markers.forEach((marker) => {
+      marker.getPopup().remove()
+    })
+    // console.log('court')
     // const courtsArray = Array.from(courts)
-    console.log(index)
+    // console.log(index)
     map.flyTo({
-      center: [-3, 40 + 0.1 * index], // Set the center to the marker's location
+      center: [longs[index], lats[index]], // Set the center to the marker's location
       zoom: 16, // Set the zoom level to a low level for zooming out (you can adjust this as needed)
-      speed: 2, // Animation speed (1 is standard)
+      speed: 6, // Animation speed (1 is standard)
       curve: 2, // Animation curve (1 is standard)
       easing(t) {
         return t // Linear easing (you can change it for different effects)
       },
     })
+    if (markers[index]) {
+      markers[index].togglePopup() // Toggles the visibility of the popup
+    }
   }
 
   // INITIAL ANIMATIONS
