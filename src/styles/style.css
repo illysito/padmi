@@ -1,3 +1,8 @@
+body {
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+
 .stop-scrolling {
   height: 100%;
   overflow: hidden;
