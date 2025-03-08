@@ -7,10 +7,10 @@ import buttons from './features/scripts/buttons'
 import hero from './features/scripts/hero'
 import horizontal from './features/scripts/horizontal'
 import map from './features/scripts/map'
+import menu from './features/scripts/menu'
 import nav from './features/scripts/nav'
 import parallax from './features/scripts/parallax'
 import split from './features/scripts/split'
-// import menu from './features/scripts/menu'
 // import mouse from './features/scripts/mouse'
 
 import './styles/style.css'
@@ -20,6 +20,14 @@ const body = document.body
 const world_container = document.querySelector('.world-container')
 const world_2_container = document.querySelector('.world-2-container')
 
+function runGeneralFunctions() {
+  world_2(world_2_container)
+  nav()
+  menu()
+  buttons()
+  // dark_mode()
+}
+
 function runHomeFunctions() {
   // bg_shader()
   // mouse()
@@ -28,24 +36,31 @@ function runHomeFunctions() {
   world(world_container, 0)
   // }
   hero()
-  // menu()
   split()
   parallax()
   bento()
   horizontal()
 }
 
+function runClubFunctions() {
+  console.log('welcome to Padmi Club')
+}
+
 function runWhereFunctions() {
   map()
 }
 
-function runGeneralFunctions() {
-  world_2(world_2_container)
-  nav()
-  buttons()
+function runContactFunctions() {
+  console.log('welcome to Contact')
 }
-// dark_mode()
+
+function runLegalsFunctions() {
+  console.log('welcome to Legals')
+}
 
 runGeneralFunctions()
 if (body.classList.contains('body__home')) runHomeFunctions()
+if (body.classList.contains('body__club')) runClubFunctions()
 if (body.classList.contains('body__where')) runWhereFunctions()
+if (body.classList.contains('body__contact')) runContactFunctions()
+if (body.classList.contains('body__legals')) runLegalsFunctions()

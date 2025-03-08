@@ -5,11 +5,11 @@ import SplitType from 'split-type'
 gsap.registerPlugin(ScrollTrigger)
 
 function nav() {
-  function isDesktop() {
+  function isDesktopOrTablet() {
     //prettier-ignore
-    return window.innerWidth >= 991
+    return window.innerWidth >= 768
   }
-  if (isDesktop()) {
+  if (isDesktopOrTablet()) {
     // CONST
     const nav_container = document.querySelector('.nav-container')
     const button = document.querySelectorAll('.button')
