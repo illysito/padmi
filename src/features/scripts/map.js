@@ -160,10 +160,10 @@ function map() {
     map.flyTo({
       center: [longs[index], lats[index]], // Set the center to the marker's location
       zoom: 16, // Set the zoom level to a low level for zooming out (you can adjust this as needed)
-      speed: 6, // Animation speed (1 is standard)
-      curve: 2, // Animation curve (1 is standard)
-      easing(t) {
-        return t // Linear easing (you can change it for different effects)
+      speed: 1.5, // Animation speed (1 is standard)
+      curve: 1, // Animation curve (1 is standard)
+      easing: (t) => {
+        return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t // A custom easing for smoother start and end
       },
     })
     if (markers[index]) {
