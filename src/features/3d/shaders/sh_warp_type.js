@@ -100,7 +100,7 @@ void main() {
 
   // DIVIDING IN BLOCKS
 
-  float blocks = 12.1;
+  float blocks = 0.1;
   float x = coords.x;
   float y = coords.y;
   x = floor(coords.x * asp * blocks) / (asp * blocks);

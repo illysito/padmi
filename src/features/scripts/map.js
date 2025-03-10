@@ -25,7 +25,7 @@ function map() {
     container: 'map', // ID of your HTML element
     style: `https://api.maptiler.com/maps/5af093ac-6e4a-49cb-b247-bd629a603481/style.json?key=OFwEOATP6EiKKl7TcWZ6`,
     center: [-3.70256, 40.4165], // Longitude, Latitude (Madrid)
-    zoom: 10, // Adjust the zoom level
+    zoom: 2, // Adjust the zoom level
     attributionControl: false,
   })
 

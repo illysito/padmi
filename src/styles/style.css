@@ -10,8 +10,15 @@ body {
 
 .map {
   width: calc(100% + 8px);
-  height: calc(100% + 8px)
-    /* Forces an extra pixel to fill the gap */
+  height: calc(100% + 8px);
+  /* Mask effect */
+  -webkit-mask-image: radial-gradient(closest-side,
+      rgba(0, 0, 0, 1) 50%,
+      rgba(0, 0, 0, 0) 100%);
+
+  mask-image: radial-gradient(closest-side,
+      rgba(0, 0, 0, 1) 50%,
+      rgba(0, 0, 0, 0) 100%);
 }
 
 .popup {

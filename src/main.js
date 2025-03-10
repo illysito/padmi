@@ -7,6 +7,7 @@ import buttons from './features/scripts/buttons'
 import hero from './features/scripts/hero'
 import horizontal from './features/scripts/horizontal'
 import map from './features/scripts/map'
+import map_nav from './features/scripts/map_nav'
 import menu from './features/scripts/menu'
 import nav from './features/scripts/nav'
 import parallax from './features/scripts/parallax'
@@ -48,6 +49,7 @@ function runClubFunctions() {
 
 function runWhereFunctions() {
   map()
+  map_nav()
 }
 
 function runContactFunctions() {
