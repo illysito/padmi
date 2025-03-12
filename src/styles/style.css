@@ -13,12 +13,13 @@ body {
   height: calc(100% + 8px);
   image-rendering: optimizeQuality;
   /* Mask effect */
+  /* 0% is center */
   -webkit-mask-image: radial-gradient(circle,
       rgba(0, 0, 0, 1) 0%,
-      rgba(0, 0, 0, 0.8) 80%);
+      rgba(0, 0, 0, 0.0) 80%);
   mask-image: radial-gradient(circle,
       rgba(0, 0, 0, 1) 0%,
-      rgba(0, 0, 0, 0) 80%);
+      rgba(0, 0, 0, 0.0) 80%);
 }
 
 .popup {
