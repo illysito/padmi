@@ -11,8 +11,8 @@ function map() {
   console.log(isMobile())
   // CONSTANTS
 
-  const court_heading = document.querySelectorAll('.court-heading')
-  const courts = document.querySelectorAll('.court')
+  // const court_heading = document.querySelectorAll('.court-heading')
+  // const courts = document.querySelectorAll('.court')
   const map_wrapper = document.querySelector('.map')
   const names = []
   const lats = []
@@ -24,7 +24,7 @@ function map() {
   const map = new maplibregl.Map({
     container: 'map', // ID of your HTML element
     style: `https://api.maptiler.com/maps/5af093ac-6e4a-49cb-b247-bd629a603481/style.json?key=OFwEOATP6EiKKl7TcWZ6`,
-    center: [-3.70256, 40.4165], // Longitude, Latitude (Madrid)
+    center: [-15, 32], // Longitude, Latitude (Madrid)
     zoom: 2, // Adjust the zoom level
     attributionControl: false,
   })
@@ -99,16 +99,20 @@ function map() {
         const marker = document.createElement('div')
         marker.className = 'custom-marker'
         //prettier-ignore
-        marker.style.backgroundImage = 'url(https://raw.githubusercontent.com/illysito/padmi/main/map_marker.png)'
-        marker.style.width = '30px'
-        marker.style.height = '41px'
-        marker.style.backgroundSize = 'cover'
+        // marker.style.backgroundImage = 'url(https://raw.githubusercontent.com/illysito/padmi/main/map_marker.png)'
+        // marker.style.width = '30px'
+        // marker.style.height = '41px'
+        // marker.style.backgroundSize = 'cover'
+        marker.style.width = '0.8em'
+        marker.style.height = '0.8em'
+        marker.style.borderRadius = '0.8em'
+        marker.style.backgroundColor = '#ceff05bb'
 
         marker.addEventListener('click', () => {
           // Animate the map zooming out to the marker's coordinates
           map.flyTo({
             center: [longitude, latitude], // Set the center to the marker's location
-            zoom: 16, // Set the zoom level to a low level for zooming out (you can adjust this as needed)
+            zoom: 10, // Set the zoom level to a low level for zooming out (you can adjust this as needed)
             speed: 2, // Animation speed (1 is standard)
             curve: 2, // Animation curve (1 is standard)
             easing(t) {
@@ -144,40 +148,40 @@ function map() {
 
   // FLY
 
-  function fly(index) {
-    if (isMobile()) {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth', // Optional: adds smooth scrolling
-      })
-    }
-    markers.forEach((marker) => {
-      marker.getPopup().remove()
-    })
-    // console.log('court')
-    // const courtsArray = Array.from(courts)
-    // console.log(index)
-    map.flyTo({
-      center: [longs[index], lats[index]], // Set the center to the marker's location
-      zoom: 16, // Set the zoom level to a low level for zooming out (you can adjust this as needed)
-      speed: 1.5, // Animation speed (1 is standard)
-      curve: 1, // Animation curve (1 is standard)
-      easing: (t) => {
-        return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t // A custom easing for smoother start and end
-      },
-    })
-    if (markers[index]) {
-      markers[index].togglePopup() // Toggles the visibility of the popup
-    }
-  }
+  // function fly(index) {
+  //   if (isMobile()) {
+  //     window.scrollTo({
+  //       top: 0,
+  //       behavior: 'smooth', // Optional: adds smooth scrolling
+  //     })
+  //   }
+  //   markers.forEach((marker) => {
+  //     marker.getPopup().remove()
+  //   })
+  //   // console.log('court')
+  //   // const courtsArray = Array.from(courts)
+  //   // console.log(index)
+  //   map.flyTo({
+  //     center: [longs[index], lats[index]], // Set the center to the marker's location
+  //     zoom: 16, // Set the zoom level to a low level for zooming out (you can adjust this as needed)
+  //     speed: 1.5, // Animation speed (1 is standard)
+  //     curve: 1, // Animation curve (1 is standard)
+  //     easing: (t) => {
+  //       return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t // A custom easing for smoother start and end
+  //     },
+  //   })
+  //   if (markers[index]) {
+  //     markers[index].togglePopup() // Toggles the visibility of the popup
+  //   }
+  // }
 
-  // INITIAL ANIMATIONS
+  // // INITIAL ANIMATIONS
 
-  gsap.to(court_heading, {
-    opacity: 1,
-    yPercent: -100,
-    duration: 1.4,
-  })
+  // gsap.to(court_heading, {
+  //   opacity: 1,
+  //   yPercent: -100,
+  //   duration: 1.4,
+  // })
 
   gsap.to(map_wrapper, {
     opacity: 1,
@@ -186,33 +190,33 @@ function map() {
     ease: 'power2.inOut',
   })
 
-  function hoverIn(event) {
-    const wrapper = event.currentTarget
-    const h = wrapper.firstElementChild
-    const hidden_h = h.nextElementSibling
-    gsap.to([h, hidden_h], {
-      yPercent: -200,
-      duration: 0.4,
-    })
-  }
+  // function hoverIn(event) {
+  //   const wrapper = event.currentTarget
+  //   const h = wrapper.firstElementChild
+  //   const hidden_h = h.nextElementSibling
+  //   gsap.to([h, hidden_h], {
+  //     yPercent: -200,
+  //     duration: 0.4,
+  //   })
+  // }
 
-  function hoverOut(event) {
-    const wrapper = event.currentTarget
-    const h = wrapper.firstElementChild
-    const hidden_h = h.nextElementSibling
-    gsap.to([h, hidden_h], {
-      yPercent: -100,
-      duration: 0.4,
-    })
-  }
+  // function hoverOut(event) {
+  //   const wrapper = event.currentTarget
+  //   const h = wrapper.firstElementChild
+  //   const hidden_h = h.nextElementSibling
+  //   gsap.to([h, hidden_h], {
+  //     yPercent: -100,
+  //     duration: 0.4,
+  //   })
+  // }
 
   // EVENT LISTENING
 
-  courts.forEach((court, index) => {
-    court.addEventListener('mouseover', hoverIn)
-    court.addEventListener('mouseleave', hoverOut)
-    court.addEventListener('click', () => fly(index))
-  })
+  // courts.forEach((court, index) => {
+  //   court.addEventListener('mouseover', hoverIn)
+  //   court.addEventListener('mouseleave', hoverOut)
+  //   court.addEventListener('click', () => fly(index))
+  // })
 }
 
 export default map

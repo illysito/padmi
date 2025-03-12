@@ -1,95 +1,104 @@
 // import gsap from 'gsap'
 //prettier-ignore
 import {
+  Mesh,
   MeshPhysicalMaterial,
   // DoubleSide,
+  // Vector3,
+  Group,
   Color,
 } from 'three'
-import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js'
+// import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js'
+import { STLLoader } from 'three/examples/jsm/loaders/STLLoader'
 
 function createObject() {
   return new Promise((resolve) => {
-    const loader = new OBJLoader()
+    const loader = new STLLoader()
     //prettier-ignore
-    // const url = 'https://raw.githubusercontent.com/illysito/padmi/refs/heads/main/objPaddle.obj' // PADDLE
-    const url = 'https://raw.githubusercontent.com/illysito/padmi/refs/heads/main/iPhone_6.obj' // OBJECT
+    const url = 'https://raw.githubusercontent.com/illysito/cosas/1d2b2a9851bdf7a1a07822c77e7cbe95278bc9a4/minitimple.stl' // OBJECT
 
-    loader.load(url, (paddle) => {
-      paddle.traverse((child) => {
-        if (child.isMesh) {
-          // Apply material to each mesh in the model
-          child.material = new MeshPhysicalMaterial({
-            color: new Color(0xffffff), // Keep it white or very light
-            // emissive: new Color(0xfffbf6), // No emissive for glass
-            // emissiveIntensity: 0.1, // Emissive isn't needed for glass
-
-            transmission: 1.0, // Ensures light passes through
-            thickness: 0.2, // Standard thickness (adjust if needed)
-            ior: 0.5, // Real glass has an IOR of ~1.5
-            roughness: 0.0, // Lower = shinier glass
-            metalness: 0.0, // Glass isn't metallic
-            reflectivity: 0.4, // High reflectivity for a glossy effect
-
-            // side: DoubleSide, // Ensure both sides render properly
-            // transparent: false, // Essential for transmission to work
-          })
-        }
+    loader.load(url, (geometry) => {
+      const material = new MeshPhysicalMaterial({
+        color: new Color(0xffffff), // Keep it white or very light
+        emissive: new Color(0x5511f6), // No emissive for glass
+        // emissive: new Color(0xffffff), // No emissive for glass
+        emissiveIntensity: 1.5, // Emissive isn't needed for glass
+        transmission: 1.0,
+        thickness: 2.0,
+        ior: 1.5,
+        roughness: 0.013,
+        metalness: 0.0,
+        reflectivity: 0.4,
       })
-      // INITIAL SET UP
 
-      // SCALE
-      const scale = 10
-      paddle.scale.set(scale, scale, scale)
+      const timple = new Mesh(geometry, material)
+
+      // INITIAL SET UP
+      const scale = 0.0075
+      const group = new Group()
+      group.add(timple)
+      group.scale.set(scale, scale, scale)
+
+      group.scale.set(scale, scale, scale)
+      group.rotation.x = -Math.PI / 2
+
+      geometry.computeBoundingBox()
+      geometry.computeVertexNormals()
+      // const center = geometry.boundingBox.getCenter(new Vector3())
+      // geometry.center()
+      // timple.position.set(-center.x, -center.y, -center.z + 0.5)
 
       // POSITION
-      paddle.position.z = 5
+      group.position.z = 2
+      group.position.y = -2
+      group.position.x = -1
 
+      resolve(group)
       // ROTATION
       let toRad = Math.PI / 180
-      let lastMouseX = 0
-      // These will track the rotational speed in both axes
-      let rotationalSpeedX = 0
+      // let lastMouseX = 0
+      // // These will track the rotational speed in both axes
+      // let rotationalSpeedX = 0
 
-      // Constants for acceleration, deceleration, and damping
-      const maxSpeed = 0.05 // Maximum rotational speed
-      const acceleration = 0.25 // How quickly the object accelerates to its maximum speed
-      const damping = 0.9 // How quickly it slows down when the mouse stops moving
+      // // Constants for acceleration, deceleration, and damping
+      // const maxSpeed = 0.05 // Maximum rotational speed
+      // const acceleration = 0.25 // How quickly the object accelerates to its maximum speed
+      // const damping = 0.9 // How quickly it slows down when the mouse stops moving
 
-      let paddleRotationX = 0
+      // let paddleRotationX = 0
 
-      // LOOP
+      // // LOOP
       let counter = 0
-      paddle.tick = (delta) => {
+      group.tick = (delta) => {
         counter += 0.5 * delta
-        paddle.rotation.x = -90 * toRad + Math.sin(counter) * 20 * toRad
-        paddle.rotation.y = -60 * toRad + Math.cos(counter) * 20 * toRad
-        paddle.rotation.z = paddleRotationX // Apply rotation to X axis
+        group.rotation.x = -90 * toRad + Math.sin(counter) * 20 * toRad
+        group.rotation.y = -60 * toRad + Math.cos(counter) * 20 * toRad
+        group.rotation.z = -30 * toRad + Math.cos(counter) * 20 * toRad
+        // // Damping effect applied even if mouse is moving
+        // rotationalSpeedX *= damping
 
-        // Damping effect applied even if mouse is moving
-        rotationalSpeedX *= damping
-
-        // Smooth update of rotations with rotational speed
-        paddleRotationX += rotationalSpeedX
+        // // Smooth update of rotations with rotational speed
+        // paddleRotationX += rotationalSpeedX
       }
 
       // ANIMATION
-      window.addEventListener('mousemove', (event) => {
-        const currentMouseX = event.clientX
+      // window.addEventListener('mousemove', (event) => {
+      //   const currentMouseX = event.clientX
 
-        // Calculate mouse movement (velocity)
-        const deltaX = currentMouseX - lastMouseX
+      //   // Calculate mouse movement (velocity)
+      //   const deltaX = currentMouseX - lastMouseX
 
-        // If there is movement, update rotational speed
-        if (Math.abs(deltaX) > 6) {
-          rotationalSpeedX += deltaX * acceleration
-          // Cap the rotational speed to a maximum value
-          // prettier-ignore
-          rotationalSpeedX = Math.min(Math.max(rotationalSpeedX, -maxSpeed), maxSpeed)
-        }
+      //   // If there is movement, update rotational speed
+      //   if (Math.abs(deltaX) > 6) {
+      //     rotationalSpeedX += deltaX * acceleration
+      //     // Cap the rotational speed to a maximum value
+      //     // prettier-ignore
+      //     rotationalSpeedX = Math.min(Math.max(rotationalSpeedX, -maxSpeed), maxSpeed)
+      //   }
 
-        // Update last mouse position
-        lastMouseX = currentMouseX
-      })
+      //   // Update last mouse position
+      //   lastMouseX = currentMouseX
+      // })
 
       // window.addEventListener('scroll', () => {
       //   //prettier-ignore
@@ -98,7 +107,7 @@ function createObject() {
       //   paddle.position.y -= window.scrollY * toRad * scale
       // })
       // Resolve the promise with the loaded group
-      resolve(paddle)
+      // resolve(timple)
     })
   })
 }
