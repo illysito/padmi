@@ -9,6 +9,7 @@ function map() {
     return window.innerWidth <= 568
   }
   console.log(isMobile())
+
   // CONSTANTS
 
   // const court_heading = document.querySelectorAll('.court-heading')
@@ -25,11 +26,12 @@ function map() {
     container: 'map', // ID of your HTML element
     style: `https://api.maptiler.com/maps/5af093ac-6e4a-49cb-b247-bd629a603481/style.json?key=OFwEOATP6EiKKl7TcWZ6`,
     center: [-15, 32], // Longitude, Latitude (Madrid)
-    zoom: 2, // Adjust the zoom level
+    zoom: 1.2, // Adjust the zoom level
     attributionControl: false,
   })
 
   // FETCH DATA
+
   async function fetchData() {
     //prettier-ignore
     const url = 'https://docs.google.com/spreadsheets/d/1vrx1C923eENudXx2PKNoUil72SChqlNxk3bscbVd2Y8/gviz/tq?tqx=out:csv'
@@ -126,6 +128,7 @@ function map() {
   }
 
   // ASYNC INITIALIZATION
+
   async function init() {
     await fetchData()
     // console.log(lats)
@@ -133,6 +136,15 @@ function map() {
     // console.log(markers)
     loadMarkers()
   }
+
+  // FADE IN
+
+  gsap.to(map_wrapper, {
+    opacity: 1,
+    scale: 1,
+    duration: 1.8,
+    ease: 'power2.inOut',
+  })
 
   init()
 
@@ -148,32 +160,32 @@ function map() {
 
   // FLY
 
-  // function fly(index) {
-  //   if (isMobile()) {
-  //     window.scrollTo({
-  //       top: 0,
-  //       behavior: 'smooth', // Optional: adds smooth scrolling
-  //     })
-  //   }
-  //   markers.forEach((marker) => {
-  //     marker.getPopup().remove()
-  //   })
-  //   // console.log('court')
-  //   // const courtsArray = Array.from(courts)
-  //   // console.log(index)
-  //   map.flyTo({
-  //     center: [longs[index], lats[index]], // Set the center to the marker's location
-  //     zoom: 16, // Set the zoom level to a low level for zooming out (you can adjust this as needed)
-  //     speed: 1.5, // Animation speed (1 is standard)
-  //     curve: 1, // Animation curve (1 is standard)
-  //     easing: (t) => {
-  //       return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t // A custom easing for smoother start and end
-  //     },
-  //   })
-  //   if (markers[index]) {
-  //     markers[index].togglePopup() // Toggles the visibility of the popup
-  //   }
-  // }
+  function fly(index) {
+    if (isMobile()) {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth', // Optional: adds smooth scrolling
+      })
+    }
+    markers.forEach((marker) => {
+      marker.getPopup().remove()
+    })
+    // console.log('court')
+    // const courtsArray = Array.from(courts)
+    // console.log(index)
+    map.flyTo({
+      center: [longs[index], lats[index]], // Set the center to the marker's location
+      zoom: 11, // Set the zoom level to a low level for zooming out (you can adjust this as needed)
+      speed: 1.5, // Animation speed (1 is standard)
+      curve: 1, // Animation curve (1 is standard)
+      easing: (t) => {
+        return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t // A custom easing for smoother start and end
+      },
+    })
+    if (markers[index]) {
+      markers[index].togglePopup() // Toggles the visibility of the popup
+    }
+  }
 
   // // INITIAL ANIMATIONS
 
@@ -182,13 +194,6 @@ function map() {
   //   yPercent: -100,
   //   duration: 1.4,
   // })
-
-  gsap.to(map_wrapper, {
-    opacity: 1,
-    scale: 1,
-    duration: 1.8,
-    ease: 'power2.inOut',
-  })
 
   // function hoverIn(event) {
   //   const wrapper = event.currentTarget
@@ -211,12 +216,12 @@ function map() {
   // }
 
   // EVENT LISTENING
-
-  // courts.forEach((court, index) => {
-  //   court.addEventListener('mouseover', hoverIn)
-  //   court.addEventListener('mouseleave', hoverOut)
-  //   court.addEventListener('click', () => fly(index))
-  // })
+  const cards = document.querySelectorAll('.city-card')
+  cards.forEach((card, index) => {
+    // court.addEventListener('mouseover', hoverIn)
+    // court.addEventListener('mouseleave', hoverOut)
+    card.addEventListener('click', () => fly(index))
+  })
 }
 
 export default map
