@@ -11,14 +11,13 @@ body {
 .map {
   width: calc(100% + 8px);
   height: calc(100% + 8px);
+  image-rendering: optimizeQuality;
   /* Mask effect */
   -webkit-mask-image: radial-gradient(circle,
       rgba(0, 0, 0, 1) 0%,
-      rgba(0, 0, 0, 0.5) 35%,
-      rgba(0, 0, 0, 0.1) 80%);
+      rgba(0, 0, 0, 0.8) 80%);
   mask-image: radial-gradient(circle,
       rgba(0, 0, 0, 1) 0%,
-      rgba(0, 0, 0, 0.5) 35%,
       rgba(0, 0, 0, 0) 80%);
 }
 
@@ -133,7 +132,6 @@ body.light-mode .nav-container {
   backdrop-filter: hue-rotate(180deg) blur(15px);
   transition: background-color 0.8s ease;
 }
-
 
 /* Text */
 body.light-mode .is--button-text,
