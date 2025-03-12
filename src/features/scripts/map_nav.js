@@ -30,8 +30,8 @@ function map_nav() {
     if (isCollapsed) {
       // EXPANDING
       //prettier-ignore
-      const toCollapse = document.querySelectorAll('.city-card, .map-h, .map-coords, .map-p, .map-img')
-      toCollapse.forEach((el) => el.classList.add('is--collapsed'))
+      // const toCollapse = document.querySelectorAll('.city-card, .map-h, .map-coords, .map-p, .map-img')
+      // toCollapse.forEach((el) => el.classList.add('is--collapsed'))
       console.log(sH)
 
       card.classList.remove('is--collapsed') // Make content visible
