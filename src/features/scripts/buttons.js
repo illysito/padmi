@@ -21,7 +21,7 @@ function buttons() {
       })
 
       gsap.to(splitText.chars, {
-        yPercent: -100,
+        yPercent: -102,
         color: '#cbcbcd',
         duration: 0.4,
         ease: 'power1.out',

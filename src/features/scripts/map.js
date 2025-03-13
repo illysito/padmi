@@ -19,6 +19,7 @@ function map() {
   const lats = []
   const longs = []
   const markers = []
+  let clicks = []
 
   // MAP RENDERING INIT
 
@@ -131,6 +132,8 @@ function map() {
 
   async function init() {
     await fetchData()
+    clicks = new Array(names.length).fill(false)
+    console.log(clicks)
     // console.log(lats)
     // console.log(longs)
     // console.log(markers)
@@ -161,29 +164,35 @@ function map() {
   // FLY
 
   function fly(index) {
-    if (isMobile()) {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth', // Optional: adds smooth scrolling
+    if (clicks[index]) {
+      clicks[index] = !clicks[index]
+      return
+    } else {
+      if (isMobile()) {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth', // Optional: adds smooth scrolling
+        })
+      }
+      markers.forEach((marker) => {
+        marker.getPopup().remove()
       })
-    }
-    markers.forEach((marker) => {
-      marker.getPopup().remove()
-    })
-    // console.log('court')
-    // const courtsArray = Array.from(courts)
-    // console.log(index)
-    map.flyTo({
-      center: [longs[index], lats[index]], // Set the center to the marker's location
-      zoom: 11, // Set the zoom level to a low level for zooming out (you can adjust this as needed)
-      speed: 1.5, // Animation speed (1 is standard)
-      curve: 1, // Animation curve (1 is standard)
-      easing: (t) => {
-        return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t // A custom easing for smoother start and end
-      },
-    })
-    if (markers[index]) {
-      markers[index].togglePopup() // Toggles the visibility of the popup
+      // console.log('court')
+      // const courtsArray = Array.from(courts)
+      // console.log(index)
+      map.flyTo({
+        center: [longs[index], lats[index]], // Set the center to the marker's location
+        zoom: 11, // Set the zoom level to a low level for zooming out (you can adjust this as needed)
+        speed: 1.5, // Animation speed (1 is standard)
+        curve: 1, // Animation curve (1 is standard)
+        easing: (t) => {
+          return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t // A custom easing for smoother start and end
+        },
+      })
+      if (markers[index]) {
+        markers[index].togglePopup() // Toggles the visibility of the popup
+      }
+      clicks[index] = !clicks[index]
     }
   }
 
