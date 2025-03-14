@@ -8,7 +8,7 @@ import { CanvasTexture, ShaderMaterial, PlaneGeometry, Mesh } from 'three'
 import { color_shift_frag, color_shift_vertex } from '../shaders/sh_color_shift.js'
 import { warp_type_frag, warp_type_vertex } from '../shaders/sh_warp_type.js'
 
-async function createPlane(shader_index) {
+async function createPlane() {
   async function updateCanvasTexture(template) {
     //prettier-ignore
     // console.log(isLightMode)
@@ -64,9 +64,9 @@ async function createPlane(shader_index) {
     u_aspect: { value: [canvasW, canvasH] },
   }
 
-  const fragmentShader = frag_shaders[shader_index]
+  const fragmentShader = frag_shaders[0]
 
-  const vertexShader = vert_shaders[shader_index]
+  const vertexShader = vert_shaders[0]
 
   const material = new ShaderMaterial({
     uniforms,

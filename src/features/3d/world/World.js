@@ -8,6 +8,7 @@ import { createPaddle } from '../components/paddle.js'
 import { createPlane } from '../components/plane.js'
 import { createLight } from '../components/point_light.js'
 import { createScene } from '../components/scene.js'
+import { createStarfield } from '../components/starfield.js'
 import { createText } from '../components/text.js'
 import { Loop } from '../systems/Loop.js'
 import { createRenderer } from '../systems/Renderer.js'
@@ -20,24 +21,27 @@ import { Resizer } from '../systems/Resizer.js'
 
 class World {
   // 1. Create an instance of the World app
-  constructor(container, shader_index) {
+  constructor(container, index) {
     this.camera = createCamera()
     this.scene = createScene()
     this.renderer = createRenderer()
     this.loop = new Loop(this.camera, this.scene, this.renderer)
-    this.shader_index = shader_index
+    this.index = index
     // adding canvas element to the webflow container
     container.append(this.renderer.domElement)
-    //prettier-ignore
 
     // INITS!!!!!
-    // this.initGradPlane()
-    this.initPlane()
-    // this.initText()
-    // this.initBall()
-    this.initPaddle()
-    // this.initObject()
-    this.initLights()
+    if (index == 0) {
+      // this.initGradPlane()
+      this.initPlane()
+      // this.initText()
+      // this.initBall()
+      this.initPaddle()
+      // this.initObject()
+      this.initLights()
+    } else if (index == 1) {
+      this.initStarfield()
+    }
 
     //prettier-ignore
     const resizer = new Resizer(container, this.camera, this.renderer)
@@ -53,7 +57,7 @@ class World {
   // }
 
   async initPlane() {
-    const plane = await createPlane(this.shader_index) // Await the result of createText
+    const plane = await createPlane() // Await the result of createText
     this.scene.add(plane)
     this.loop.updatables.push(plane) // Add the loaded text to the scene
     this.render()
@@ -88,6 +92,13 @@ class World {
     const type = await createText('Play smarter.', 0, 0, 0)
     this.scene.add(type)
     // loop.updatables.push(type)
+  }
+
+  initStarfield() {
+    const starfield = createStarfield()
+    this.scene.add(starfield)
+    this.loop.updatables.push(starfield)
+    this.render()
   }
 
   initLights() {

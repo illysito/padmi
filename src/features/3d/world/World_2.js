@@ -21,6 +21,7 @@ class World_2 {
     container.append(this.renderer.domElement)
 
     this.initGradPlane()
+    // this.initStarfield()
     console.log('plane started!')
 
     const resizer = new Resizer(container, this.camera, this.renderer)

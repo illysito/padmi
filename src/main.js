@@ -20,6 +20,7 @@ import './styles/style.css'
 const body = document.body
 const world_container = document.querySelector('.world-container')
 const world_2_container = document.querySelector('.world-2-container')
+const particles_container = document.querySelector('.particles-container')
 
 function runGeneralFunctions() {
   world_2(world_2_container)
@@ -34,7 +35,7 @@ function runHomeFunctions() {
   // mouse()
   console.log('hey!')
   // if (world_container) {
-  world(world_container, 0)
+  world(world_container, 0) // INDEX 0 --> Paddle & Type
   // }
   hero()
   split()
@@ -54,6 +55,7 @@ function runWhereFunctions() {
 
 function runContactFunctions() {
   console.log('welcome to Contact')
+  world(particles_container, 1) // INDEX 1 --> Particles
 }
 
 function runLegalsFunctions() {
