@@ -37,7 +37,7 @@ function createGradPlane() {
   mesh.position.y = 0.1
 
   mesh.tick = (delta) => {
-    uniforms.u_time.value += 0.05 * delta
+    uniforms.u_time.value = (uniforms.u_time.value + 0.05 * delta) % 10000
     // console.log('ticking' + uniforms.u_time)
   }
 

@@ -60,6 +60,8 @@ async function createPlane() {
     u_mouseX: { value: 0.0 },
     u_mouseY: { value: 0.0 },
     u_prevMouse: { value: prevMouse },
+    u_velocityX: { value: 0.0 },
+    u_velocityY: { value: 0.0 },
     u_texture: { value: texture },
     u_aspect: { value: [canvasW, canvasH] },
   }
@@ -111,6 +113,8 @@ async function createPlane() {
   document.addEventListener('darkModeToggled', handleModes)
 
   let ticking = false
+  let prevMouseX = 0
+  let prevMouseY = 0
   window.addEventListener('mousemove', (event) => {
     if (!ticking) {
       requestAnimationFrame(() => {
@@ -118,18 +122,18 @@ async function createPlane() {
         const mouseX = gsap.utils.mapRange(0, window.innerWidth, 0.0, 1.0, event.clientX)
         //prettier-ignore
         const mouseY = gsap.utils.mapRange(0, window.innerHeight, 0.0, 1.0, event.pageY)
-
-        const inertiaFactor = 1
-        //prettier-ignore
-        const inertiaMouseX = gsap.utils.interpolate(prevMouse.x, mouseX, inertiaFactor)
-        //prettier-ignore
-        const inertiaMouseY = gsap.utils.interpolate(prevMouse.y, mouseY, inertiaFactor)
-
-        uniforms.u_prevMouse.value.set(inertiaMouseX, inertiaMouseY)
-        uniforms.u_mouseX.value = inertiaMouseX
-        uniforms.u_mouseY.value = inertiaMouseY
-
-        prevMouse.set(inertiaMouseX, inertiaMouseY)
+        // Store previous values before updating
+        const velocityX = mouseX - prevMouseX
+        const velocityY = mouseY - prevMouseY
+        uniforms.u_prevMouse.value.set(prevMouseX, prevMouseY)
+        // Update current values
+        uniforms.u_mouseX.value = mouseX
+        uniforms.u_mouseY.value = mouseY
+        uniforms.u_velocityX.value = velocityX
+        uniforms.u_velocityY.value = velocityY
+        // Set previous values for the next event trigger
+        prevMouseX = mouseX
+        prevMouseY = mouseY
 
         ticking = false
       })
