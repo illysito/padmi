@@ -131,13 +131,17 @@ function createStarfield() {
 
   mesh.renderOrder = 999
   let direction = 1
+  let counter = 0
   mesh.tick = (delta) => {
+    counter++
     uniforms.u_time.value = clock.getElapsedTime()
     mesh.position.z += delta * mouseY * direction * 0.5
+    mesh.position.x = 0.1 * Math.sin(0.01 * counter)
+    mesh.position.y = 0.1 * Math.cos(0.01 * counter)
     // mesh.rotation.y = 0.25 * mouseX
-    mesh.rotation.y += delta * mouseX * 0.025
+    mesh.rotation.y += delta * mouseX * 0.01
     // mesh.rotation.x = -0.1 * mouseY
-    mesh.rotation.x -= delta * mouseY * 0.025
+    mesh.rotation.x -= delta * mouseY * 0.0125
     // mesh.position.x += delta * mouseX
     if (mesh.position.z >= 0) {
       direction = -1
