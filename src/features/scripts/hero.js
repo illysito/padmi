@@ -5,14 +5,13 @@ import SplitType from 'split-type'
 gsap.registerPlugin(ScrollTrigger)
 
 function hero() {
-  function isDesktop() {
-    //prettier-ignore
-    return window.innerWidth >= 991
+  function isDesktopOrTablet() {
+    return window.innerWidth >= 768
   }
   // ELEMENTS
-  if (isDesktop()) {
+  if (isDesktopOrTablet()) {
     const h1 = document.querySelectorAll('.h1')
-    const h2 = document.querySelectorAll('.h2')
+    // const h2 = document.querySelectorAll('.h2')
     const hero = document.querySelector('.hero')
     const hero_section = document.querySelector('.scene__section')
     // const nav_container = document.querySelector('.nav-container')
@@ -28,7 +27,7 @@ function hero() {
     // SPLIT
     const splitClaim = new SplitType(claim, { types: 'lines' })
     // const splitH1 = new SplitType(h1, { types: 'chars' })
-    const splitH2 = new SplitType(h2, { types: 'chars' })
+    // const splitH2 = new SplitType(h2, { types: 'chars' })
 
     splitClaim.lines.forEach((line) => {
       const wrapper = document.createElement('div')
@@ -64,11 +63,11 @@ function hero() {
       ease: 'power3.out',
     })
 
-    gsap.to(splitH2.chars, {
-      yPercent: 100,
-      duration: 0.8,
-      stagger: 0.1,
-    })
+    // gsap.to(splitH2.chars, {
+    //   yPercent: 100,
+    //   duration: 0.8,
+    //   stagger: 0.1,
+    // })
     // INTRO ANIMATION
     // gsap.to(nav_container, {
     //   opacity: 1,
@@ -101,19 +100,19 @@ function hero() {
       },
     })
 
-    gsap.to(claim, {
-      scale: 1,
-      opacity: 1,
-      duration: 1.5,
-      ease: 'power3.inOut',
-    })
+    // gsap.to(claim, {
+    //   scale: 1,
+    //   opacity: 1,
+    //   duration: 1.5,
+    //   ease: 'power3.inOut',
+    // })
 
-    gsap.from(splitClaim.lines, {
-      yPercent: 100,
-      duration: 1.8,
-      ease: 'power3.inOut',
-      stagger: 0.2,
-    })
+    // gsap.from(splitClaim.lines, {
+    //   yPercent: 100,
+    //   duration: 1.8,
+    //   ease: 'power3.inOut',
+    //   stagger: 0.2,
+    // })
 
     // gsap.to(button, {
     //   scale: 1,

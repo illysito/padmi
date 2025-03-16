@@ -5,21 +5,31 @@ function world(container, index) {
   let hasClaimBeenObserved = false // Track if claim has been observed
   let lastScrollY = window.scrollY // Track the last scroll position
 
-  function isDesktop() {
+  function isDesktopOrTablet() {
     //prettier-ignore
-    return window.innerWidth >= 991
+    return window.innerWidth >= 768
   }
   // 1. Create an instance of the World app
-  if (isDesktop()) {
+  if (isDesktopOrTablet()) {
     const world = new World(container, index)
+    const hamburger = document.querySelector('.ham-button')
+    const back_button = document.querySelector('.back-wrapper')
     // 2. Render the scene
     world.start()
     if (index == 0) {
+      // STOP LOOP WHEN MENU IS CLICKED
+      hamburger.addEventListener('click', () => {
+        setTimeout(() => world.stop(), 600)
+      })
+      back_button.addEventListener('click', () => {
+        setTimeout(() => world.start(), 800)
+      })
+
+      // STOP LOOP WHEN UNOBSERVED (INTERSECTION OBSERVER METHOD)
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
-              console.log('ya!')
               if (!hasClaimBeenObserved) {
                 world.stop() // Stop the loop when claim is observed
                 hasClaimBeenObserved = true
@@ -33,7 +43,7 @@ function world(container, index) {
             }
           })
         },
-        { threshold: 0.8 } // Adjust threshold for sensitivity
+        { threshold: 0.25 } // Adjust threshold for sensitivity
       )
 
       observer.observe(trigger)

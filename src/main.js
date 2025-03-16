@@ -10,7 +10,7 @@ import map from './features/scripts/map'
 import map_nav from './features/scripts/map_nav'
 import menu from './features/scripts/menu'
 import nav from './features/scripts/nav'
-import parallax from './features/scripts/parallax'
+// import parallax from './features/scripts/parallax'
 import split from './features/scripts/split'
 // import mouse from './features/scripts/mouse'
 
@@ -39,7 +39,7 @@ function runHomeFunctions() {
   // }
   hero()
   split()
-  parallax()
+  // parallax()
   bento()
   horizontal()
 }
@@ -51,10 +51,11 @@ function runClubFunctions() {
 function runWhereFunctions() {
   map()
   map_nav()
+  console.log('Welcome to Map')
+  // world(particles_container, 1) // INDEX 1 --> Particles
 }
 
 function runContactFunctions() {
-  console.log('welcome to Contact')
   world(particles_container, 1) // INDEX 1 --> Particles
 }
 

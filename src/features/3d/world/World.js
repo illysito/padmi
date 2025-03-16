@@ -39,6 +39,7 @@ class World {
       this.initPaddle()
       // this.initObject()
       this.initLights()
+      this.initStarfield()
     } else if (index == 1) {
       this.initStarfield()
     }

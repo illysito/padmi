@@ -5,6 +5,8 @@ import { gsap } from 'gsap'
 
 function map_nav() {
   const city_card = document.querySelectorAll('.city-card')
+  const legend = document.querySelector('.legend-card')
+  const hover_duration = 0.6
   // const map_h = document.querySelectorAll('.map-h')
   // const map_coords = document.querySelectorAll('.map-coords')
   // const map_p = document.querySelectorAll('.map-p')
@@ -16,6 +18,17 @@ function map_nav() {
     if (c.classList.contains('is--collapsed')) {
       return (sH = c.scrollHeight)
     }
+  })
+
+  gsap.to(city_card, {
+    opacity: 1,
+    duration: 0.8,
+    stagger: 0.065,
+  })
+
+  gsap.to(legend, {
+    opacity: 1,
+    duration: 1.2,
   })
 
   function handleCard(event) {
@@ -91,7 +104,6 @@ function map_nav() {
       eH = endHeight
 
       // Reset height and animate
-
       card.style.height = `${sH}px`
       elementsToToggle.forEach((el) => {
         gsap.to(el, {
@@ -181,6 +193,32 @@ function map_nav() {
 
   city_card.forEach((w) => {
     w.addEventListener('click', handleCard)
+    w.addEventListener('mouseover', (event) => {
+      const card = event.currentTarget
+      gsap.to(card, {
+        backgroundColor: '#8b81e444',
+        duration: hover_duration - 0.2,
+      })
+    })
+    w.addEventListener('mouseleave', (event) => {
+      const card = event.currentTarget
+      gsap.to(card, {
+        backgroundColor: '#ffffff00',
+        duration: hover_duration,
+      })
+    })
+  })
+  legend.addEventListener('mouseover', () => {
+    gsap.to(legend, {
+      backgroundColor: '#8b81e412',
+      duration: hover_duration - 0.2,
+    })
+  })
+  legend.addEventListener('mouseleave', () => {
+    gsap.to(legend, {
+      backgroundColor: '#ffffff00',
+      duration: hover_duration,
+    })
   })
 }
 

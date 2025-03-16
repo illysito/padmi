@@ -3,6 +3,10 @@ body {
   outline: none;
 }
 
+.particles-container {
+  pointer-events: none;
+}
+
 .stop-scrolling {
   height: 100%;
   overflow: hidden;
