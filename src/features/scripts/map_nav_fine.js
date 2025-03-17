@@ -3,7 +3,7 @@ import { gsap } from 'gsap'
 
 // gsap.registerPlugin(ScrollTrigger)
 
-function map_nav(clubs, courts, names) {
+function map_nav(clubs, courts, names, lats, longs) {
   const card = document.querySelector('.sity-card')
   // const city_cards = document.querySelectorAll('.sity-card-element')
   // const city_cards_array = Array.from(city_cards)
@@ -22,7 +22,7 @@ function map_nav(clubs, courts, names) {
   const court_h = document.querySelector('.is--court')
   const info_wraper = document.querySelector('.sity-info-wrapper')
   const heading = document.querySelector('.sity-heading')
-  // const coords = document.querySelector('.sity-coords')
+  const coords = document.querySelector('.sity-coords')
   // const map_h = document.querySelectorAll('.map-h')
   // const map_coords = document.querySelectorAll('.map-coords')
   // const map_p = document.querySelectorAll('.map-p')
@@ -112,6 +112,9 @@ function map_nav(clubs, courts, names) {
     // CONTENT
     let currentCity = names[currentIndex - 1].toUpperCase()
     generateName(currentCity)
+    let currentLat = lats[currentIndex - 1].toFixed(2)
+    let currentLong = longs[currentIndex - 1].toFixed(2)
+    coords.textContent = `${currentLat} ºN ${currentLong} ºW`
   }
 
   function updateLegend() {
@@ -159,7 +162,7 @@ function map_nav(clubs, courts, names) {
       })
       gsap.to(city_dots_array[index], {
         backgroundColor: '#ceff05',
-        x: 20,
+        x: 16,
         duration: 0.4,
       })
       // handleCity()

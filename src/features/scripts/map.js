@@ -141,7 +141,7 @@ function map() {
   async function init() {
     await fetchData()
     // clicks = new Array(names.length).fill(false)
-    map_nav(clubs, courts, names)
+    map_nav(clubs, courts, names, lats, longs)
     // console.log(lats)
     // console.log(longs)
     // console.log(markers)
