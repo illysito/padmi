@@ -3,6 +3,7 @@ import world_2 from './features/3d/world/universe_2'
 import bento from './features/scripts/bento'
 // import bg_shader from './features/script_shaders/bg_shader_handler'
 import buttons from './features/scripts/buttons'
+import contact from './features/scripts/contact'
 // import dark_mode from './features/scripts/darkmode'
 import hero from './features/scripts/hero'
 import horizontal from './features/scripts/horizontal'
@@ -50,13 +51,11 @@ function runClubFunctions() {
 
 function runWhereFunctions() {
   map()
-  // map_nav()
-  console.log('Welcome to Map')
-  // world(particles_container, 1) // INDEX 1 --> Particles
 }
 
 function runContactFunctions() {
   world(particles_container, 1) // INDEX 1 --> Particles
+  contact()
 }
 
 function runLegalsFunctions() {
