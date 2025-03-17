@@ -8,6 +8,8 @@ function menu() {
   const burger = document.querySelector('.ham-button')
   const back_wrapper = document.querySelector('.back-wrapper')
   const balls = document.querySelectorAll('.ball')
+  const os = document.querySelector('.os-links')
+  const os_links = document.querySelectorAll('.os-heading')
 
   const ease = 'power1.out'
 
@@ -85,7 +87,7 @@ function menu() {
       })
     })
 
-    menu_link.forEach((link) => {
+    menu_link.forEach((link, index) => {
       link.addEventListener('click', () => {
         burger.style.pointerEvents = 'none'
         menu_screen.style.pointerEvents = 'none'
@@ -103,6 +105,11 @@ function menu() {
           duration: 1.4,
           ease: 'power2.inOut',
         })
+        gsap.to(os, {
+          opacity: 0,
+          y: '50%',
+          duration: 0.4,
+        })
       })
       link.addEventListener('mouseover', (event) => {
         const l = event.currentTarget
@@ -117,6 +124,13 @@ function menu() {
           x: 0,
           duration: 0.4,
         })
+        if (index == 4) {
+          gsap.to(os, {
+            opacity: 1,
+            y: 0,
+            duration: 0.4,
+          })
+        }
       })
       link.addEventListener('mouseleave', (event) => {
         const l = event.currentTarget
@@ -128,6 +142,45 @@ function menu() {
         })
         gsap.to(ball, {
           scale: 0,
+          x: 0,
+          duration: 0.4,
+        })
+      })
+    })
+    os_links.forEach((heading) => {
+      heading.addEventListener('click', () => {
+        burger.style.pointerEvents = 'none'
+        menu_screen.style.pointerEvents = 'none'
+        gsap.to(menu_header, {
+          yPercent: 100,
+          duration: 1.2,
+          ease: 'power1.inOut',
+          onComplete: () => {
+            burger.style.pointerEvents = 'auto'
+            menu_screen.style.pointerEvents = 'auto'
+          },
+        })
+        gsap.to(menu_screen, {
+          yPercent: 0,
+          duration: 1.4,
+          ease: 'power2.inOut',
+        })
+        gsap.to(heading, {
+          yPercent: '50%',
+          duration: 0.4,
+          opacity: 0,
+        })
+      })
+      heading.addEventListener('mouseover', (event) => {
+        const h = event.currentTarget
+        gsap.to(h, {
+          x: 10,
+          duration: 0.4,
+        })
+      })
+      heading.addEventListener('mouseleave', (event) => {
+        const h = event.currentTarget
+        gsap.to(h, {
           x: 0,
           duration: 0.4,
         })
@@ -150,6 +203,11 @@ function menu() {
         yPercent: 0,
         duration: 1.4,
         ease: 'power2.inOut',
+      })
+      gsap.to(os, {
+        opacity: 0,
+        y: '50%',
+        duration: 0.4,
       })
     })
     back_wrapper.addEventListener('mouseover', (event) => {

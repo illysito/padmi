@@ -7,7 +7,7 @@ import buttons from './features/scripts/buttons'
 import hero from './features/scripts/hero'
 import horizontal from './features/scripts/horizontal'
 import map from './features/scripts/map'
-import map_nav from './features/scripts/map_nav'
+// import map_nav from './features/scripts/map_nav_fine'
 import menu from './features/scripts/menu'
 import nav from './features/scripts/nav'
 // import parallax from './features/scripts/parallax'
@@ -50,7 +50,7 @@ function runClubFunctions() {
 
 function runWhereFunctions() {
   map()
-  map_nav()
+  // map_nav()
   console.log('Welcome to Map')
   // world(particles_container, 1) // INDEX 1 --> Particles
 }

@@ -2,6 +2,8 @@ import gsap from 'gsap'
 import maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 
+import map_nav from './map_nav_fine'
+
 function map() {
   // MOBILE CHECK
 
@@ -11,15 +13,15 @@ function map() {
   console.log(isMobile())
 
   // CONSTANTS
-
-  // const court_heading = document.querySelectorAll('.court-heading')
-  // const courts = document.querySelectorAll('.court')
   const map_wrapper = document.querySelector('.map')
+  const map_navigator = document.querySelector('.map-nav-3')
   const names = []
   const lats = []
   const longs = []
+  const clubs = []
+  const courts = []
   const markers = []
-  let clicks = []
+  // let clicks = []
 
   // MAP RENDERING INIT
 
@@ -54,11 +56,15 @@ function map() {
         let name = columns[0]?.trim().replace(/"/g, '')
         let stringLng = columns[1]?.trim().replace(',', '.').replace(/"/g, '')
         let stringLat = columns[2]?.trim().replace(',', '.').replace(/"/g, '')
+        let club = columns[3]?.trim().replace(/"/g, '')
+        let court = columns[4]?.trim().replace(/"/g, '')
         if (!stringLng || !stringLat) {
           console.log('Longitude or Latitude is empty or invalid')
         } else {
           lng = parseFloat(stringLng)
           lat = parseFloat(stringLat)
+          club = parseFloat(club)
+          court = parseFloat(court)
           // console.log(`Longitude: ${stringLng}, Latitude: ${stringLat}`)
           // console.log('Type of Longitude:', typeof stringLng)
           // console.log('Type of Latitude:', typeof stringLat)
@@ -74,6 +80,8 @@ function map() {
         lats[index] = lat
         longs[index] = lng
         names[index] = name
+        clubs[index] = club
+        courts[index] = court
       })
     } catch (error) {
       console.error('Error loading Google Sheets data:', error)
@@ -132,8 +140,10 @@ function map() {
 
   async function init() {
     await fetchData()
-    clicks = new Array(names.length).fill(false)
-    console.log(clicks)
+    // clicks = new Array(names.length).fill(false)
+    console.log(clubs)
+    console.log(courts)
+    map_nav(clubs, courts)
     // console.log(lats)
     // console.log(longs)
     // console.log(markers)
@@ -142,7 +152,7 @@ function map() {
 
   // FADE IN
 
-  gsap.to(map_wrapper, {
+  gsap.to([map_wrapper, map_navigator], {
     opacity: 1,
     scale: 1,
     duration: 1.8,
@@ -164,72 +174,46 @@ function map() {
   // FLY
 
   function fly(index) {
-    if (clicks[index]) {
-      clicks[index] = !clicks[index]
-      return
-    } else {
-      if (isMobile()) {
-        window.scrollTo({
-          top: 0,
-          behavior: 'smooth', // Optional: adds smooth scrolling
-        })
-      }
-      markers.forEach((marker) => {
-        marker.getPopup().remove()
+    // if (clicks[index]) {
+    //   clicks[index] = !clicks[index]
+    //   return
+    // } else {
+    if (isMobile()) {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth', // Optional: adds smooth scrolling
       })
-      // console.log('court')
-      // const courtsArray = Array.from(courts)
-      // console.log(index)
-      map.flyTo({
-        center: [longs[index], lats[index]], // Set the center to the marker's location
-        zoom: 11, // Set the zoom level to a low level for zooming out (you can adjust this as needed)
-        speed: 1.5, // Animation speed (1 is standard)
-        curve: 1, // Animation curve (1 is standard)
-        easing: (t) => {
-          return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t // A custom easing for smoother start and end
-        },
-      })
-      if (markers[index]) {
-        markers[index].togglePopup() // Toggles the visibility of the popup
-      }
-      clicks[index] = !clicks[index]
     }
+    markers.forEach((marker) => {
+      marker.getPopup().remove()
+    })
+    // console.log('court')
+    // const courtsArray = Array.from(courts)
+    // console.log(index)
+    map.flyTo({
+      center: [longs[index], lats[index]], // Set the center to the marker's location
+      zoom: 11, // Set the zoom level to a low level for zooming out (you can adjust this as needed)
+      speed: 1.5, // Animation speed (1 is standard)
+      curve: 1, // Animation curve (1 is standard)
+      easing: (t) => {
+        return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t // A custom easing for smoother start and end
+      },
+    })
+    if (markers[index]) {
+      markers[index].togglePopup() // Toggles the visibility of the popup
+    }
+    // clicks[index] = !clicks[index]
+    // }
   }
 
   // // INITIAL ANIMATIONS
 
-  // gsap.to(court_heading, {
-  //   opacity: 1,
-  //   yPercent: -100,
-  //   duration: 1.4,
-  // })
-
-  // function hoverIn(event) {
-  //   const wrapper = event.currentTarget
-  //   const h = wrapper.firstElementChild
-  //   const hidden_h = h.nextElementSibling
-  //   gsap.to([h, hidden_h], {
-  //     yPercent: -200,
-  //     duration: 0.4,
-  //   })
-  // }
-
-  // function hoverOut(event) {
-  //   const wrapper = event.currentTarget
-  //   const h = wrapper.firstElementChild
-  //   const hidden_h = h.nextElementSibling
-  //   gsap.to([h, hidden_h], {
-  //     yPercent: -100,
-  //     duration: 0.4,
-  //   })
-  // }
-
   // EVENT LISTENING
-  const cards = document.querySelectorAll('.city-card')
-  cards.forEach((card, index) => {
+  const city_names = document.querySelectorAll('.sity-h')
+  city_names.forEach((name, index) => {
     // court.addEventListener('mouseover', hoverIn)
     // court.addEventListener('mouseleave', hoverOut)
-    card.addEventListener('click', () => fly(index))
+    name.addEventListener('click', () => fly(index))
   })
 }
 

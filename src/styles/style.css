@@ -44,7 +44,6 @@ body {
 }
 
 .maplibregl-popup {
-  display: flex;
   flex-direction: column;
   /* Stack elements vertically */
   justify-content: flex-start;

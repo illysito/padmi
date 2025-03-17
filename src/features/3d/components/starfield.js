@@ -84,7 +84,7 @@ void main() {
 function createStarfield() {
   const particlesCnt = 2500
   const posArray = new Float32Array(particlesCnt * 3)
-  const container = document.querySelector('.particles-container')
+  // const container = document.querySelector('.particles-container')
   let mouseX = 0
   let mouseY = 0
 
@@ -152,8 +152,8 @@ function createStarfield() {
 
   window.addEventListener('mousemove', (event) => {
     //prettier-ignore
-    mouseX = event.clientX / container.clientWidth
-    mouseY = 1 - event.clientY / container.clientHeight // Flip Y axis
+    mouseX = event.clientX / window.innerWidth
+    mouseY = 1 - event.clientY / window.innerHeight // Flip Y axis
     uniforms.u_mouse.value.x = mouseX
     uniforms.u_mouse.value.y = mouseY
   })
