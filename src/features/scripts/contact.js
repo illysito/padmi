@@ -2,8 +2,7 @@ import { gsap } from 'gsap'
 import SplitType from 'split-type'
 
 function contact() {
-  const cards = document.querySelectorAll('.social-card')
-  const cards_long = document.querySelectorAll('.social-card-longer')
+  const cards = document.querySelectorAll('.social-card, .social-card-longer')
   const send = document.querySelector('.submit-button')
   const nav = document.querySelector('.nav-container')
   const socials = document.querySelector('.socials-wrapper')
@@ -20,11 +19,25 @@ function contact() {
     ease: 'power2.inOut',
   })
 
+  gsap.to([heading, contact_line], {
+    y: 200,
+    scrollTrigger: {
+      trigger: form,
+      start: 'top 90%',
+      scrub: true,
+      markers: false,
+    },
+    ease: 'none',
+  })
+
   gsap.to(icon, {
-    rotation: 360,
+    rotateZ: 360, // Better than rotation
     duration: 10,
     ease: 'linear',
     repeat: -1,
+    willChange: 'transform', // Hinting browser for optimization
+    force3D: true, // Forces GPU acceleration
+    x: 0.1,
   })
 
   const splitH = new SplitType(heading, { types: 'lines' })
@@ -49,24 +62,6 @@ function contact() {
 
   // HOVER
   cards.forEach((card) => {
-    card.addEventListener('mouseover', (event) => {
-      const card = event.currentTarget
-      gsap.to(card, {
-        backgroundColor: '#8b81e444',
-        duration: hover_duration,
-        borderRadius: 16,
-      })
-    })
-    card.addEventListener('mouseleave', (event) => {
-      const card = event.currentTarget
-      gsap.to(card, {
-        backgroundColor: '#ffffff00',
-        duration: hover_duration,
-        borderRadius: 32,
-      })
-    })
-  })
-  cards_long.forEach((card) => {
     card.addEventListener('mouseover', (event) => {
       const card = event.currentTarget
       gsap.to(card, {

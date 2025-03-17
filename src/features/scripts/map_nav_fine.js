@@ -3,10 +3,16 @@ import { gsap } from 'gsap'
 
 // gsap.registerPlugin(ScrollTrigger)
 
-function map_nav(clubs, courts) {
+function map_nav(clubs, courts, names) {
   const card = document.querySelector('.sity-card')
-  const city_cards = document.querySelectorAll('.sity-card-element')
-  const city_cards_array = Array.from(city_cards)
+  // const city_cards = document.querySelectorAll('.sity-card-element')
+  // const city_cards_array = Array.from(city_cards)
+  const elements = document.querySelectorAll('.element')
+  const elementsArray = Array.from(elements)
+  // const city_clubs = document.querySelectorAll('.sity-p')
+  // const city_clubs_array = Array.from(city_clubs)
+  // const city_img = document.querySelectorAll('.sity-img')
+  // const city_img_array = Array.from(city_img)
   const city_dots = document.querySelectorAll('.sity-dot')
   const city_dots_array = Array.from(city_dots)
   const city_names = document.querySelectorAll('.sity-h')
@@ -14,6 +20,9 @@ function map_nav(clubs, courts) {
   const hover_duration = 0.6
   const club_h = document.querySelector('.is--club')
   const court_h = document.querySelector('.is--court')
+  const info_wraper = document.querySelector('.sity-info-wrapper')
+  const heading = document.querySelector('.sity-heading')
+  // const coords = document.querySelector('.sity-coords')
   // const map_h = document.querySelectorAll('.map-h')
   // const map_coords = document.querySelectorAll('.map-coords')
   // const map_p = document.querySelectorAll('.map-p')
@@ -26,17 +35,72 @@ function map_nav(clubs, courts) {
   let heights = []
   let currentIndex
   let margins = 36
+  let info_offset = info_wraper.scrollHeight
+
   // INIZIALIZO EL ARRAY DE TAMAÑOS
-  city_cards.forEach((c, index) => {
-    heights[index] = c.scrollHeight + margins
+  elements.forEach((c, index) => {
+    heights[index] = c.scrollHeight + margins + info_offset
   })
 
-  function handleCity() {
-    gsap.to(city_cards, {
+  // function handleCity() {
+  //   gsap.to(city_cards, {
+  //     opacity: 0,
+  //     duration: 0.2,
+  //   })
+  //   gsap.to(city_cards_array[currentIndex], {
+  //     opacity: 1,
+  //     duration: 0.6,
+  //   })
+  //   gsap.to(card, {
+  //     height: heights[currentIndex],
+  //     duration: 0.8,
+  //   })
+  // }
+  let countIndex = 0
+  let countChar = ''
+  function randomChar() {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZÁÉÍÓÚ'
+    // return chars[Math.floor(Math.random() * chars.length)]
+    countChar = chars[countIndex]
+    countIndex = (countIndex + 1) % 31
+  }
+
+  function generateName(target) {
+    const targetText = target
+    const targetChars = targetText.split('')
+    let names = new Array(targetChars.length).fill(' ')
+
+    let index = 0
+
+    const interval = setInterval(() => {
+      if (index < targetChars.length) {
+        if (names[index] !== targetChars[index]) {
+          randomChar()
+          names[index] = countChar
+        } else {
+          countIndex = 0
+          index++ // Move to the next character only when correct
+        }
+
+        heading.textContent = names.join('')
+        console.log(names.join(''))
+      } else {
+        clearInterval(interval)
+        console.log('Match found:', names.join(''))
+      }
+    }, 20)
+
+    console.log(targetChars)
+    console.log(names)
+  }
+
+  function handleCity2() {
+    // OPACITIES & HEIGHT
+    gsap.to(elements, {
       opacity: 0,
       duration: 0.2,
     })
-    gsap.to(city_cards_array[currentIndex], {
+    gsap.to(elementsArray[currentIndex], {
       opacity: 1,
       duration: 0.6,
     })
@@ -44,7 +108,12 @@ function map_nav(clubs, courts) {
       height: heights[currentIndex],
       duration: 0.8,
     })
+
+    // CONTENT
+    let currentCity = names[currentIndex - 1].toUpperCase()
+    generateName(currentCity)
   }
+
   function updateLegend() {
     let current_i = parseInt(club_h.textContent) || 0
     let target_i = clubs[currentIndex - 1]
@@ -93,17 +162,18 @@ function map_nav(clubs, courts) {
         x: 20,
         duration: 0.4,
       })
-      handleCity()
+      // handleCity()
+      handleCity2()
       updateLegend()
     })
     name.addEventListener('mouseover', (event) => {
       const n = event.currentTarget
       gsap.to(n, {
-        x: 20,
+        x: 12,
         duration: 0.4,
       })
       gsap.to(city_dots_array[index], {
-        x: 20,
+        x: 12,
         duration: 0.4,
       })
     })

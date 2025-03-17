@@ -141,9 +141,7 @@ function map() {
   async function init() {
     await fetchData()
     // clicks = new Array(names.length).fill(false)
-    console.log(clubs)
-    console.log(courts)
-    map_nav(clubs, courts)
+    map_nav(clubs, courts, names)
     // console.log(lats)
     // console.log(longs)
     // console.log(markers)
@@ -172,7 +170,6 @@ function map() {
   })
 
   // FLY
-
   function fly(index) {
     // if (clicks[index]) {
     //   clicks[index] = !clicks[index]
