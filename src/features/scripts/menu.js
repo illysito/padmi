@@ -36,16 +36,25 @@ function menu() {
     ease: 'linear',
   })
 
+  let width = burger.clientWidth
+
   if (burger) {
     burger.addEventListener('click', () => {
       burger.style.pointerEvents = 'none'
       menu_screen.style.pointerEvents = 'none'
+      gsap.to(burger, {
+        width: 0,
+        duration: 1.2,
+        ease: 'power3.inOut',
+      })
       gsap.to(menu_screen, {
+        delay: 0.8,
         yPercent: 100,
         duration: 1.4,
         ease: 'power2.inOut',
       })
       gsap.to(menu_header, {
+        delay: 0.6,
         yPercent: -100,
         duration: 1.6,
         ease: 'power1.inOut',
@@ -88,7 +97,10 @@ function menu() {
     })
 
     menu_link.forEach((link, index) => {
-      link.addEventListener('click', () => {
+      link.addEventListener('click', (event) => {
+        const l = event.currentTarget
+        const h = l.firstElementChild
+        const ball = l.lastElementChild
         burger.style.pointerEvents = 'none'
         menu_screen.style.pointerEvents = 'none'
         gsap.to(menu_header, {
@@ -108,6 +120,15 @@ function menu() {
         gsap.to(os, {
           opacity: 0,
           y: '50%',
+          duration: 0.4,
+        })
+        gsap.to(h, {
+          x: 0,
+          duration: 0.4,
+        })
+        gsap.to(ball, {
+          scale: 0,
+          x: 0,
           duration: 0.4,
         })
       })
@@ -190,6 +211,11 @@ function menu() {
     back_wrapper.addEventListener('click', () => {
       burger.style.pointerEvents = 'none'
       menu_screen.style.pointerEvents = 'none'
+      gsap.to(burger, {
+        width: width,
+        duration: 1.2,
+        ease: 'power3.inOut',
+      })
       gsap.to(menu_header, {
         yPercent: 100,
         duration: 1.2,

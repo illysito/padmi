@@ -1,49 +1,50 @@
-import { World } from './World.js' // cambiar la ruta si fuera necesario
+import { World } from './World.js'
 
 function world(container, index) {
   const trigger = document.querySelector('.claim')
-  let hasClaimBeenObserved = false // Track if claim has been observed
-  let lastScrollY = window.scrollY // Track the last scroll position
+  let hasClaimBeenObserved = false
+  let lastScrollY = window.scrollY
 
   function isDesktopOrTablet() {
-    //prettier-ignore
     return window.innerWidth >= 768
   }
-  // 1. Create an instance of the World app
+
   if (isDesktopOrTablet()) {
     const world = new World(container, index)
     const hamburger = document.querySelector('.ham-button')
     const back_button = document.querySelector('.back-wrapper')
-    // 2. Render the scene
+
     world.start()
-    if (index == 0) {
-      // STOP LOOP WHEN MENU IS CLICKED
+
+    // STOP LOOP WHEN MENU IS CLICKED
+    if (index == 0 || index == 1) {
       hamburger.addEventListener('click', () => {
-        setTimeout(() => world.stop(), 600)
+        setTimeout(() => world.stop(), 1300)
       })
       back_button.addEventListener('click', () => {
         setTimeout(() => world.start(), 800)
       })
+    }
 
-      // STOP LOOP WHEN UNOBSERVED (INTERSECTION OBSERVER METHOD)
+    // STOP LOOP WHEN UNOBSERVED (INTERSECTION OBSERVER METHOD)
+    if (index == 0) {
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
               if (!hasClaimBeenObserved) {
-                world.stop() // Stop the loop when claim is observed
+                world.stop()
                 hasClaimBeenObserved = true
               }
             } else {
               if (window.scrollY < lastScrollY) {
-                // Scrolled upwards, resume the loop
-                world.start() // Start the loop again when scrolling up
-                hasClaimBeenObserved = false // Reset the flag
+                world.start()
+                hasClaimBeenObserved = false
               }
             }
           })
         },
-        { threshold: 0.25 } // Adjust threshold for sensitivity
+        { threshold: 0.25 }
       )
 
       observer.observe(trigger)
