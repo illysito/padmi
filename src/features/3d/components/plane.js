@@ -39,7 +39,7 @@ async function createPlane() {
   const canvasW = renderedCanvas.width
   const canvasH = renderedCanvas.height
   const aspect = canvasW / canvasH
-  const planeH = 4.8
+  const planeH = 5.4
   const planeW = planeH * aspect
 
   //prettier-ignore

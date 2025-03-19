@@ -2,6 +2,8 @@ import gsap from 'gsap'
 
 function menu() {
   const logo_link = document.querySelector('.logo-link')
+  const logo = logo_link.firstElementChild
+  const green = document.querySelector('.is--green')
   const menu_screen = document.querySelector('.menu-bg')
   const menu_header = document.querySelectorAll('.menu-heading')
   const menu_link = document.querySelectorAll('.menu-link')
@@ -14,15 +16,27 @@ function menu() {
   const ease = 'power1.out'
 
   logo_link.addEventListener('mouseover', () => {
-    gsap.to(logo_link, {
-      scale: 0.97,
+    gsap.to(logo, {
+      scale: 0,
+      duration: 0.5,
+      ease: ease,
+    })
+    gsap.to(green, {
+      scale: 1,
+      opacity: 1,
       duration: 0.5,
       ease: ease,
     })
   })
   logo_link.addEventListener('mouseleave', () => {
-    gsap.to(logo_link, {
+    gsap.to(logo, {
       scale: 1,
+      duration: 0.5,
+      ease: ease,
+    })
+    gsap.to(green, {
+      scale: 0,
+      opacity: 0,
       duration: 0.5,
       ease: ease,
     })

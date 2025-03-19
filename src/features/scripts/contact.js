@@ -19,16 +19,16 @@ function contact() {
     ease: 'power2.inOut',
   })
 
-  gsap.to([heading, contact_line], {
-    y: 200,
-    scrollTrigger: {
-      trigger: form,
-      start: 'top 90%',
-      scrub: true,
-      markers: false,
-    },
-    ease: 'none',
-  })
+  // gsap.to([heading, contact_line], {
+  //   y: 200,
+  //   scrollTrigger: {
+  //     trigger: form,
+  //     start: 'top 90%',
+  //     scrub: true,
+  //     markers: false,
+  //   },
+  //   ease: 'none',
+  // })
 
   gsap.to(icon, {
     rotateZ: 360, // Better than rotation
