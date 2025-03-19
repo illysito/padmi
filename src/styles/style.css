@@ -87,8 +87,8 @@ body,
 }
 
 .nav-container {
-  background-color: #0a0b0b88;
-  backdrop-filter: hue-rotate(20deg) blur(15px);
+  /* background-color: #0a0b0b88; */
+  backdrop-filter: blur(15px);
   transition: background-color 0.8s ease;
 }
 

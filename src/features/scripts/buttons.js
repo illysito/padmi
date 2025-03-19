@@ -15,9 +15,10 @@ function buttons() {
 
     function hoverIn() {
       gsap.to(button, {
-        scale: 0.95,
+        scale: 0.9,
         duration: 0.2,
         backgroundColor: '#ffffff00',
+        ease: 'power2.out',
       })
 
       gsap.to(splitText.chars, {
@@ -55,10 +56,10 @@ function buttons() {
       })
 
       gsap.to(button, {
-        scale: 1.0,
+        scale: 1,
         duration: 0.4,
         backgroundColor: '#ceff05',
-        ease: 'power2.in',
+        ease: 'power2.out',
       })
     }
     button.addEventListener('mouseenter', hoverIn)

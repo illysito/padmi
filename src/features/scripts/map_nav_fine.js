@@ -16,6 +16,7 @@ function map_nav(clubs, courts, names, lats, longs) {
   const city_dots = document.querySelectorAll('.sity-dot')
   const city_dots_array = Array.from(city_dots)
   const city_names = document.querySelectorAll('.sity-h')
+  const city_names_wrapper = document.querySelector('.sity-names')
   const legend = document.querySelector('.legend-card')
   const hover_duration = 0.6
   const club_h = document.querySelector('.is--club')
@@ -23,6 +24,7 @@ function map_nav(clubs, courts, names, lats, longs) {
   const info_wraper = document.querySelector('.sity-info-wrapper')
   const heading = document.querySelector('.sity-heading')
   const coords = document.querySelector('.sity-coords')
+  const world = document.querySelector('.is--world')
   // const map_h = document.querySelectorAll('.map-h')
   // const map_coords = document.querySelectorAll('.map-coords')
   // const map_p = document.querySelectorAll('.map-p')
@@ -32,9 +34,16 @@ function map_nav(clubs, courts, names, lats, longs) {
     duration: 1.2,
   })
 
+  gsap.to(world, {
+    rotation: 360,
+    duration: 24,
+    repeat: -1,
+    ease: 'linear',
+  })
+
   let heights = []
   let currentIndex
-  let margins = 36
+  let margins = 32
   let info_offset = info_wraper.scrollHeight
 
   // INIZIALIZO EL ARRAY DE TAMAÑOS
@@ -59,39 +68,48 @@ function map_nav(clubs, courts, names, lats, longs) {
   let countIndex = 0
   let countChar = ''
   function randomChar() {
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZÁÉÍÓÚ'
+    //prettier-ignore
+    const chars = 'abcdefghijklmnopqrstuvwxyzáéíóú'
     // return chars[Math.floor(Math.random() * chars.length)]
     countChar = chars[countIndex]
-    countIndex = (countIndex + 1) % 31
+    countIndex = (countIndex + 1) % 62
+  }
+
+  function isUpperCase(letter) {
+    return letter === letter.toUpperCase()
   }
 
   function generateName(target) {
     const targetText = target
     const targetChars = targetText.split('')
     let names = new Array(targetChars.length).fill(' ')
+    names[0] = targetChars[0]
 
-    let index = 0
+    let index = 1
 
     const interval = setInterval(() => {
       if (index < targetChars.length) {
         if (names[index] !== targetChars[index]) {
           randomChar()
           names[index] = countChar
+          if (isUpperCase(targetChars[index])) {
+            names[index] = targetChars[index]
+          }
         } else {
           countIndex = 0
           index++ // Move to the next character only when correct
         }
 
         heading.textContent = names.join('')
-        console.log(names.join(''))
+        // console.log(names.join(''))
       } else {
         clearInterval(interval)
         console.log('Match found:', names.join(''))
       }
+      if (index == targetChars.length - 1) {
+        city_names_wrapper.style.pointerEvents = 'auto'
+      }
     }, 20)
-
-    console.log(targetChars)
-    console.log(names)
   }
 
   function handleCity2() {
@@ -110,11 +128,11 @@ function map_nav(clubs, courts, names, lats, longs) {
     })
 
     // CONTENT
-    let currentCity = names[currentIndex - 1].toUpperCase()
+    let currentCity = names[currentIndex - 1]
     generateName(currentCity)
     let currentLat = lats[currentIndex - 1].toFixed(2)
     let currentLong = longs[currentIndex - 1].toFixed(2)
-    coords.textContent = `${currentLat} ºN ${currentLong} ºW`
+    coords.textContent = `${currentLat}º N ${currentLong}º W`
   }
 
   function updateLegend() {
@@ -130,7 +148,7 @@ function map_nav(clubs, courts, names, lats, longs) {
     for (let i = current_i; i !== target_i + step_i; i += step_i) {
       setTimeout(() => {
         club_h.textContent = i
-      }, Math.abs(i - current_i) * 80)
+      }, Math.abs(i - current_i) * 140)
     }
     for (let j = current_j; j !== target_j + step_j; j += step_j) {
       setTimeout(() => {
@@ -145,6 +163,7 @@ function map_nav(clubs, courts, names, lats, longs) {
   // CLICK
   city_names.forEach((name, index) => {
     name.addEventListener('click', (event) => {
+      city_names_wrapper.style.pointerEvents = 'none'
       const n = event.currentTarget
       currentIndex = index + 1
       gsap.to(city_names, {
@@ -162,7 +181,6 @@ function map_nav(clubs, courts, names, lats, longs) {
       })
       gsap.to(city_dots_array[index], {
         backgroundColor: '#ceff05',
-        x: 16,
         duration: 0.4,
       })
       // handleCity()
@@ -172,10 +190,6 @@ function map_nav(clubs, courts, names, lats, longs) {
     name.addEventListener('mouseover', (event) => {
       const n = event.currentTarget
       gsap.to(n, {
-        x: 12,
-        duration: 0.4,
-      })
-      gsap.to(city_dots_array[index], {
         x: 12,
         duration: 0.4,
       })

@@ -21,21 +21,26 @@ function map() {
   const clubs = []
   const courts = []
   const markers = []
+  const club_names = []
+  const club_lats = []
+  const club_lngs = []
+  const club_courts = []
   // let clicks = []
 
   // MAP RENDERING INIT
 
   const map = new maplibregl.Map({
-    container: 'map', // ID of your HTML element
+    container: 'map',
     style: `https://api.maptiler.com/maps/5af093ac-6e4a-49cb-b247-bd629a603481/style.json?key=OFwEOATP6EiKKl7TcWZ6`,
-    center: [-15, 32], // Longitude, Latitude (Madrid)
-    zoom: 1.2, // Adjust the zoom level
+    center: [-15, 32],
+    zoom: 1.2,
     attributionControl: false,
   })
 
   // FETCH DATA
 
-  async function fetchData() {
+  async function fetchDataCities() {
+    console.log('fetching data')
     //prettier-ignore
     const url = 'https://docs.google.com/spreadsheets/d/1vrx1C923eENudXx2PKNoUil72SChqlNxk3bscbVd2Y8/gviz/tq?tqx=out:csv'
     try {
@@ -86,6 +91,55 @@ function map() {
     } catch (error) {
       console.error('Error loading Google Sheets data:', error)
     }
+  }
+
+  async function fetchDataClubs() {
+    console.log('fetching data')
+    //prettier-ignore
+    const url = 'https://docs.google.com/spreadsheets/d/1Eq_-QFHJpyr5npeI2u5Vc2WVQ8eE5qdbPndKra6FfzM/gviz/tq?tqx=out:csv'
+    try {
+      const response = await fetch(url)
+      const data = await response.text()
+
+      const rows = data.split('\n').slice(1) // Remove header
+      rows.forEach((row, index) => {
+        const columns = row.split(',')
+
+        if (columns.length < 3) {
+          console.warn(`Skipping row ${index + 1}: Not enough columns`)
+          return
+        }
+
+        let clb_lat
+        let clb_lng
+        let clb_name = columns[0]?.trim().replace(/"/g, '')
+        let stringLng = columns[1]?.trim().replace(',', '.').replace(/"/g, '')
+        let stringLat = columns[2]?.trim().replace(',', '.').replace(/"/g, '')
+        let clb_crts = columns[3]?.trim().replace(/"/g, '')
+        if (!stringLng || !stringLat) {
+          console.log('Longitude or Latitude is empty or invalid')
+        } else {
+          clb_lng = parseFloat(stringLng)
+          clb_lat = parseFloat(stringLat)
+        }
+
+        // if (isNaN(clb_lat) || isNaN(clb_lng)) {
+        //   //prettier-ignore
+        //   console.warn(`Skipping row ${index + 1}: Invalid lat/lng values`, { clb_name, clb_lng, clb_lat })
+        //   return
+        // }
+        club_names[index] = clb_name
+        club_lats[index] = clb_lat
+        club_lngs[index] = clb_lng
+        club_courts[index] = clb_crts
+      })
+    } catch (error) {
+      console.error('Error loading Google Sheets data:', error)
+    }
+    // console.log(club_names)
+    // console.log(club_lats)
+    // console.log(club_lngs)
+    console.log('Club courts: ' + club_courts)
   }
 
   // LOAD MARKERS
@@ -139,13 +193,37 @@ function map() {
   // ASYNC INITIALIZATION
 
   async function init() {
-    await fetchData()
-    // clicks = new Array(names.length).fill(false)
+    await fetchDataCities()
+    await fetchDataClubs()
+    // await fetchDataClubs()
     map_nav(clubs, courts, names, lats, longs)
-    // console.log(lats)
-    // console.log(longs)
-    // console.log(markers)
     loadMarkers()
+  }
+
+  // FLY
+
+  function fly(index) {
+    if (isMobile()) {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      })
+    }
+    markers.forEach((marker) => {
+      marker.getPopup().remove()
+    })
+    map.flyTo({
+      center: [longs[index], lats[index]],
+      zoom: 11,
+      speed: 1.5,
+      curve: 1,
+      easing: (t) => {
+        return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t
+      },
+    })
+    if (markers[index]) {
+      markers[index].togglePopup()
+    }
   }
 
   // FADE IN
@@ -159,57 +237,19 @@ function map() {
 
   init()
 
+  // EVENT LISTENING
+
+  const city_names = document.querySelectorAll('.sity-h')
+
   map_wrapper.addEventListener('mouseenter', () => {
-    // console.log('scroll should stop')
     document.body.classList.add('stop-scrolling')
   })
 
   map_wrapper.addEventListener('mouseleave', () => {
-    // console.log('scroll should resume')
     document.body.classList.remove('stop-scrolling')
   })
 
-  // FLY
-  function fly(index) {
-    // if (clicks[index]) {
-    //   clicks[index] = !clicks[index]
-    //   return
-    // } else {
-    if (isMobile()) {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth', // Optional: adds smooth scrolling
-      })
-    }
-    markers.forEach((marker) => {
-      marker.getPopup().remove()
-    })
-    // console.log('court')
-    // const courtsArray = Array.from(courts)
-    // console.log(index)
-    map.flyTo({
-      center: [longs[index], lats[index]], // Set the center to the marker's location
-      zoom: 11, // Set the zoom level to a low level for zooming out (you can adjust this as needed)
-      speed: 1.5, // Animation speed (1 is standard)
-      curve: 1, // Animation curve (1 is standard)
-      easing: (t) => {
-        return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t // A custom easing for smoother start and end
-      },
-    })
-    if (markers[index]) {
-      markers[index].togglePopup() // Toggles the visibility of the popup
-    }
-    // clicks[index] = !clicks[index]
-    // }
-  }
-
-  // // INITIAL ANIMATIONS
-
-  // EVENT LISTENING
-  const city_names = document.querySelectorAll('.sity-h')
   city_names.forEach((name, index) => {
-    // court.addEventListener('mouseover', hoverIn)
-    // court.addEventListener('mouseleave', hoverOut)
     name.addEventListener('click', () => fly(index))
   })
 }
