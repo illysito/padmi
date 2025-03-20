@@ -274,19 +274,19 @@ function map_nav(cities, clubs) {
     name.addEventListener('mouseover', (event) => {
       const n = event.currentTarget
       gsap.to(n, {
-        x: 12,
-        duration: 0.4,
+        x: 8,
+        duration: 0.3,
       })
     })
     name.addEventListener('mouseleave', (event) => {
       const n = event.currentTarget
       gsap.to(n, {
         x: 0,
-        duration: 0.4,
+        duration: 0.3,
       })
       gsap.to(cityDotsArray[index], {
         x: 0,
-        duration: 0.4,
+        duration: 0.3,
       })
     })
   })
