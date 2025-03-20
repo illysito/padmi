@@ -29,10 +29,16 @@ function map_nav(cities, clubs) {
   const club_p = document.querySelectorAll('.club-p')
   // courts list
   const courts_card = document.querySelector('.courts-card')
+  const courts_h = document.querySelector('.pistas-h')
   const court_name = document.querySelector('.court-h')
   const courts_wrapper = document.querySelector('.courts-wrapper')
 
   const hover_duration = 0.6
+
+  let clubCardsDummy = false
+  gsap.set(clubs_card, {
+    pointerEvents: 'none',
+  })
 
   gsap.to([city_data_wrapper, clubs_card, courts_card], {
     opacity: 1,
@@ -81,6 +87,7 @@ function map_nav(cities, clubs) {
   function generateCityName(target) {
     if (isGeneratingCity) return
     isGeneratingCity = true
+
     const targetText = target
     const targetChars = targetText.split('')
 
@@ -97,6 +104,9 @@ function map_nav(cities, clubs) {
           randomChar()
           names[index] = countChar
           if (isUpperCase(targetChars[index])) {
+            names[index] = targetChars[index]
+          }
+          if (countIndex == 12) {
             names[index] = targetChars[index]
           }
         } else {
@@ -191,7 +201,12 @@ function map_nav(cities, clubs) {
     let currentLat = cities[currentIndex - 1].lat.toFixed(2)
     let currentLong = cities[currentIndex - 1].lng.toFixed(2)
     coords.textContent = `${currentLat}º N ${currentLong}º W`
-    handleClub(cities[currentIndex - 1].firstClubIndex) // aquí estoy metiendo FCI de cada club: .....firstClubIndex
+    clubs_h.textContent = `Clubs en ${cities[currentIndex - 1].name}`
+    // handleClub(cities[currentIndex - 1].firstClubIndex) // aquí estoy metiendo FCI de cada club: .....firstClubIndex
+    // reiniciar caja pistas
+    courts_wrapper.innerHTML = ''
+    court_name.textContent = `Selecciona un club`
+    courts_h.textContent = `Pistas Padmi: `
   }
 
   function handleClub(index) {
@@ -216,6 +231,7 @@ function map_nav(cities, clubs) {
       courtContainer.appendChild(courtName)
       courts_wrapper.appendChild(courtContainer)
     })
+    courts_h.textContent = `Pistas Padmi: ${clubs[index].courtNumber}`
   }
 
   function updateLegend() {
@@ -247,6 +263,7 @@ function map_nav(cities, clubs) {
   // cities
   city_names.forEach((name, index) => {
     name.addEventListener('click', (event) => {
+      console.log(clubCardsDummy)
       city_names_wrapper.style.pointerEvents = 'none'
       const n = event.currentTarget
       currentIndex = index + 1
@@ -267,6 +284,27 @@ function map_nav(cities, clubs) {
         backgroundColor: '#ceff05',
         duration: 0.4,
       })
+      gsap.to(clubs_card, {
+        backgroundColor: '#8b81e422',
+        duration: hover_duration - 0.25,
+        ease: 'power1.inOut',
+        onComplete: () => {
+          gsap.to(clubs_card, {
+            backgroundColor: '#8b81e400',
+            duration: hover_duration - 0.25,
+            ease: 'power1.inOut',
+          })
+        },
+      })
+      if (!clubCardsDummy) {
+        gsap.set(clubs_card, {
+          pointerEvents: 'auto',
+          onComplete: () => {
+            clubs_card.style.pointerEvents = 'auto'
+            clubCardsDummy = true
+          },
+        })
+      }
       // handleCity()
       handleCity()
       updateLegend()
@@ -340,20 +378,35 @@ function map_nav(cities, clubs) {
       duration: hover_duration,
     })
   })
-
-  // // legend
-  // city_data_wrapper.addEventListener('mouseover', () => {
-  //   gsap.to(city_data_wrapper, {
-  //     backgroundColor: '#8b81e412',
-  //     duration: hover_duration - 0.2,
-  //   })
-  // })
-  // city_data_wrapper.addEventListener('mouseleave', () => {
-  //   gsap.to(city_data_wrapper, {
-  //     backgroundColor: '#ffffff00',
-  //     duration: hover_duration,
-  //   })
-  // })
+  // boxes
+  clubs_card.addEventListener('mouseover', (event) => {
+    const card = event.currentTarget
+    gsap.to(card, {
+      backgroundColor: '#8b81e410',
+      duration: hover_duration - 0.2,
+    })
+  })
+  clubs_card.addEventListener('mouseleave', (event) => {
+    const card = event.currentTarget
+    gsap.to(card, {
+      backgroundColor: '#ffffff00',
+      duration: hover_duration,
+    })
+  })
+  courts_card.addEventListener('mouseover', (event) => {
+    const card = event.currentTarget
+    gsap.to(card, {
+      backgroundColor: '#8b81e410',
+      duration: hover_duration - 0.2,
+    })
+  })
+  courts_card.addEventListener('mouseleave', (event) => {
+    const card = event.currentTarget
+    gsap.to(card, {
+      backgroundColor: '#ffffff00',
+      duration: hover_duration,
+    })
+  })
 }
 
 export default map_nav

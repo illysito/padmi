@@ -105,6 +105,7 @@ function map() {
         let stringLng = columns[1]?.trim().replace(',', '.').replace(/"/g, '')
         let stringLat = columns[2]?.trim().replace(',', '.').replace(/"/g, '')
         let clb_crts = columns[3]?.trim().replace(/"/g, '')
+        let clb_crt_number = columns[4]?.trim().replace(/"/g, '')
 
         clb_lng = parseFloat(stringLng)
         clb_lat = parseFloat(stringLat)
@@ -114,6 +115,7 @@ function map() {
           lat: clb_lat,
           lng: clb_lng,
           courts: clb_crts,
+          courtNumber: clb_crt_number,
         })
       })
     } catch (error) {
@@ -174,7 +176,6 @@ function map() {
   async function init() {
     await fetchDataCities()
     await fetchDataClubs()
-    // await fetchDataClubs()
     map_nav(cities, clubs)
     loadMarkers()
   }
@@ -200,9 +201,9 @@ function map() {
         return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t
       },
     })
-    if (markers[cities[index].firstClubIndex]) {
-      markers[cities[index].firstClubIndex].togglePopup()
-    }
+    // if (markers[cities[index].firstClubIndex]) {
+    //   markers[cities[index].firstClubIndex].togglePopup()
+    // }
   }
 
   function flyToClub(index) {
