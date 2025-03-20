@@ -3,219 +3,306 @@ import { gsap } from 'gsap'
 
 // gsap.registerPlugin(ScrollTrigger)
 
-function map_nav() {
-  const city_card = document.querySelectorAll('.city-card')
-  const legend = document.querySelector('.legend-card')
+function map_nav(cities, clubs) {
+  // main card
+  const card = document.querySelector('.card')
+  const heading = document.querySelector('.city-heading')
+  const coords = document.querySelector('.city-coords')
+  const city_data_wrapper = document.querySelector('.city-data-wrapper')
+  const club_h = document.querySelector('.is--club')
+  const court_h = document.querySelector('.is--court')
+  const city_imgs = document.querySelectorAll('.city-img')
+  const world_img = document.querySelector('.is--world')
+  const cityImgsArray = Array.from(city_imgs)
+  // city names
+  const city_names_wrapper = document.querySelector('.city-names-wrapper')
+  const city_dots = document.querySelectorAll('.city-point')
+  const cityDotsArray = Array.from(city_dots)
+  const city_names = document.querySelectorAll('.city-header')
+  // clubs list
+  const clubs_card = document.querySelector('.clubs-card')
+  const clubs_wrapper = document.querySelector('.clubs-wrapper')
+  const clubs_list = document.querySelectorAll('.clubs-list')
+  const elementsArray = Array.from(clubs_list)
+  const clubs_h = document.querySelector('.clubs-h')
+  const club_p = document.querySelectorAll('.club-p')
+  // courts list
+  const court_name = document.querySelector('.court-h')
+  const courts_wrapper = document.querySelector('.courts-wrapper')
+
   const hover_duration = 0.6
-  // const map_h = document.querySelectorAll('.map-h')
-  // const map_coords = document.querySelectorAll('.map-coords')
-  // const map_p = document.querySelectorAll('.map-p')
-  // const map_imgs = document.querySelectorAll('.map-img')
-  let sH
-  let eH
-  // DETECTO LA MEDIDA INICIAL DE LA TARJETA COLAPSADA
-  city_card.forEach((c) => {
-    if (c.classList.contains('is--collapsed')) {
-      return (sH = c.scrollHeight)
-    }
-  })
 
-  gsap.to(city_card, {
+  gsap.to(city_data_wrapper, {
     opacity: 1,
-    duration: 0.8,
-    stagger: 0.065,
+    duration: 1,
   })
 
-  gsap.to(legend, {
-    opacity: 1,
-    duration: 1.2,
+  gsap.to(world_img, {
+    rotation: 360,
+    duration: 24,
+    repeat: -1,
+    ease: 'linear',
   })
 
-  function handleCard(event) {
-    const card = event.currentTarget
-    card.style.pointerEvents = 'none'
-    const wrapper = card.firstElementChild
-    const title = wrapper.firstElementChild
-    console.log(title)
-    const img = wrapper.nextElementSibling
+  let heights = []
+  let currentIndex
+  let margins = 32
+  let info_offset = clubs_h.scrollHeight
+
+  // INIZIALIZO EL ARRAY DE TAMAÑOS
+  clubs_list.forEach((c, index) => {
+    heights[index] = c.scrollHeight + margins + info_offset
+  })
+
+  let countIndex = 0
+  let countChar = ''
+  function randomChar() {
     //prettier-ignore
-    const elementsToToggle = wrapper.querySelectorAll('.map-coords, .map-p')
-
-    const isCollapsed = card.classList.contains('is--collapsed')
-
-    // function collapseAll() {
-    //   //prettier-ignore
-    //   // const toCollapse = document.querySelectorAll('.city-card, .map-h, .map-coords, .map-p, .map-img')
-    //   // toCollapse.forEach((el) => el.classList.add('is--collapsed'))
-    //   city_card.forEach((c) => {
-    //     c.style.height = `${eH}px`
-    //   })
-    //   gsap.to(map_h, {
-    //     opacity: 1,
-    //     fontSize: '1em',
-    //     fontWeight: 300,
-    //     scale: 1,
-    //     duration: 0.8,
-    //     ease: 'power2.out',
-    //   })
-    //   gsap.to(city_card, {
-    //     paddingTop: 12,
-    //     paddingBottom: 10,
-    //     height: sH,
-    //     duration: 0.8,
-    //     ease: 'power2.out',
-    //     onComplete: () => {
-    //       city_card.forEach((c) => {
-    //         c.style.pointerEvents = 'auto' // Reset after animation
-    //         c.classList.add('is--collapsed') // Hide content
-    //         c.style.height = ''
-    //       })
-    //       map_imgs.forEach((img) => {
-    //         img.classList.add('is--collapsed')
-    //       })
-    //       map_coords.forEach((coord) => {
-    //         coord.classList.add('is--collapsed')
-    //       })
-    //       map_p.forEach((p) => {
-    //         p.classList.add('is--collapsed')
-    //       })
-    //     },
-    //   })
-    //   gsap.to(img, {
-    //     opacity: 0,
-    //     scale: 0.8,
-    //     duration: 0.8,
-    //     ease: 'power2.out',
-    //   })
-    // }
-
-    function expand() {
-      //prettier-ignore
-      // collapseAll()
-      card.classList.remove('is--collapsed') // Make content visible
-      img.classList.remove('is--collapsed')
-      elementsToToggle.forEach((el) => el.classList.remove('is--collapsed'))
-      elementsToToggle.forEach((el) => (el.style.opacity = 0))
-      img.style.opacity = 0
-      title.style.opacity = 0
-
-      const endHeight = card.scrollHeight // Get new height
-      console.log(card.scrollHeight)
-      eH = endHeight
-
-      // Reset height and animate
-      card.style.height = `${sH}px`
-      elementsToToggle.forEach((el) => {
-        gsap.to(el, {
-          opacity: 1,
-          duration: 0.8,
-          ease: 'power2.out',
-        })
-      })
-      gsap.to(title, {
-        opacity: 1,
-        fontSize: '1.6em',
-        fontWeight: 600,
-        scale: 1,
-        duration: 0.4,
-        ease: 'power2.out',
-      })
-      gsap.to(img, {
-        opacity: 1,
-        scale: 1,
-        duration: 1,
-        ease: 'power2.out',
-      })
-      gsap.to(card, {
-        paddingTop: 16,
-        // paddingBottom: 20,
-        height: eH,
-        duration: 0.8,
-        ease: 'power2.out',
-        onComplete: () => {
-          card.style.pointerEvents = 'auto' // Reset to auto after animation
-        },
-      })
-      console.log(eH)
-      console.log(card.scrollHeight)
-    }
-
-    function collapse() {
-      console.log(sH)
-      card.style.height = `${eH}px`
-      elementsToToggle.forEach((el) => {
-        gsap.to(el, {
-          opacity: 0,
-          duration: 0.8,
-          ease: 'power2.out',
-        })
-      })
-      gsap.to(title, {
-        opacity: 1,
-        fontSize: '1em',
-        fontWeight: 300,
-        scale: 1,
-        duration: 0.8,
-        ease: 'power2.out',
-      })
-      gsap.to(card, {
-        paddingTop: 12,
-        paddingBottom: 10,
-        height: sH,
-        duration: 0.8,
-        ease: 'power2.out',
-        onComplete: () => {
-          card.style.pointerEvents = 'auto' // Reset after animation
-          card.classList.add('is--collapsed') // Hide content
-          img.classList.add('is--collapsed')
-          elementsToToggle.forEach((el) => el.classList.add('is--collapsed'))
-          card.style.height = ''
-        },
-      })
-      gsap.to(img, {
-        opacity: 0,
-        scale: 0.8,
-        duration: 0.8,
-        ease: 'power2.out',
-      })
-
-      // const endHeight = card.offsetHeight // New height after collapse
-
-      // Animate to collapsed height
-    }
-
-    if (isCollapsed) {
-      expand()
-    } else {
-      collapse()
-    }
+    const chars = 'abcdefghijklmnopqrstuvwxyzáéíóú'
+    countChar = chars[countIndex]
+    countIndex = (countIndex + 1) % 62
   }
 
-  city_card.forEach((w) => {
-    w.addEventListener('click', handleCard)
-    w.addEventListener('mouseover', (event) => {
-      const card = event.currentTarget
-      gsap.to(card, {
-        backgroundColor: '#8b81e444',
-        duration: hover_duration - 0.2,
+  function isUpperCase(letter) {
+    return letter === letter.toUpperCase()
+  }
+
+  function generateName(target, isCity, isClub) {
+    const targetText = target
+    const targetChars = targetText.split('')
+
+    let time
+    if (isCity) time = 20
+    if (isClub) time = 5
+
+    let names = new Array(targetChars.length).fill(' ')
+    names[0] = targetChars[0]
+
+    let index = 1
+
+    const interval = setInterval(() => {
+      if (index < targetChars.length) {
+        if (names[index] !== targetChars[index]) {
+          randomChar()
+          names[index] = countChar
+          if (isUpperCase(targetChars[index])) {
+            names[index] = targetChars[index]
+          }
+        } else {
+          countIndex = 0
+          index++ // Move to the next character only when correct
+        }
+
+        if (isCity) heading.textContent = names.join('')
+        if (isClub) court_name.textContent = names.join('')
+        // console.log(names.join(''))
+      } else {
+        clearInterval(interval)
+        // console.log('Match found:', names.join(''))
+      }
+      if (index == targetChars.length - 1) {
+        city_names_wrapper.style.pointerEvents = 'auto'
+        clubs_wrapper.style.pointerEvents = 'auto'
+      }
+    }, time)
+  }
+
+  function handleCity() {
+    // OPACITIES & HEIGHT
+    gsap.to(clubs_list, {
+      opacity: 0,
+      duration: 0.2,
+      //prettier-ignore
+      zIndex: 0,
+    })
+    gsap.to(elementsArray[currentIndex], {
+      opacity: 1,
+      duration: 0.6,
+      //prettier-ignore
+      zIndex: 10,
+    })
+    gsap.to(city_imgs, {
+      opacity: 0,
+      duration: 0.2,
+      //prettier-ignore
+      zIndex: 0,
+    })
+    gsap.to(cityImgsArray[currentIndex], {
+      opacity: 1,
+      duration: 0.6,
+      //prettier-ignore
+      zIndex: 10,
+    })
+    gsap.to(clubs_card, {
+      height: heights[currentIndex],
+      duration: 0.8,
+    })
+
+    // CONTENT
+    // console.log(cities)
+    let currentCity = cities[currentIndex - 1].name
+    // console.log(currentCity)
+    generateName(currentCity, true, false)
+    let currentLat = cities[currentIndex - 1].lat.toFixed(2)
+    let currentLong = cities[currentIndex - 1].lng.toFixed(2)
+    coords.textContent = `${currentLat}º N ${currentLong}º W`
+    handleClub(cities[currentIndex - 1].firstClubIndex)
+  }
+
+  function handleClub(index) {
+    // name
+    let currentClub = clubs[index].name
+    generateName(currentClub, false, true)
+
+    // courts
+    courts_wrapper.innerHTML = ''
+    // const courtNumbers = clubs[index].courts.split(' ')
+    console.log(clubs[index].courts)
+    //prettier-ignore
+    const courtNumbers = [...clubs[index].courts.matchAll(/[·](.*?)[·]/g)].map(match => match[1])
+    console.log(courtNumbers)
+    courtNumbers.forEach((court) => {
+      console.log(court)
+      const courtContainer = document.createElement('div')
+      courtContainer.classList.add('court-container')
+      const courtName = document.createElement('h6')
+      courtName.classList.add('court-name')
+      courtName.textContent = `${court}`
+      courtContainer.appendChild(courtName)
+      courts_wrapper.appendChild(courtContainer)
+    })
+  }
+
+  function updateLegend() {
+    let current_i = parseInt(club_h.textContent) || 0
+    let target_i = cities[currentIndex - 1].clubs
+    let current_j = parseInt(court_h.textContent) || 0
+    let target_j = cities[currentIndex - 1].courts
+    let step_i = current_i < target_i ? 1 : -1
+    let step_j = current_j < target_j ? 1 : -1
+
+    if (current_i === target_i && current_j === target_j) return
+
+    for (let i = current_i; i !== target_i + step_i; i += step_i) {
+      setTimeout(() => {
+        club_h.textContent = i
+      }, Math.abs(i - current_i) * 140)
+    }
+    for (let j = current_j; j !== target_j + step_j; j += step_j) {
+      setTimeout(() => {
+        court_h.textContent = j
+      }, Math.abs(j - current_j) * 80)
+    }
+    // i = clubs[currentIndex - 1]
+  }
+
+  //  ------------------------ CLICK & HOVER  ------------------------
+
+  // cities
+  city_names.forEach((name, index) => {
+    name.addEventListener('click', (event) => {
+      city_names_wrapper.style.pointerEvents = 'none'
+      const n = event.currentTarget
+      currentIndex = index + 1
+      gsap.to(city_names, {
+        color: '#e5e7e1',
+        duration: 0.4,
+      })
+      gsap.to(n, {
+        color: '#ceff05',
+        duration: 0.4,
+      })
+      gsap.to(city_dots, {
+        backgroundColor: '#e5e7e1',
+        x: 0,
+        duration: 0.4,
+      })
+      gsap.to(cityDotsArray[index], {
+        backgroundColor: '#ceff05',
+        duration: 0.4,
+      })
+      // handleCity()
+      handleCity()
+      updateLegend()
+    })
+    name.addEventListener('mouseover', (event) => {
+      const n = event.currentTarget
+      gsap.to(n, {
+        x: 12,
+        duration: 0.4,
       })
     })
-    w.addEventListener('mouseleave', (event) => {
-      const card = event.currentTarget
-      gsap.to(card, {
-        backgroundColor: '#ffffff00',
-        duration: hover_duration,
+    name.addEventListener('mouseleave', (event) => {
+      const n = event.currentTarget
+      gsap.to(n, {
+        x: 0,
+        duration: 0.4,
+      })
+      gsap.to(cityDotsArray[index], {
+        x: 0,
+        duration: 0.4,
       })
     })
   })
-  legend.addEventListener('mouseover', () => {
-    gsap.to(legend, {
+
+  // clubs
+  club_p.forEach((club, index) => {
+    club.addEventListener('click', (event) => {
+      clubs_wrapper.style.pointerEvents = 'none'
+      const n = event.currentTarget
+      gsap.to(club_p, {
+        color: '#e5e7e1',
+        duration: 0.4,
+      })
+      gsap.to(n, {
+        color: '#ceff05',
+        duration: 0.4,
+      })
+      handleClub(index)
+    })
+    club.addEventListener('mouseover', (event) => {
+      const n = event.currentTarget
+      gsap.to(n, {
+        x: 8,
+        duration: 0.4,
+      })
+    })
+    club.addEventListener('mouseleave', (event) => {
+      const n = event.currentTarget
+      gsap.to(n, {
+        x: 0,
+        duration: 0.4,
+      })
+    })
+  })
+
+  // ------------------------ HOVER  ------------------------
+
+  // card
+  card.addEventListener('mouseover', (event) => {
+    const card = event.currentTarget
+    gsap.to(card, {
+      backgroundColor: '#8b81e410',
+      duration: hover_duration - 0.2,
+    })
+  })
+  card.addEventListener('mouseleave', (event) => {
+    const card = event.currentTarget
+    gsap.to(card, {
+      backgroundColor: '#ffffff00',
+      duration: hover_duration,
+    })
+  })
+
+  // legend
+  city_data_wrapper.addEventListener('mouseover', () => {
+    gsap.to(city_data_wrapper, {
       backgroundColor: '#8b81e412',
       duration: hover_duration - 0.2,
     })
   })
-  legend.addEventListener('mouseleave', () => {
-    gsap.to(legend, {
+  city_data_wrapper.addEventListener('mouseleave', () => {
+    gsap.to(city_data_wrapper, {
       backgroundColor: '#ffffff00',
       duration: hover_duration,
     })

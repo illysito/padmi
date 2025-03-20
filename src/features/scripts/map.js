@@ -2,7 +2,7 @@ import gsap from 'gsap'
 import maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 
-import map_nav from './map_nav_fine'
+import map_nav from './map_nav'
 
 function map() {
   // MOBILE CHECK
@@ -10,21 +10,14 @@ function map() {
   function isMobile() {
     return window.innerWidth <= 568
   }
-  console.log(isMobile())
+  // console.log(isMobile())
 
   // CONSTANTS
   const map_wrapper = document.querySelector('.map')
-  const map_navigator = document.querySelector('.map-nav-3')
-  const names = []
-  const lats = []
-  const longs = []
+  const map_navigator = document.querySelector('.map-main-nav')
+  const cities = []
   const clubs = []
-  const courts = []
   const markers = []
-  const club_names = []
-  const club_lats = []
-  const club_lngs = []
-  const club_courts = []
   // let clicks = []
 
   // MAP RENDERING INIT
@@ -40,7 +33,6 @@ function map() {
   // FETCH DATA
 
   async function fetchDataCities() {
-    console.log('fetching data')
     //prettier-ignore
     const url = 'https://docs.google.com/spreadsheets/d/1vrx1C923eENudXx2PKNoUil72SChqlNxk3bscbVd2Y8/gviz/tq?tqx=out:csv'
     try {
@@ -63,6 +55,8 @@ function map() {
         let stringLat = columns[2]?.trim().replace(',', '.').replace(/"/g, '')
         let club = columns[3]?.trim().replace(/"/g, '')
         let court = columns[4]?.trim().replace(/"/g, '')
+        let frst_clb_index = columns[5]?.trim().replace(/"/g, '')
+
         if (!stringLng || !stringLat) {
           console.log('Longitude or Latitude is empty or invalid')
         } else {
@@ -70,11 +64,7 @@ function map() {
           lat = parseFloat(stringLat)
           club = parseFloat(club)
           court = parseFloat(court)
-          // console.log(`Longitude: ${stringLng}, Latitude: ${stringLat}`)
-          // console.log('Type of Longitude:', typeof stringLng)
-          // console.log('Type of Latitude:', typeof stringLat)
-          // console.log('Parsed Longitude:', lng, 'Parsed Latitude:', lat)
-          // console.log(`Raw row data: "${row}"`)
+          frst_clb_index = parseFloat(frst_clb_index)
         }
 
         if (isNaN(lat) || isNaN(lng)) {
@@ -82,11 +72,16 @@ function map() {
           console.warn(`Skipping row ${index + 1}: Invalid lat/lng values`, { name, lng, lat })
           return
         }
-        lats[index] = lat
-        longs[index] = lng
-        names[index] = name
-        clubs[index] = club
-        courts[index] = court
+
+        cities.push({
+          name,
+          lat,
+          lng,
+          clubs: club,
+          courts: court,
+          firstClubIndex: frst_clb_index,
+        })
+        console.log(cities)
       })
     } catch (error) {
       console.error('Error loading Google Sheets data:', error)
@@ -94,7 +89,6 @@ function map() {
   }
 
   async function fetchDataClubs() {
-    console.log('fetching data')
     //prettier-ignore
     const url = 'https://docs.google.com/spreadsheets/d/1Eq_-QFHJpyr5npeI2u5Vc2WVQ8eE5qdbPndKra6FfzM/gviz/tq?tqx=out:csv'
     try {
@@ -102,13 +96,8 @@ function map() {
       const data = await response.text()
 
       const rows = data.split('\n').slice(1) // Remove header
-      rows.forEach((row, index) => {
+      rows.forEach((row) => {
         const columns = row.split(',')
-
-        if (columns.length < 3) {
-          console.warn(`Skipping row ${index + 1}: Not enough columns`)
-          return
-        }
 
         let clb_lat
         let clb_lng
@@ -116,46 +105,35 @@ function map() {
         let stringLng = columns[1]?.trim().replace(',', '.').replace(/"/g, '')
         let stringLat = columns[2]?.trim().replace(',', '.').replace(/"/g, '')
         let clb_crts = columns[3]?.trim().replace(/"/g, '')
-        if (!stringLng || !stringLat) {
-          console.log('Longitude or Latitude is empty or invalid')
-        } else {
-          clb_lng = parseFloat(stringLng)
-          clb_lat = parseFloat(stringLat)
-        }
 
-        // if (isNaN(clb_lat) || isNaN(clb_lng)) {
-        //   //prettier-ignore
-        //   console.warn(`Skipping row ${index + 1}: Invalid lat/lng values`, { clb_name, clb_lng, clb_lat })
-        //   return
-        // }
-        club_names[index] = clb_name
-        club_lats[index] = clb_lat
-        club_lngs[index] = clb_lng
-        club_courts[index] = clb_crts
+        clb_lng = parseFloat(stringLng)
+        clb_lat = parseFloat(stringLat)
+
+        clubs.push({
+          name: clb_name,
+          lat: clb_lat,
+          lng: clb_lng,
+          courts: clb_crts,
+        })
       })
     } catch (error) {
       console.error('Error loading Google Sheets data:', error)
     }
-    // console.log(club_names)
-    // console.log(club_lats)
-    // console.log(club_lngs)
-    console.log('Club courts: ' + club_courts)
   }
 
   // LOAD MARKERS
 
   function loadMarkers() {
-    lats.forEach((lat, i) => {
-      let latitude = lats[i]
-      let longitude = longs[i]
-      // console.log(latitude, longitude)
+    clubs.forEach((club, i) => {
+      let latitude = clubs[i].lat
+      let longitude = clubs[i].lng
       const marker = new maplibregl.Marker({
         element: createCustomImageMarker(), // Function to create an image marker
       })
         .setLngLat([longitude, latitude])
         .setPopup(
           new maplibregl.Popup({ className: 'popup', offset: [0, -28] }) // Add custom class
-            .setHTML(`<div class="popup-content">${names[i]}</div>`)
+            .setHTML(`<div class="popup-content">${clubs[i].name}</div>`)
         )
         .addTo(map)
       markers.push(marker)
@@ -196,13 +174,13 @@ function map() {
     await fetchDataCities()
     await fetchDataClubs()
     // await fetchDataClubs()
-    map_nav(clubs, courts, names, lats, longs)
+    map_nav(cities, clubs)
     loadMarkers()
   }
 
   // FLY
 
-  function fly(index) {
+  function flyToCity(index) {
     if (isMobile()) {
       window.scrollTo({
         top: 0,
@@ -213,9 +191,33 @@ function map() {
       marker.getPopup().remove()
     })
     map.flyTo({
-      center: [longs[index], lats[index]],
-      zoom: 11,
+      center: [cities[index].lng, cities[index].lat],
+      zoom: 10,
       speed: 1.5,
+      curve: 1,
+      easing: (t) => {
+        return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t
+      },
+    })
+    if (markers[index]) {
+      markers[index].togglePopup()
+    }
+  }
+
+  function flyToClub(index) {
+    if (isMobile()) {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      })
+    }
+    markers.forEach((marker) => {
+      marker.getPopup().remove()
+    })
+    map.flyTo({
+      center: [clubs[index].lng, clubs[index].lat],
+      zoom: 15,
+      speed: 0.8,
       curve: 1,
       easing: (t) => {
         return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t
@@ -239,7 +241,8 @@ function map() {
 
   // EVENT LISTENING
 
-  const city_names = document.querySelectorAll('.sity-h')
+  const city_names = document.querySelectorAll('.city-header')
+  const club_names = document.querySelectorAll('.club-p')
 
   map_wrapper.addEventListener('mouseenter', () => {
     document.body.classList.add('stop-scrolling')
@@ -250,7 +253,11 @@ function map() {
   })
 
   city_names.forEach((name, index) => {
-    name.addEventListener('click', () => fly(index))
+    name.addEventListener('click', () => flyToCity(index))
+  })
+
+  club_names.forEach((name, index) => {
+    name.addEventListener('click', () => flyToClub(index))
   })
 }
 
