@@ -341,19 +341,19 @@ function map_nav(cities, clubs) {
     })
   })
 
-  // legend
-  city_data_wrapper.addEventListener('mouseover', () => {
-    gsap.to(city_data_wrapper, {
-      backgroundColor: '#8b81e412',
-      duration: hover_duration - 0.2,
-    })
-  })
-  city_data_wrapper.addEventListener('mouseleave', () => {
-    gsap.to(city_data_wrapper, {
-      backgroundColor: '#ffffff00',
-      duration: hover_duration,
-    })
-  })
+  // // legend
+  // city_data_wrapper.addEventListener('mouseover', () => {
+  //   gsap.to(city_data_wrapper, {
+  //     backgroundColor: '#8b81e412',
+  //     duration: hover_duration - 0.2,
+  //   })
+  // })
+  // city_data_wrapper.addEventListener('mouseleave', () => {
+  //   gsap.to(city_data_wrapper, {
+  //     backgroundColor: '#ffffff00',
+  //     duration: hover_duration,
+  //   })
+  // })
 }
 
 export default map_nav
