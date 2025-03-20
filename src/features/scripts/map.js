@@ -81,7 +81,7 @@ function map() {
           courts: court,
           firstClubIndex: frst_clb_index,
         })
-        console.log(cities)
+        // console.log(cities)
       })
     } catch (error) {
       console.error('Error loading Google Sheets data:', error)
@@ -119,6 +119,7 @@ function map() {
     } catch (error) {
       console.error('Error loading Google Sheets data:', error)
     }
+    console.log(clubs)
   }
 
   // LOAD MARKERS
@@ -149,7 +150,7 @@ function map() {
         marker.style.width = '0.8em'
         marker.style.height = '0.8em'
         marker.style.borderRadius = '0.8em'
-        marker.style.backgroundColor = '#ceff05bb'
+        marker.style.backgroundColor = '#ceff05'
 
         marker.addEventListener('click', () => {
           // Animate the map zooming out to the marker's coordinates
@@ -192,15 +193,15 @@ function map() {
     })
     map.flyTo({
       center: [cities[index].lng, cities[index].lat],
-      zoom: 10,
-      speed: 1.5,
+      zoom: 9,
+      speed: 2,
       curve: 1,
       easing: (t) => {
         return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t
       },
     })
-    if (markers[index]) {
-      markers[index].togglePopup()
+    if (markers[cities[index].firstClubIndex]) {
+      markers[cities[index].firstClubIndex].togglePopup()
     }
   }
 
@@ -216,8 +217,8 @@ function map() {
     })
     map.flyTo({
       center: [clubs[index].lng, clubs[index].lat],
-      zoom: 15,
-      speed: 0.8,
+      zoom: 17,
+      speed: 3,
       curve: 1,
       easing: (t) => {
         return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t
@@ -253,11 +254,14 @@ function map() {
   })
 
   city_names.forEach((name, index) => {
-    name.addEventListener('click', () => flyToCity(index))
+    //prettier-ignore
+    name.addEventListener('click', () => {
+      flyToCity(index)
+    })
   })
 
   club_names.forEach((name, index) => {
-    name.addEventListener('click', () => flyToClub(index))
+    name.addEventListener('click', () => flyToClub(index - 1))
   })
 }
 

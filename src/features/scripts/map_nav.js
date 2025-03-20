@@ -7,6 +7,7 @@ function map_nav(cities, clubs) {
   // main card
   const card = document.querySelector('.card')
   const heading = document.querySelector('.city-heading')
+  const low_line = document.querySelector('.low-line')
   const coords = document.querySelector('.city-coords')
   const city_data_wrapper = document.querySelector('.city-data-wrapper')
   const club_h = document.querySelector('.is--club')
@@ -27,12 +28,13 @@ function map_nav(cities, clubs) {
   const clubs_h = document.querySelector('.clubs-h')
   const club_p = document.querySelectorAll('.club-p')
   // courts list
+  const courts_card = document.querySelector('.courts-card')
   const court_name = document.querySelector('.court-h')
   const courts_wrapper = document.querySelector('.courts-wrapper')
 
   const hover_duration = 0.6
 
-  gsap.to(city_data_wrapper, {
+  gsap.to([city_data_wrapper, clubs_card, courts_card], {
     opacity: 1,
     duration: 1,
   })
@@ -42,6 +44,14 @@ function map_nav(cities, clubs) {
     duration: 24,
     repeat: -1,
     ease: 'linear',
+  })
+
+  gsap.to(low_line, {
+    opacity: 0,
+    repeat: -1,
+    yoyo: true, // Automatically reverses animation
+    repeatDelay: hover_duration / 1.5,
+    duration: 0.2, // Adjust as needed
   })
 
   let heights = []
@@ -67,13 +77,14 @@ function map_nav(cities, clubs) {
     return letter === letter.toUpperCase()
   }
 
-  function generateName(target, isCity, isClub) {
+  let isGeneratingCity = false
+  function generateCityName(target) {
+    if (isGeneratingCity) return
+    isGeneratingCity = true
     const targetText = target
     const targetChars = targetText.split('')
 
-    let time
-    if (isCity) time = 20
-    if (isClub) time = 5
+    const time = 20
 
     let names = new Array(targetChars.length).fill(' ')
     names[0] = targetChars[0]
@@ -93,16 +104,52 @@ function map_nav(cities, clubs) {
           index++ // Move to the next character only when correct
         }
 
-        if (isCity) heading.textContent = names.join('')
-        if (isClub) court_name.textContent = names.join('')
+        heading.textContent = names.join('')
+
         // console.log(names.join(''))
       } else {
         clearInterval(interval)
+        city_names_wrapper.style.pointerEvents = 'auto'
+        isGeneratingCity = false
         // console.log('Match found:', names.join(''))
       }
-      if (index == targetChars.length - 1) {
-        city_names_wrapper.style.pointerEvents = 'auto'
+    }, time)
+  }
+
+  let isGeneratingClub = false
+  function generateClubName(target) {
+    if (isGeneratingClub) return
+    isGeneratingClub = true
+    const targetText = target
+    const targetChars = targetText.split('')
+
+    const time = 5
+
+    let names = new Array(targetChars.length).fill(' ')
+    names[0] = targetChars[0]
+
+    let index = 1
+
+    const interval = setInterval(() => {
+      if (index < targetChars.length) {
+        if (names[index] !== targetChars[index]) {
+          randomChar()
+          names[index] = countChar
+          if (isUpperCase(targetChars[index])) {
+            names[index] = targetChars[index]
+          }
+        } else {
+          countIndex = 0
+          index++ // Move to the next character only when correct
+        }
+
+        court_name.textContent = names.join('')
+        // console.log(names.join(''))
+      } else {
+        clearInterval(interval)
         clubs_wrapper.style.pointerEvents = 'auto'
+        isGeneratingClub = false
+        // console.log('Match found:', names.join(''))
       }
     }, time)
   }
@@ -139,25 +186,23 @@ function map_nav(cities, clubs) {
     })
 
     // CONTENT
-    // console.log(cities)
     let currentCity = cities[currentIndex - 1].name
-    // console.log(currentCity)
-    generateName(currentCity, true, false)
+    generateCityName(currentCity)
     let currentLat = cities[currentIndex - 1].lat.toFixed(2)
     let currentLong = cities[currentIndex - 1].lng.toFixed(2)
     coords.textContent = `${currentLat}º N ${currentLong}º W`
-    handleClub(cities[currentIndex - 1].firstClubIndex)
+    handleClub(cities[currentIndex - 1].firstClubIndex) // aquí estoy metiendo FCI de cada club: .....firstClubIndex
   }
 
   function handleClub(index) {
     // name
     let currentClub = clubs[index].name
-    generateName(currentClub, false, true)
+    generateClubName(currentClub)
 
     // courts
     courts_wrapper.innerHTML = ''
     // const courtNumbers = clubs[index].courts.split(' ')
-    console.log(clubs[index].courts)
+    // console.log(clubs[index].courts)
     //prettier-ignore
     const courtNumbers = [...clubs[index].courts.matchAll(/[·](.*?)[·]/g)].map(match => match[1])
     console.log(courtNumbers)
@@ -186,12 +231,13 @@ function map_nav(cities, clubs) {
     for (let i = current_i; i !== target_i + step_i; i += step_i) {
       setTimeout(() => {
         club_h.textContent = i
-      }, Math.abs(i - current_i) * 140)
+      }, Math.abs(i - current_i) * 70)
     }
+    if (current_j > 30) current_j = 30
     for (let j = current_j; j !== target_j + step_j; j += step_j) {
       setTimeout(() => {
         court_h.textContent = j
-      }, Math.abs(j - current_j) * 80)
+      }, Math.abs(j - current_j) * 60)
     }
     // i = clubs[currentIndex - 1]
   }
@@ -250,6 +296,7 @@ function map_nav(cities, clubs) {
     club.addEventListener('click', (event) => {
       clubs_wrapper.style.pointerEvents = 'none'
       const n = event.currentTarget
+      console.log(index)
       gsap.to(club_p, {
         color: '#e5e7e1',
         duration: 0.4,
@@ -258,7 +305,7 @@ function map_nav(cities, clubs) {
         color: '#ceff05',
         duration: 0.4,
       })
-      handleClub(index)
+      handleClub(index - 1) // aquí index - 1 porque hay un primer elemento dummy: - (guion solo)
     })
     club.addEventListener('mouseover', (event) => {
       const n = event.currentTarget
