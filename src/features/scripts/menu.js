@@ -53,29 +53,47 @@ function menu() {
   let width = burger.clientWidth
 
   if (burger) {
-    burger.addEventListener('click', () => {
+    burger.addEventListener('click', (event) => {
+      if (!burger.classList.contains('clicked')) {
+        burger.classList.add('clicked') // Keep rotation state
+      }
+      const ham = event.currentTarget
+      const ham_up = ham.firstElementChild
+      const ham_down = ham.lastElementChild
+
       burger.style.pointerEvents = 'none'
       menu_screen.style.pointerEvents = 'none'
       gsap.to(burger, {
         width: 0,
         duration: 1.2,
-        ease: 'power3.inOut',
+        ease: 'power2.out',
       })
       gsap.to(menu_screen, {
-        delay: 0.8,
+        delay: 0.1,
         yPercent: 100,
         duration: 1.4,
         ease: 'power2.inOut',
       })
       gsap.to(menu_header, {
-        delay: 0.6,
+        // delay: 0.6,
         yPercent: -100,
         duration: 1.6,
         ease: 'power1.inOut',
         stagger: 0.05,
         onComplete: () => {
+          burger.classList.remove('clicked')
           burger.style.pointerEvents = 'auto'
           menu_screen.style.pointerEvents = 'auto'
+          gsap.to(ham_up, {
+            rotate: 0,
+            duration: 0.6,
+            // ease: 'power2.out',
+          })
+          gsap.to(ham_down, {
+            rotate: 0,
+            duration: 0.6,
+            // ease: 'power2.out',
+          })
         },
       })
     })
@@ -95,6 +113,7 @@ function menu() {
       })
     })
     burger.addEventListener('mouseleave', (event) => {
+      if (burger.classList.contains('clicked')) return
       const ham = event.currentTarget
       const ham_up = ham.firstElementChild
       const ham_down = ham.lastElementChild

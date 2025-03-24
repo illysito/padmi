@@ -131,40 +131,64 @@ function map() {
       let latitude = clubs[i].lat
       let longitude = clubs[i].lng
       const marker = new maplibregl.Marker({
-        element: createCustomImageMarker(), // Function to create an image marker
+        element: createCustomImageMarker(),
+        anchor: 'bottom',
       })
         .setLngLat([longitude, latitude])
         .setPopup(
-          new maplibregl.Popup({ className: 'popup', offset: [0, -28] }) // Add custom class
+          new maplibregl.Popup({ className: 'popup', offset: [0, -80] }) // Add custom class
             .setHTML(`<div class="popup-content">${clubs[i].name}</div>`)
         )
         .addTo(map)
       markers.push(marker)
+
+      map.on('zoom', () => {
+        const zoom = map.getZoom()
+        // markers.forEach((marker) => {
+        //   const popup = marker.getPopup()
+        //   // Set opacity of the popup based on zoom level
+        //   if (zoom < 13) {
+        //     popup.getElement().style.opacity = '0' // Hide popup
+        //   } else {
+        //     popup.getElement().style.opacity = '1' // Show popup
+        //   }
+        // })
+        document.querySelectorAll('.custom-marker').forEach((marker) => {
+          const size = Math.max(10, zoom * 1.6) // Adjust scaling formula
+          marker.style.width = `${size * 1.1}px`
+          marker.style.height = `${size * 2.5}px` // Keep proportions
+        })
+      })
       // Function to create an image marker
       function createCustomImageMarker() {
         const marker = document.createElement('div')
         marker.className = 'custom-marker'
         //prettier-ignore
-        // marker.style.backgroundImage = 'url(https://raw.githubusercontent.com/illysito/padmi/main/map_marker.png)'
-        // marker.style.width = '30px'
-        // marker.style.height = '41px'
-        // marker.style.backgroundSize = 'cover'
-        marker.style.width = '0.8em'
-        marker.style.height = '0.8em'
-        marker.style.borderRadius = '0.8em'
-        marker.style.backgroundColor = '#ceff05'
+        marker.style.backgroundImage = 'url(https://raw.githubusercontent.com/illysito/padmi/85951f28c6a93b36ae3d6a20a083dd7519412f92/location-icon-3.png)'
+        marker.style.width = '11px'
+        marker.style.height = '25px'
+        marker.style.backgroundSize = 'cover'
+        // marker.style.width = '0.8em'
+        // marker.style.height = '0.8em'
+        // marker.style.borderRadius = '0.8em'
+        // marker.style.backgroundColor = '#ceff05'
 
-        marker.addEventListener('click', () => {
+        marker.addEventListener('click', (event) => {
           // Animate the map zooming out to the marker's coordinates
           map.flyTo({
             center: [longitude, latitude], // Set the center to the marker's location
-            zoom: 10, // Set the zoom level to a low level for zooming out (you can adjust this as needed)
-            speed: 2, // Animation speed (1 is standard)
-            curve: 2, // Animation curve (1 is standard)
-            easing(t) {
-              return t // Linear easing (you can change it for different effects)
+            zoom: 17,
+            speed: 3,
+            curve: 1,
+            easing: (t) => {
+              return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t
             },
           })
+          const markersNodeList = document.querySelectorAll('.custom-marker')
+          const markersArray = Array.from(markersNodeList)
+          const currentMarker = event.currentTarget
+          const markersArrayIndex = markersArray.indexOf(currentMarker)
+          console.log(markersArrayIndex)
         })
         return marker
       }

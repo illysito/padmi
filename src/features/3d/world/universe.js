@@ -19,7 +19,7 @@ function world(container, index) {
     // STOP LOOP WHEN MENU IS CLICKED
     if (index == 0 || index == 1) {
       hamburger.addEventListener('click', () => {
-        setTimeout(() => world.stop(), 1300)
+        setTimeout(() => world.stop(), 600)
       })
       back_button.addEventListener('click', () => {
         setTimeout(() => world.start(), 800)
