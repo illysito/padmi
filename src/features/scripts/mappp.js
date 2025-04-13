@@ -496,6 +496,16 @@ function map() {
             duration: 0.4,
           })
           handleClub(markersArrayIndex)
+          // activate pointer events on clubs on first marker click
+          if (!clubCardsDummy) {
+            gsap.set(domElements.clubs_card, {
+              pointerEvents: 'auto',
+              onComplete: () => {
+                domElements.clubs_card.style.pointerEvents = 'auto'
+                clubCardsDummy = true
+              },
+            })
+          }
         })
         return marker
       }
@@ -630,7 +640,7 @@ function map() {
         const n = event.currentTarget
         // console.log(index)
         gsap.to(domElements.club_p, {
-          color: '#e5e7e133',
+          color: '#e5e7e144',
           duration: 0.4,
         })
         gsap.to(n, {

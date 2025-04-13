@@ -18,6 +18,58 @@ function split() {
   // CLAIM
   const splitClaim = new SplitType(claim, { types: 'lines' })
   const pSplitClaim = new SplitType(p_claim, { types: 'lines' })
+  // const splitClaimLinesArray = Array.from(splitClaim.lines)
+  // const lastClaimLine = splitClaimLinesArray[2]
+  // // const splitLastLine = new SplitType(lastClaimLine, { types: 'chars' })
+  // const targetLine = Array.from(lastClaimLine.textContent)
+  // console.log(targetLine)
+
+  // // computer effect ritardando
+  // let countIndex = 0
+  // let countChar = ''
+  // function randomChar() {
+  //   //prettier-ignore
+  //   const chars = 'abcdefghijklmnopqrstuvwxyzáéíóú.'
+  //   countChar = chars[countIndex]
+  //   countIndex = (countIndex + 1) % 62
+  // }
+
+  // function generateLastLine() {
+  //   const targetChars = targetLine
+
+  //   const time = 20
+
+  //   let names = new Array(targetChars.length).fill(' ')
+  //   names[0] = targetChars[0]
+
+  //   let index = 1
+
+  //   const animate = () => {
+  //     if (index < targetChars.length) {
+  //       if (names[index] !== targetChars[index]) {
+  //         randomChar()
+  //         names[index] = countChar
+  //         if (targetChars[index] === ' ') {
+  //           names[index] = targetChars[index]
+  //         }
+  //         if (countIndex == 12) {
+  //           names[index] = targetChars[index]
+  //         }
+  //       } else {
+  //         countIndex = 0
+  //         index++ // Move to the next character only when correct
+  //       }
+
+  //       lastClaimLine.style.fontWeight = '500'
+  //       lastClaimLine.style.color = '#8b81e4'
+  //       lastClaimLine.textContent = names.join('')
+
+  //       setTimeout(animate, time * 2.35)
+  //     }
+  //   }
+  //   animate()
+  // }
+  // generateLastLine()
 
   splitClaim.lines.forEach((line) => {
     const wrapper = document.createElement('div')
@@ -50,7 +102,7 @@ function split() {
     },
   })
 
-  //CARD HEADINGS
+  // CARD HEADINGS
   card_heading.forEach((heading) => {
     const splitCardHeading = new SplitType(heading, { types: 'lines' })
 

@@ -26,8 +26,6 @@ function hero() {
 
     // SPLIT
     const splitClaim = new SplitType(claim, { types: 'lines' })
-    // const splitH1 = new SplitType(h1, { types: 'chars' })
-    // const splitH2 = new SplitType(h2, { types: 'chars' })
 
     splitClaim.lines.forEach((line) => {
       const wrapper = document.createElement('div')
