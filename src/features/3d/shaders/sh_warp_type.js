@@ -121,11 +121,11 @@ void main() {
   redChannel.g = 0.0;
   redChannel.b = 0.0;
 
-  vec4 greenChannel = texture2D(u_texture, coords - distortion - 0.0 * 0.5 * vec2(separation_factor, separation_factor));
+  vec4 greenChannel = texture2D(u_texture, coords - distortion - 0.5 * 0.5 * vec2(separation_factor, separation_factor));
   greenChannel.r = 0.0;
   greenChannel.b = 0.0;
 
-  vec4 blueChannel = texture2D(u_texture, coords - distortion + 0.0 * 2.0 * vec2(separation_factor, separation_factor));
+  vec4 blueChannel = texture2D(u_texture, coords - distortion + 0.5 * 2.0 * vec2(separation_factor, separation_factor));
   blueChannel.r = 0.0;
   blueChannel.g = 0.0;
 
