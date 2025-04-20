@@ -6,7 +6,7 @@ import buttons from './features/scripts/buttons'
 import contact from './features/scripts/contact'
 // import dark_mode from './features/scripts/darkmode'
 import hero from './features/scripts/hero'
-import horizontal from './features/scripts/horizontal'
+// import horizontal from './features/scripts/horizontal'
 import map from './features/scripts/mappp'
 // import map_nav from './features/scripts/map_nav_fine'
 import menu from './features/scripts/menu'
@@ -42,7 +42,7 @@ function runHomeFunctions() {
   split()
   // parallax()
   bento()
-  horizontal()
+  // horizontal()
 }
 
 function runClubFunctions() {
