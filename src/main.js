@@ -1,6 +1,6 @@
 import world from './features/3d/world/universe'
 import world_2 from './features/3d/world/universe_2'
-import bento from './features/scripts/bento'
+import bento from './features/scripts/bento copy'
 // import bg_shader from './features/script_shaders/bg_shader_handler'
 import buttons from './features/scripts/buttons'
 import contact from './features/scripts/contact'
