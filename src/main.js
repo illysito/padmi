@@ -23,9 +23,9 @@ const world_container = document.querySelector('.world-container')
 const world_2_container = document.querySelector('.world-2-container')
 const particles_container = document.querySelector('.particles-container')
 
-window.onbeforeunload = () => {
+window.addEventListener('load', () => {
   window.scrollTo(0, 0)
-}
+})
 
 function runGeneralFunctions() {
   world_2(world_2_container)
