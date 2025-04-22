@@ -4,6 +4,17 @@ body {
   overflow: visible;
 }
 
+/* BENTO */
+
+.bento_box.expanded {
+  position: absolute;
+  left: 35%;
+  top: -8svh;
+  width: 30%;
+  height: 70svh;
+  z-index: 2;
+}
+
 /* MISC */
 
 .particles-container {
@@ -23,12 +34,16 @@ body {
   image-rendering: optimizeQuality;
   /* Mask effect */
   /* 0% is center */
-  -webkit-mask-image: radial-gradient(circle,
-      rgba(0, 0, 0, 1) 0%,
-      rgba(0, 0, 0, 0.0) 80%);
-  mask-image: radial-gradient(circle,
-      rgba(0, 0, 0, 1) 0%,
-      rgba(0, 0, 0, 0.0) 80%);
+  -webkit-mask-image: radial-gradient(
+    circle,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0) 80%
+  );
+  mask-image: radial-gradient(
+    circle,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0) 80%
+  );
 }
 
 .popup {
@@ -84,16 +99,20 @@ body {
 /* MAP NAV */
 
 .city-names-wrapper {
-  -webkit-mask-image: linear-gradient(to bottom,
-      rgba(0, 0, 0, 0.0) 0%,
-      rgba(0, 0, 0, 1.0) 20%,
-      rgba(0, 0, 0, 1.0) 60%,
-      rgba(0, 0, 0, 0.0) 100%);
-  mask-image: radial-gradient(to bottom,
-      rgba(0, 0, 0, 0.0) 0%,
-      rgba(0, 0, 0, 1.0) 20%,
-      rgba(0, 0, 0, 1.0) 60%,
-      rgba(0, 0, 0, 0.0) 100%);
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 1) 20%,
+    rgba(0, 0, 0, 1) 60%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  mask-image: radial-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 1) 20%,
+    rgba(0, 0, 0, 1) 60%,
+    rgba(0, 0, 0, 0) 100%
+  );
 }
 
 .court-container {
