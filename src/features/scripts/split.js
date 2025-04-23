@@ -6,6 +6,7 @@ gsap.registerPlugin(ScrollTrigger)
 
 function split() {
   // ELEMENTS
+  // const claim_section = document.querySelector('.video')
   const claim = document.querySelector('.claim-heading-2')
   const p_claim = document.querySelector('.p-claim')
   const card_heading = document.querySelectorAll('.card-heading')
@@ -18,6 +19,7 @@ function split() {
   // CLAIM
   const splitClaim = new SplitType(claim, { types: 'lines' })
   const pSplitClaim = new SplitType(p_claim, { types: 'lines' })
+  // const video_section = document.querySelector('.video')
   // const splitClaimLinesArray = Array.from(splitClaim.lines)
   // const lastClaimLine = splitClaimLinesArray[2]
   // // const splitLastLine = new SplitType(lastClaimLine, { types: 'chars' })
@@ -101,6 +103,21 @@ function split() {
       markers: false,
     },
   })
+
+  // gsap.to(claim, {
+  //   scale: 40,
+  //   duration: 1,
+  //   // ease: 'power1.out',
+  //   scrollTrigger: {
+  //     trigger: claim_section,
+  //     start: 'bottom 40%',
+  //     end: 'bottom -100%',
+  //     markers: true,
+  //     scrub: true,
+  //   },
+  // })
+
+  // QUIERO QUE LA TIPOGRAFIA CAMBIE UN SCROLL! o que las LETRAS DE PADEL CAMBIEN Y SE PONGA JUEGO!
 
   // CARD HEADINGS
   card_heading.forEach((heading) => {

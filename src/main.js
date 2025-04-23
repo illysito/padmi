@@ -1,8 +1,9 @@
 import world from './features/3d/world/universe'
 import world_2 from './features/3d/world/universe_2'
-import bento from './features/scripts/bento copy'
+import bento from './features/scripts/bento'
 // import bg_shader from './features/script_shaders/bg_shader_handler'
 import buttons from './features/scripts/buttons'
+import claim from './features/scripts/claim'
 import contact from './features/scripts/contact'
 // import dark_mode from './features/scripts/darkmode'
 import hero from './features/scripts/hero'
@@ -21,7 +22,7 @@ import './styles/style.css'
 const body = document.body
 const world_container = document.querySelector('.world-container')
 const world_2_container = document.querySelector('.world-2-container')
-const particles_container = document.querySelector('.particles-container')
+// const particles_container = document.querySelector('.particles-container')
 
 function runGeneralFunctions() {
   world_2(world_2_container)
@@ -41,6 +42,7 @@ function runHomeFunctions() {
   hero()
   split()
   // parallax()
+  claim()
   bento()
   // horizontal()
 }
@@ -54,7 +56,7 @@ function runWhereFunctions() {
 }
 
 function runContactFunctions() {
-  world(particles_container, 1) // INDEX 1 --> Particles
+  // world(particles_container, 1) // INDEX 1 --> Particles
   contact()
 }
 

@@ -78,8 +78,8 @@ function createStarfield() {
 
   for (let i = 0; i < particlesCnt; i++) {
     // Random starfield
-    posArray[i * 3] = (Math.random() - 0.5) * 30 * (Math.random() - 2)
-    posArray[i * 3 + 1] = (Math.random() - 0.5) * 30 // Y
+    posArray[i * 3] = (Math.random() - 0.5) * 15 * (Math.random() - 2)
+    posArray[i * 3 + 1] = (Math.random() - 0.5) * 15 // Y
     posArray[i * 3 + 2] = (Math.random() - 0.5) * 30 // Z
   }
 
@@ -100,7 +100,7 @@ function createStarfield() {
   })
 
   const mesh = new Points(geometry, material)
-  mesh.position.z = -12
+  mesh.position.z = -3
 
   const clock = new Clock()
 
@@ -111,8 +111,8 @@ function createStarfield() {
     counter++
     uniforms.u_time.value = clock.getElapsedTime()
     mesh.position.z += delta * mouseY * direction * 0.5
-    mesh.position.x = 0.1 * Math.sin(0.01 * counter)
-    mesh.position.y = 0.1 * Math.cos(0.01 * counter)
+    mesh.position.x = 0.075 * Math.sin(0.01 * counter)
+    mesh.position.y = 0.075 * Math.cos(0.01 * counter)
     // mesh.rotation.y = 0.25 * mouseX
     //prettier-ignore
     mesh.rotation.y += delta * gsap.utils.mapRange(0, 1, -1, 1, mouseX) * 0.031

@@ -68,6 +68,7 @@ function contact() {
         backgroundColor: '#8b81e444',
         duration: hover_duration,
         borderRadius: 16,
+        ease: 'power2.out',
       })
     })
     card.addEventListener('mouseleave', (event) => {
@@ -76,6 +77,7 @@ function contact() {
         backgroundColor: '#ffffff00',
         duration: hover_duration,
         borderRadius: 32,
+        ease: 'power2.out',
       })
     })
   })
@@ -84,6 +86,7 @@ function contact() {
       scale: 0.94,
       borderRadius: 48,
       duration: hover_duration - 0.1,
+      ease: 'power2.out',
     })
     gsap.to(icon, {
       y: -12,
@@ -93,8 +96,9 @@ function contact() {
   send.addEventListener('mouseleave', () => {
     gsap.to(send, {
       scale: 1,
-      borderRadius: 32,
+      borderRadius: 16,
       duration: hover_duration - 0.1,
+      ease: 'power2.out',
     })
     gsap.to(icon, {
       y: 0,

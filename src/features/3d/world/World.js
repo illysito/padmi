@@ -34,7 +34,7 @@ class World {
     if (index == 0) {
       // this.initGradPlane()
       this.initPlane()
-      // this.initText()
+      // this.initText('1')
       // this.initBall()
       this.initPaddle()
       // this.initObject()
@@ -89,8 +89,8 @@ class World {
     this.loop.updatables.push(object)
   }
 
-  async initText() {
-    const type = await createText('Play smarter.', 0, 0, 0)
+  async initText(text) {
+    const type = await createText(text, 0, 0, 0)
     this.scene.add(type)
     // loop.updatables.push(type)
   }

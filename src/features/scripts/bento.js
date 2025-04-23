@@ -1,4 +1,7 @@
 import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
 
 function bento() {
   function isDesktop() {
@@ -6,70 +9,101 @@ function bento() {
     return window.innerWidth >= 991
   }
   const boxes = document.querySelectorAll('.bento_box')
+  const title = document.querySelector('.title-heading')
+  const titlesArray = [
+    'Tus estadísticas',
+    '% de errores y winners de cada golpe',
+    'Total de golpes',
+    'Velocidad de la bola',
+    'Mapa de calor',
+    'VS Jugadores',
+    'Metros recorridos',
+    'Análisis de servicio',
+    'Pad ID',
+  ]
   const boxesArray = Array.from(boxes)
   const bentoOverlay = document.querySelector('.bento-overlay')
 
   let isClicked = false
+  let isHoverActive = false
   let rotation = 0
   let left = 0
   let top = 0
 
+  function setInitialState() {
+    gsap.from(boxes, {
+      opacity: 0,
+      rotationZ: 0,
+      duration: 1,
+      stagger: 0.1,
+      scrollTrigger: {
+        trigger: boxes,
+        start: 'top 90%',
+        // end: 'top 20%',
+        // pin: true,
+      },
+      onComplete: () => {
+        isHoverActive = true
+      },
+    })
+    gsap.to(title, {
+      yPercent: 100,
+      oapcity: 1,
+      duration: 1,
+      scrollTrigger: {
+        trigger: title,
+        start: 'top 80%',
+      },
+    })
+  }
+  setInitialState()
+
+  function handleTitles(i) {
+    title.textContent = titlesArray[i + 1]
+  }
+
   function hoverIn(event, cardIndex) {
+    if (!isHoverActive) return
     if (isClicked) return
     const box = event.currentTarget
-    const text_wrapper = box.firstElementChild
-    const aux = text_wrapper.nextElementSibling
-    const illustration = aux.nextElementSibling
     boxesArray.forEach((box, index) => {
-      if (index != cardIndex) {
+      if (index !== cardIndex) {
         gsap.to(box, {
-          filter: 'blur(5px)',
-          // backdropFilter: 'blur(60px)',
-          // opacity: 0.8,
-          duration: 0.4,
+          filter: 'saturate(0%)',
+          duration: 0.6,
         })
       }
-    })
-    gsap.to(illustration, {
-      scale: 1.05,
-      duration: 0.6,
-      ease: 'power1.out',
     })
     gsap.to(box, {
       opacity: 1,
       scale: 0.99,
       y: -60,
       borderRadius: '16px',
-      duration: 0.4,
+      duration: 0.6,
     })
+    handleTitles(cardIndex)
   }
 
   function hoverOut(event) {
+    if (!isHoverActive) return
     // if (isClicked) return
     const box = event.currentTarget
-    const text_wrapper = box.firstElementChild
-    const aux = text_wrapper.nextElementSibling
-    const illustration = aux.nextElementSibling
     gsap.to(boxes, {
-      filter: 'blur(0px)',
-      // opacity: 1,
-      duration: 0.4,
-    })
-    gsap.to(illustration, {
-      scale: 1.0,
+      filter: 'saturate(80%)',
       duration: 0.6,
-      ease: 'power1.out',
     })
     gsap.to(box, {
       scale: 1,
       y: 0,
       borderRadius: '8px',
-      duration: 0.4,
+      duration: 0.6,
     })
+    if (!isClicked) handleTitles(-1)
   }
 
   function clickIn(event) {
     const box = event.currentTarget
+    const textContainer = box.lastElementChild
     console.log(rotation)
     console.log(isClicked)
     if (!isClicked) {
@@ -77,21 +111,37 @@ function bento() {
       left = gsap.getProperty(box, 'left')
       top = gsap.getProperty(box, 'top')
       gsap.to(box, {
+        y: 0,
         width: '30%',
         height: '70svh',
         left: '35%',
         top: '-8svh',
+        borderRadius: '8px',
+        scale: 1,
         rotationZ: 0,
         zIndex: 2,
-        duration: 0.5,
+        duration: 0.6,
+        ease: 'power1.out',
       })
       gsap.to(bentoOverlay, {
         zIndex: 1,
         opacity: 1,
       })
+      gsap.to(textContainer, {
+        yPercent: -100,
+        opacity: 1,
+        duration: 0.8,
+        delay: 0.2,
+        ease: 'power1.out',
+      })
       isClicked = true
     } else {
       if (gsap.getProperty(box, 'zIndex') === 2) {
+        gsap.to(textContainer, {
+          yPercent: 0,
+          opacity: 0,
+          duration: 0.8,
+        })
         gsap.to(box, {
           width: '16%',
           height: '40svh',
@@ -99,7 +149,14 @@ function bento() {
           top: top,
           rotationZ: rotation,
           zIndex: 0,
-          duration: 0.5,
+          duration: 0.6,
+          delay: 0.1,
+          ease: 'power1.out',
+          onComplete: () => {
+            gsap.set(box, {
+              clearProps: 'width,height,left,top,rotation,zIndex',
+            })
+          },
         })
         gsap.to(bentoOverlay, {
           zIndex: 0,

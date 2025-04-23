@@ -107,6 +107,10 @@ async function createPlane() {
 
   mesh.tick = (delta) => {
     uniforms.u_time.value += 0.5 * delta
+    mesh.rotation.y = gsap.utils.mapRange(0, 1, -0.025, 0.025, prevMouseX)
+    mesh.rotation.x = gsap.utils.mapRange(0, 1, -0.025, 0.025, prevMouseY)
+    mesh.position.x = gsap.utils.mapRange(0, 1, 0.05, -0.05, prevMouseX)
+    // mesh.rotation.y = prevMouseX
     // console.log('ticking' + uniforms.u_time)
   }
 

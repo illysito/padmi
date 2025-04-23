@@ -1,8 +1,6 @@
 //prettier-ignore
-import {
-  MeshPhysicalMaterial,
-  Color,
-} from 'three'
+import gsap from 'gsap'
+import { MeshPhysicalMaterial, Color } from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 
 function createPaddle() {
@@ -65,6 +63,13 @@ function createPaddle() {
         // Smooth update of rotations with rotational speed
         paddleRotationX += rotationalSpeedX
         // console.log(colorCounter)
+        paddle.position.x = gsap.utils.mapRange(
+          0,
+          window.innerWidth,
+          -0.15,
+          0.15,
+          lastMouseX
+        )
       }
 
       // ANIMATION
