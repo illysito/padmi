@@ -41,7 +41,7 @@ class World {
       this.initLights()
       this.initStarfield()
     } else if (index == 1) {
-      this.initStarfield()
+      this.initBall()
     }
 
     //prettier-ignore

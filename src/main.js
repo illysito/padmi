@@ -1,5 +1,6 @@
 import world from './features/3d/world/universe'
 import world_2 from './features/3d/world/universe_2'
+// import world_3 from './features/3d/world/universe_3'
 import bento from './features/scripts/bento'
 // import bg_shader from './features/script_shaders/bg_shader_handler'
 import buttons from './features/scripts/buttons'
@@ -22,7 +23,9 @@ import './styles/style.css'
 const body = document.body
 const world_container = document.querySelector('.world-container')
 const world_2_container = document.querySelector('.world-2-container')
+// const world_3_container = document.querySelector('.world-3-container')
 // const particles_container = document.querySelector('.particles-container')
+const club_container = document.querySelector('.club-container')
 
 function runGeneralFunctions() {
   world_2(world_2_container)
@@ -44,11 +47,13 @@ function runHomeFunctions() {
   // parallax()
   claim()
   bento()
+  // world_3(world_3_container)
   // horizontal()
 }
 
 function runClubFunctions() {
   console.log('welcome to Padmi Club')
+  world(club_container, 1)
 }
 
 function runWhereFunctions() {
