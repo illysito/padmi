@@ -1,3 +1,5 @@
+// import gsap from 'gsap'
+
 import world from './features/3d/world/universe'
 import world_2 from './features/3d/world/universe_2'
 // import world_3 from './features/3d/world/universe_3'
@@ -54,6 +56,15 @@ function runHomeFunctions() {
 function runClubFunctions() {
   console.log('welcome to Padmi Club')
   world(club_container, 1)
+
+  // SCROLL HELP!
+  const scrollHelper = document.querySelector('.scroll-guide')
+  // let scrollScale = 0
+  window.addEventListener('scroll', () => {
+    scrollHelper.textContent = Math.floor(window.scrollY)
+    // scrollScale = gsap.utils.mapRange(0, 2000, 0, 2, scrollY)
+    // scrollHelper.textContent = scrollScale
+  })
 }
 
 function runWhereFunctions() {

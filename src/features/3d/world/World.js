@@ -5,6 +5,7 @@ import { createGradPlane } from '../components/gradient_plane.js'
 import { createObject } from '../components/object.js'
 // import { createDirLight } from '../components/directional_light.js'
 import { createPaddle } from '../components/paddle.js'
+import { createPadmiCam } from '../components/padmi_cam.js'
 import { createPlane } from '../components/plane.js'
 import { createLight } from '../components/point_light.js'
 import { createScene } from '../components/scene.js'
@@ -38,10 +39,13 @@ class World {
       // this.initBall()
       this.initPaddle()
       // this.initObject()
-      this.initLights()
+      this.initLights(-2, 2, 3, 20, 0xfffbf6, false)
       this.initStarfield()
     } else if (index == 1) {
-      this.initBall()
+      // this.initBall()
+      this.initLights(-1, 2.4, 1, 30, 0xfffbf6, true)
+      this.initPadmiCam(0, 0, 0)
+      // this.initPadmiCam(0, 0, 0)
     }
 
     //prettier-ignore
@@ -83,6 +87,12 @@ class World {
     this.loop.updatables.push(paddle)
   }
 
+  async initPadmiCam(x, y, z) {
+    const cam = await createPadmiCam(x, y, z)
+    this.scene.add(cam)
+    this.loop.updatables.push(cam)
+  }
+
   async initObject() {
     const object = await createObject()
     this.scene.add(object)
@@ -102,10 +112,10 @@ class World {
     this.render()
   }
 
-  initLights() {
-    const light = createLight(-2, 2, 3, 20, 0xfffbf6)
+  initLights(x, y, z, int, color, isMove) {
+    const light = createLight(x, y, z, int, color, isMove)
     this.scene.add(light)
-    // loop.updatables.push(light)
+    if (isMove) this.loop.updatables.push(light)
   }
 
   // 2. Render the scene

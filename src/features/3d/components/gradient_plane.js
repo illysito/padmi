@@ -33,7 +33,7 @@ function createGradPlane() {
 
   mesh.rotation.x = 114 * (Math.PI / 180)
   mesh.position.z = 8.5
-  // mesh.position.z = -15
+  mesh.position.z = 6.5
   mesh.position.y = 0.1
 
   mesh.tick = (delta) => {
