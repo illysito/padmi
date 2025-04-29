@@ -6,11 +6,13 @@ import world_2 from './features/3d/world/universe_2'
 import bento from './features/scripts/bento'
 // import bg_shader from './features/script_shaders/bg_shader_handler'
 import buttons from './features/scripts/buttons'
+import cameraTexts from './features/scripts/camera_texts'
 import claim from './features/scripts/claim'
 import contact from './features/scripts/contact'
 // import dark_mode from './features/scripts/darkmode'
 import hero from './features/scripts/hero'
 // import horizontal from './features/scripts/horizontal'
+import logoMarquee from './features/scripts/logo_marquee'
 import map from './features/scripts/mappp'
 // import map_nav from './features/scripts/map_nav_fine'
 import menu from './features/scripts/menu'
@@ -54,8 +56,9 @@ function runHomeFunctions() {
 }
 
 function runClubFunctions() {
-  console.log('welcome to Padmi Club')
   world(club_container, 1)
+  cameraTexts()
+  logoMarquee()
 
   // SCROLL HELP!
   const scrollHelper = document.querySelector('.scroll-guide')

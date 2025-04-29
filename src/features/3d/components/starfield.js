@@ -70,8 +70,8 @@ void main() {
 }
 `
 
-function createStarfield() {
-  const particlesCnt = 800
+function createStarfield(starCount) {
+  const particlesCnt = starCount
   const posArray = new Float32Array(particlesCnt * 3)
   let mouseX = 0
   let mouseY = 0

@@ -52,6 +52,17 @@ function world(container, index) {
       window.addEventListener('scroll', () => {
         lastScrollY = window.scrollY
       })
+    } else if (index == 1) {
+      window.addEventListener('scroll', () => {
+        lastScrollY = window.scrollY
+        if (lastScrollY > 2600 && !hasClaimBeenObserved) {
+          world.stop()
+          hasClaimBeenObserved = true
+        } else if (lastScrollY < 2600 && hasClaimBeenObserved) {
+          world.start()
+          hasClaimBeenObserved = false
+        }
+      })
     }
   }
 }

@@ -15,8 +15,8 @@ function createLight(x, y, z, i, color, isMove) {
     let damp = 0.05
     light.tick = (delta) => {
       counter += delta
-      light.position.x = 5 * Math.sin(counter * damp)
-      light.position.y = 3 * Math.cos(counter * damp)
+      light.position.x = 2.5 * Math.sin(counter * damp)
+      // light.position.y = 1.3 * Math.cos(counter * damp)
       // light.position.z = 1 * Math.sin(counter * damp)
     }
 

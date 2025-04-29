@@ -1,9 +1,9 @@
 //LEGACY IMPORTS
 import { createBall } from '../components/ball.js'
 import { createCamera } from '../components/camera.js'
+import { createDirLight } from '../components/directional_light.js'
 import { createGradPlane } from '../components/gradient_plane.js'
 import { createObject } from '../components/object.js'
-// import { createDirLight } from '../components/directional_light.js'
 import { createPaddle } from '../components/paddle.js'
 import { createPadmiCam } from '../components/padmi_cam.js'
 import { createPlane } from '../components/plane.js'
@@ -11,6 +11,7 @@ import { createLight } from '../components/point_light.js'
 import { createScene } from '../components/scene.js'
 import { createStarfield } from '../components/starfield.js'
 import { createText } from '../components/text.js'
+import { createTransmissionPlane } from '../components/transmission_plane.js'
 import { Loop } from '../systems/Loop.js'
 import { createRenderer } from '../systems/Renderer.js'
 import { Resizer } from '../systems/Resizer.js'
@@ -33,19 +34,18 @@ class World {
 
     // INITS!!!!!
     if (index == 0) {
-      // this.initGradPlane()
       this.initPlane()
-      // this.initText('1')
-      // this.initBall()
       this.initPaddle()
-      // this.initObject()
       this.initLights(-2, 2, 3, 20, 0xfffbf6, false)
-      this.initStarfield()
+      this.initStarfield(800)
     } else if (index == 1) {
-      // this.initBall()
-      this.initLights(-1, 2.4, 1, 30, 0xfffbf6, true)
-      this.initPadmiCam(0, 0, 0)
-      // this.initPadmiCam(0, 0, 0)
+      // this.initTransmissionPlane()
+      // this.initPaddle()
+      this.initLights(-1, 2.4, 0, 20, 0xfffbf6, true)
+      this.initDirLights(1, 1, 0)
+      this.initPadmiCam(0, 0, 0, -2)
+      this.initPadmiCam(0, 0, 0, 2)
+      this.initStarfield(60)
     }
 
     //prettier-ignore
@@ -75,6 +75,12 @@ class World {
     this.render()
   }
 
+  initTransmissionPlane() {
+    const transPlane = createTransmissionPlane()
+    this.scene.add(transPlane)
+    this.render()
+  }
+
   initBall() {
     const ball = createBall()
     this.scene.add(ball)
@@ -87,8 +93,8 @@ class World {
     this.loop.updatables.push(paddle)
   }
 
-  async initPadmiCam(x, y, z) {
-    const cam = await createPadmiCam(x, y, z)
+  async initPadmiCam(x, y, z, id) {
+    const cam = await createPadmiCam(x, y, z, id)
     this.scene.add(cam)
     this.loop.updatables.push(cam)
   }
@@ -105,8 +111,8 @@ class World {
     // loop.updatables.push(type)
   }
 
-  initStarfield() {
-    const starfield = createStarfield()
+  initStarfield(starCount) {
+    const starfield = createStarfield(starCount)
     this.scene.add(starfield)
     this.loop.updatables.push(starfield)
     this.render()
@@ -116,6 +122,11 @@ class World {
     const light = createLight(x, y, z, int, color, isMove)
     this.scene.add(light)
     if (isMove) this.loop.updatables.push(light)
+  }
+
+  initDirLights(x, y, z) {
+    const dirLight = createDirLight(x, y, z)
+    this.scene.add(dirLight)
   }
 
   // 2. Render the scene

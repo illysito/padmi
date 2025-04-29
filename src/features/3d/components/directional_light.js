@@ -1,7 +1,7 @@
 import { DirectionalLight } from 'three'
 
 function createDirLight(x, y, z) {
-  const light = new DirectionalLight('#fffbf6', 1)
+  const light = new DirectionalLight('#fffbf6', 100)
   light.position.set(x, y, z)
 
   let targetX = x
