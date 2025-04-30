@@ -3,15 +3,16 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
-function bento() {
+function stats() {
   function isDesktop() {
     //prettier-ignore
     return window.innerWidth >= 991
   }
-  const boxes = document.querySelectorAll('.bento_box')
-  const title = document.querySelector('.title-heading')
+  const stats_section = document.querySelector('.stats')
+  const boxes = document.querySelectorAll('.stats_box')
+  const title = document.querySelector('.stats-title')
   const titlesArray = [
-    'Tus estadísticas',
+    '·',
     '% de errores y winners de cada golpe',
     'Total de golpes',
     'Velocidad de la bola',
@@ -22,7 +23,9 @@ function bento() {
     'Pad ID',
   ]
   const boxesArray = Array.from(boxes)
-  const bentoOverlay = document.querySelector('.bento-overlay')
+  const blurOverlay = document.querySelector('.blur-overlay')
+  const line = document.querySelector('.stats-line')
+  const dot = document.querySelector('.stats-dot')
 
   let isClicked = false
   let isHoverActive = false
@@ -30,6 +33,7 @@ function bento() {
   let left = 0
   let top = 0
 
+  // functions
   function setInitialState() {
     gsap.from(boxes, {
       opacity: 0,
@@ -56,8 +60,28 @@ function bento() {
       },
     })
   }
-  setInitialState()
 
+  const targetX = line.getBoundingClientRect().width
+  // const dotWidth = dot.getBoundingClientRect().width
+  function pinSection() {
+    gsap.to(dot, {
+      // x: targetX - dotWidth,
+      width: targetX,
+      scrollTrigger: {
+        start: 'top top',
+        end: 'bottom -50%',
+        pin: stats_section,
+        markers: false,
+        scrub: true,
+      },
+    })
+  }
+
+  // function calls
+  setInitialState()
+  pinSection()
+
+  // events
   function handleTitles(i) {
     title.textContent = titlesArray[i + 1]
   }
@@ -115,7 +139,7 @@ function bento() {
         width: '30%',
         height: '70svh',
         left: '35%',
-        top: '-8svh',
+        top: '-15svh',
         borderRadius: '8px',
         scale: 1,
         rotationZ: 0,
@@ -123,9 +147,10 @@ function bento() {
         duration: 0.6,
         ease: 'power1.out',
       })
-      gsap.to(bentoOverlay, {
+      gsap.to(blurOverlay, {
         zIndex: 1,
         opacity: 1,
+        duration: 0.6,
       })
       gsap.to(textContainer, {
         yPercent: -100,
@@ -158,7 +183,7 @@ function bento() {
             })
           },
         })
-        gsap.to(bentoOverlay, {
+        gsap.to(blurOverlay, {
           zIndex: 0,
           opacity: 0,
         })
@@ -176,4 +201,4 @@ function bento() {
   }
 }
 
-export default bento
+export default stats

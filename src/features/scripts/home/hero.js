@@ -36,23 +36,6 @@ function hero() {
       wrapper.appendChild(line)
     })
 
-    // gsap.from(splitH1.chars, {
-    //   yPercent: -100,
-    //   scaleY: 0.01,
-    //   duration: 1.6,
-    //   stagger: 0.08,
-    //   ease: 'power3.out',
-    // })
-
-    // splitH1.chars.forEach((char) => {
-    //   gsap.to(char, {
-    //     yPercent: 100,
-    //     stagger: 0.1,
-    //     duration: 1.6,
-    //     ease: 'power3.inOut',
-    //   })
-    // })
-
     gsap.from(h1, {
       yPercent: -100,
       scaleY: 0.01,
@@ -60,18 +43,6 @@ function hero() {
       stagger: 0.1,
       ease: 'power3.out',
     })
-
-    // gsap.to(splitH2.chars, {
-    //   yPercent: 100,
-    //   duration: 0.8,
-    //   stagger: 0.1,
-    // })
-    // INTRO ANIMATION
-    // gsap.to(nav_container, {
-    //   opacity: 1,
-    //   duration: 1.5,
-    //   ease: 'power2.inOut',
-    // })
 
     gsap.from(world_container, {
       scale: 0.8,
@@ -97,27 +68,6 @@ function hero() {
         })
       },
     })
-
-    // gsap.to(claim, {
-    //   scale: 1,
-    //   opacity: 1,
-    //   duration: 1.5,
-    //   ease: 'power3.inOut',
-    // })
-
-    // gsap.from(splitClaim.lines, {
-    //   yPercent: 100,
-    //   duration: 1.8,
-    //   ease: 'power3.inOut',
-    //   stagger: 0.2,
-    // })
-
-    // gsap.to(button, {
-    //   scale: 1,
-    //   opacity: 1,
-    //   duration: 2,
-    //   ease: 'power2.out',
-    // })
 
     gsap.to([badge, download], {
       scale: 1,

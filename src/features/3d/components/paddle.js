@@ -41,6 +41,7 @@ function createPaddle() {
       // ROTATION
       let toRad = Math.PI / 180
       let lastMouseX = 0
+      let scroll = 0
       // These will track the rotational speed in both axes
       let rotationalSpeedX = 0
 
@@ -57,11 +58,12 @@ function createPaddle() {
         counter += 0.5 * delta
         paddle.rotation.x = -90 * toRad + Math.sin(counter) * 20 * toRad
         paddle.rotation.y = -60 * toRad + Math.cos(counter) * 20 * toRad
-        paddle.rotation.z = paddleRotationX // Apply rotation to X axis
+        paddle.rotation.z =
+          Math.sin(0.5 * counter) * 360 * toRad + paddleRotationX // Apply rotation to X axis
         // Damping effect applied even if mouse is moving
         rotationalSpeedX *= damping
-        // Smooth update of rotations with rotational speed
-        paddleRotationX += rotationalSpeedX
+        // Smooth update of rotations with rotational speeds
+        paddleRotationX += rotationalSpeedX - scroll * 0.00025
         // console.log(colorCounter)
         paddle.position.x = gsap.utils.mapRange(
           0,
@@ -86,6 +88,10 @@ function createPaddle() {
         }
         // Update last mouse position
         lastMouseX = currentMouseX
+      })
+
+      window.addEventListener('scroll', () => {
+        scroll = window.scrollY
       })
 
       resolve(paddle)

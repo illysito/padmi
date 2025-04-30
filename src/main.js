@@ -3,23 +3,23 @@
 import world from './features/3d/world/universe'
 import world_2 from './features/3d/world/universe_2'
 // import world_3 from './features/3d/world/universe_3'
-import bento from './features/scripts/bento'
-// import bg_shader from './features/script_shaders/bg_shader_handler'
-import buttons from './features/scripts/buttons'
-import cameraTexts from './features/scripts/camera_texts'
-import claim from './features/scripts/claim'
-import contact from './features/scripts/contact'
-// import dark_mode from './features/scripts/darkmode'
-import hero from './features/scripts/hero'
-// import horizontal from './features/scripts/horizontal'
-import logoMarquee from './features/scripts/logo_marquee'
-import map from './features/scripts/mappp'
-// import map_nav from './features/scripts/map_nav_fine'
-import menu from './features/scripts/menu'
-import nav from './features/scripts/nav'
-// import parallax from './features/scripts/parallax'
-import split from './features/scripts/split'
-// import mouse from './features/scripts/mouse'
+//
+import cameraTexts from './features/scripts/club/camera_texts'
+import logoMarquee from './features/scripts/club/logo_marquee'
+//
+import contact from './features/scripts/contact/contact'
+//
+import buttons from './features/scripts/general/buttons'
+import menu from './features/scripts/general/menu'
+import nav from './features/scripts/general/nav'
+//
+// import claim from './features/scripts/home/claim'
+import hero from './features/scripts/home/hero'
+import split from './features/scripts/home/split'
+import stats from './features/scripts/home/stats'
+//
+import map from './features/scripts/where/map'
+//
 
 import './styles/style.css'
 
@@ -40,19 +40,14 @@ function runGeneralFunctions() {
 }
 
 function runHomeFunctions() {
-  // bg_shader()
-  // mouse()
   console.log('hey!')
   // if (world_container) {
-  world(world_container, 0) // INDEX 0 --> Paddle & Type
+  world(world_container, 0) // INaDEX 0 --> Paddle & Type
   // }
   hero()
   split()
-  // parallax()
-  claim()
-  bento()
-  // world_3(world_3_container)
-  // horizontal()
+  // claim()
+  stats()
 }
 
 function runClubFunctions() {
