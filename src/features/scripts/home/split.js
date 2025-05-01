@@ -7,8 +7,8 @@ gsap.registerPlugin(ScrollTrigger)
 function split() {
   // ELEMENTS
   // const claim_section = document.querySelector('.video')
-  const claim = document.querySelector('.claim-heading-2')
-  const p_claim = document.querySelector('.p-claim')
+  const claim = document.querySelectorAll('.claim-heading')
+  const p_claim = document.querySelectorAll('.p-claim')
   const card_heading = document.querySelectorAll('.card-heading')
   const card_p = document.querySelectorAll('.card-p')
   const bento = document.querySelector('.bento')
@@ -17,8 +17,8 @@ function split() {
   // const downloadClaim = new SplitType(download, { types: 'lines' })
 
   // CLAIM
-  const splitClaim = new SplitType(claim, { types: 'lines' })
-  const pSplitClaim = new SplitType(p_claim, { types: 'lines' })
+  // const splitClaim = new SplitType(claim, { types: 'lines' })
+  // const pSplitClaim = new SplitType(p_claim, { types: 'lines' })
   // const video_section = document.querySelector('.video')
   // const splitClaimLinesArray = Array.from(splitClaim.lines)
   // const lastClaimLine = splitClaimLinesArray[2]
@@ -73,37 +73,55 @@ function split() {
   // }
   // generateLastLine()
 
-  splitClaim.lines.forEach((line) => {
-    const wrapper = document.createElement('div')
-    wrapper.style.overflow = 'hidden'
-    wrapper.style.display = 'block'
+  claim.forEach((c) => {
+    const splitClaim = new SplitType(c, { types: 'lines' })
+    splitClaim.lines.forEach((line) => {
+      const wrapper = document.createElement('div')
+      wrapper.style.overflow = 'hidden'
+      wrapper.style.display = 'block'
 
-    line.parentNode.insertBefore(wrapper, line)
-    wrapper.appendChild(line)
-  })
-  pSplitClaim.lines.forEach((line) => {
-    const wrapper = document.createElement('div')
-    wrapper.style.overflow = 'hidden'
-    wrapper.style.display = 'block'
-
-    line.parentNode.insertBefore(wrapper, line)
-    wrapper.appendChild(line)
-  })
-
-  gsap.from([splitClaim.lines, pSplitClaim.lines], {
-    scaleY: 0.4,
-    yPercent: 100,
-    duration: 1,
-    ease: 'power1.out',
-    stagger: 0.2,
-    scrollTrigger: {
-      trigger: claim,
-      start: 'top 80%',
-      end: 'top 85%',
-      markers: false,
-    },
+      line.parentNode.insertBefore(wrapper, line)
+      wrapper.appendChild(line)
+    })
+    gsap.from(splitClaim.lines, {
+      scaleY: 0.4,
+      yPercent: 100,
+      duration: 1,
+      ease: 'power1.out',
+      stagger: 0.2,
+      scrollTrigger: {
+        trigger: c,
+        start: 'top 80%',
+        end: 'top 85%',
+        markers: false,
+      },
+    })
   })
 
+  p_claim.forEach((p) => {
+    const splitClaim = new SplitType(p, { types: 'lines' })
+    splitClaim.lines.forEach((line) => {
+      const wrapper = document.createElement('div')
+      wrapper.style.overflow = 'hidden'
+      wrapper.style.display = 'block'
+
+      line.parentNode.insertBefore(wrapper, line)
+      wrapper.appendChild(line)
+    })
+    gsap.from(splitClaim.lines, {
+      scaleY: 0.4,
+      yPercent: 100,
+      duration: 1,
+      ease: 'power1.out',
+      stagger: 0.2,
+      scrollTrigger: {
+        trigger: claim,
+        start: 'top 80%',
+        end: 'top 85%',
+        markers: false,
+      },
+    })
+  })
   // gsap.to(claim, {
   //   scale: 40,
   //   duration: 1,

@@ -13,7 +13,8 @@ import buttons from './features/scripts/general/buttons'
 import menu from './features/scripts/general/menu'
 import nav from './features/scripts/general/nav'
 //
-// import claim from './features/scripts/home/claim'
+import bento from './features/scripts/home/bento'
+import claim from './features/scripts/home/claim'
 import hero from './features/scripts/home/hero'
 import split from './features/scripts/home/split'
 import stats from './features/scripts/home/stats'
@@ -46,8 +47,9 @@ function runHomeFunctions() {
   // }
   hero()
   split()
-  // claim()
+  claim()
   stats()
+  bento()
 }
 
 function runClubFunctions() {
