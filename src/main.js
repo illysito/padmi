@@ -4,8 +4,9 @@ import world from './features/3d/world/universe'
 import world_2 from './features/3d/world/universe_2'
 // import world_3 from './features/3d/world/universe_3'
 //
-import cameraTexts from './features/scripts/club/camera_texts'
+// import cameraTexts from './features/scripts/club/camera_texts'
 import logoMarquee from './features/scripts/club/logo_marquee'
+import numbers from './features/scripts/club/numbers'
 //
 import contact from './features/scripts/contact/contact'
 //
@@ -18,6 +19,7 @@ import claim from './features/scripts/home/claim'
 import hero from './features/scripts/home/hero'
 import split from './features/scripts/home/split'
 import stats from './features/scripts/home/stats'
+import steps from './features/scripts/home/steps'
 //
 import map from './features/scripts/where/map'
 //
@@ -30,7 +32,7 @@ const world_container = document.querySelector('.world-container')
 const world_2_container = document.querySelector('.world-2-container')
 // const world_3_container = document.querySelector('.world-3-container')
 // const particles_container = document.querySelector('.particles-container')
-const club_container = document.querySelector('.club-container')
+// const club_container = document.querySelector('.club-container')
 
 function runGeneralFunctions() {
   world_2(world_2_container)
@@ -50,12 +52,14 @@ function runHomeFunctions() {
   claim()
   stats()
   bento()
+  steps()
 }
 
 function runClubFunctions() {
-  world(club_container, 1)
-  cameraTexts()
+  // world(club_container, 1)
+  // cameraTexts()
   logoMarquee()
+  numbers()
 
   // SCROLL HELP!
   const scrollHelper = document.querySelector('.scroll-guide')

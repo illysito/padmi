@@ -69,7 +69,7 @@ function stats() {
       width: targetX,
       scrollTrigger: {
         start: 'top top',
-        end: 'bottom -50%',
+        end: 'bottom top',
         pin: stats_section,
         markers: false,
         scrub: true,
