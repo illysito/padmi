@@ -4,7 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 function bento() {
-  const bento_section = document.querySelector('.bento')
+  const bento_section = document.querySelector('.bento_section')
   const columns = document.querySelectorAll('.bento-column')
   // const central_column = document.querySelector('.is--central')
   let columnsArray = Array.from(columns)
@@ -20,16 +20,16 @@ function bento() {
   columnsArray = shuffle(columnsArray)
 
   gsap.to(bento_section, {
-    scale: 1,
     scrollTrigger: {
       trigger: bento_section,
       start: 'top top',
-      end: 'bottom -100%',
-      pin: bento_section,
+      end: 'bottom top',
+      pin: true,
       scrub: 1,
       markers: false,
     },
   })
+
   gsap.to(columnsArray, {
     opacity: 1,
     stagger: 0.1,
@@ -37,7 +37,7 @@ function bento() {
     scrollTrigger: {
       trigger: bento_section,
       start: 'top top',
-      end: 'bottom -100%',
+      end: 'bottom top',
       scrub: 1,
       markers: false,
     },

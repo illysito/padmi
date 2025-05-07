@@ -44,7 +44,7 @@ function world(container, index) {
             }
           })
         },
-        { threshold: 0.25 }
+        { threshold: 0.4 }
       )
 
       observer.observe(trigger)

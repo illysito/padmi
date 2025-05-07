@@ -4,17 +4,6 @@ body {
   overflow: visible;
 }
 
-/* BENTO */
-
-.bento_box.expanded {
-  position: absolute;
-  left: 35%;
-  top: -8svh;
-  width: 30%;
-  height: 70svh;
-  z-index: 2;
-}
-
 /* MISC */
 
 .particles-container {
@@ -163,7 +152,7 @@ body,
 
 .claim-heading {
   color: #e5e7e1;
-  transition: background-color 0.8s ease;
+  /* transition: background-color 0.8s ease; */
 }
 
 .span--bold {

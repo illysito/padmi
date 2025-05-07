@@ -7,6 +7,8 @@ function map() {
   function queryDomElements() {
     return {
       // main card
+      clubNumber: document.querySelector('.is--club'),
+      courtNumber: document.querySelector('.is--court'),
       card: document.querySelector('.card'),
       heading: document.querySelector('.city-heading'),
       low_line: document.querySelector('.low-line'),
@@ -60,6 +62,8 @@ function map() {
   })
   const cities = []
   const clubs = []
+  let clubCount = 0
+  let courtCount = 0
   const markers = []
   const map = new maplibregl.Map({
     container: 'map',
@@ -107,7 +111,7 @@ function map() {
       duration: 0.6,
       onRepeat: function () {
         count++
-        console.log(count)
+        // console.log(count)
         if (count >= maxRepeats) {
           gsap.set(domElements.scroll_icon, { opacity: 0 })
         }
@@ -122,6 +126,31 @@ function map() {
     })
   }
   gsapInit()
+
+  // cities and club numbers
+  function loadNumbers() {
+    let time = 20
+    let clubCounter = 0
+    let courtCounter = 0
+    // Count clubs and display them
+    for (let i = 0; i < cities.length; i++) {
+      clubCount += cities[i].clubs
+    }
+    const cityInterval = setInterval(() => {
+      domElements.clubNumber.textContent = clubCounter
+      clubCounter++
+      if (clubCounter > clubCount) clearInterval(cityInterval)
+    }, time)
+    // Count courts and display them
+    for (let j = 0; j < cities.length; j++) {
+      courtCount += cities[j].courts
+    }
+    const courtInterval = setInterval(() => {
+      domElements.courtNumber.textContent = courtCounter
+      courtCounter++
+      if (courtCounter > courtCount) clearInterval(courtInterval)
+    }, time / 2)
+  }
 
   // check if it's mobile
   function isMobile() {
@@ -405,7 +434,7 @@ function map() {
     } catch (error) {
       console.error('Error loading Google Sheets data:', error)
     }
-    console.log(clubs)
+    // console.log(clubs)
   }
 
   // match city Index from city Name
@@ -567,6 +596,7 @@ function map() {
     await fetchDataCities()
     await fetchDataClubs()
     loadMarkers()
+    loadNumbers()
   }
   init()
 

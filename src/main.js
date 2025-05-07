@@ -1,4 +1,7 @@
-// import gsap from 'gsap'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
 
 import world from './features/3d/world/universe'
 import world_2 from './features/3d/world/universe_2'
@@ -90,3 +93,7 @@ if (body.classList.contains('body__club')) runClubFunctions()
 if (body.classList.contains('body__where')) runWhereFunctions()
 if (body.classList.contains('body__contact')) runContactFunctions()
 if (body.classList.contains('body__legals')) runLegalsFunctions()
+
+window.addEventListener('load', () => {
+  ScrollTrigger.refresh()
+})

@@ -11,9 +11,12 @@ function stats() {
   const stats_section = document.querySelector('.stats')
   const boxes = document.querySelectorAll('.stats_box')
   const title = document.querySelector('.stats-title')
+  const stats_card_headings = document.querySelectorAll('.stats-card-h')
+  const stats_line = document.querySelector('.stats-line')
+  const description = document.querySelector('.description-features')
   const titlesArray = [
-    '·',
-    '% de errores y winners de cada golpe',
+    '',
+    'Porcentaje de errores y winners por golpe',
     'Total de golpes',
     'Velocidad de la bola',
     'Mapa de calor',
@@ -22,40 +25,44 @@ function stats() {
     'Análisis de servicio',
     'Pad ID',
   ]
+  const descriptionsArray = [
+    'Padmi ofrece estadísticas en tiempo real coninformación detallada sobre tu partido, contándotecuándo eres un genio y cuáles son tus puntos flacos.',
+    'Podrás observar cuántos intercambios han finalizado en winners y errores, además del porcentaje de bolas pasadas al otro lado de la red.',
+    'Mide el total de impactos que has ejecutado, proporcionándote un desglose detallado del volumen y la frecuencia de tu juego.',
+    'Detectamos y registramos la velocidad de cada impacto con precisión milimétrica, proporcionando información clave para optimizar tu rendimiento.',
+    'Visualiza tu patrón de movimiento durante el partido, con un análisis detallado de las zonas que más has cubierto.',
+    'Compara tu rendimiento con el de otros jugadores dentro de la app y descubre quién domina en cada aspecto del juego.',
+    'Registra la distancia total que te has desplazado en la pista para medir tu esfuerzo y resistencia en cada partido.',
+    'Obtén datos detallados sobre la velocidad de tu saque, la efectividad de tus primeros y segundos servicios, y el número de dobles faltas.',
+    'Tu cromo digital: toda tu información de rendimiento, estadísticas y nivel en un solo lugar. Personalizable y en constante evolución con cada partido.',
+  ]
   const boxesArray = Array.from(boxes)
-  const blurOverlay = document.querySelector('.blur-overlay')
   const line = document.querySelector('.stats-line')
   const dot = document.querySelector('.stats-dot')
 
   let isClicked = false
   let isHoverActive = false
-  let rotation = 0
-  let left = 0
-  let top = 0
 
   // functions
   function setInitialState() {
     gsap.from(boxes, {
       opacity: 0,
       rotationZ: 0,
-      duration: 1,
+      duration: 0.7,
       stagger: 0.1,
       scrollTrigger: {
         trigger: boxes,
         start: 'top 90%',
-        // end: 'top 20%',
-        // pin: true,
       },
       onComplete: () => {
         isHoverActive = true
       },
     })
-    gsap.to(title, {
-      yPercent: 100,
-      oapcity: 1,
-      duration: 1,
+    gsap.from(stats_line, {
+      opacity: 0,
+      duration: 1.6,
       scrollTrigger: {
-        trigger: title,
+        trigger: stats_line,
         start: 'top 80%',
       },
     })
@@ -84,12 +91,13 @@ function stats() {
   // events
   function handleTitles(i) {
     title.textContent = titlesArray[i + 1]
+    description.textContent = descriptionsArray[i + 1]
   }
 
   function hoverIn(event, cardIndex) {
     if (!isHoverActive) return
     if (isClicked) return
-    const box = event.currentTarget
+    // todas en gris menos la que pico
     boxesArray.forEach((box, index) => {
       if (index !== cardIndex) {
         gsap.to(box, {
@@ -98,11 +106,17 @@ function stats() {
         })
       }
     })
+    // hago cosas en la que pico
+    const box = event.currentTarget
     gsap.to(box, {
       opacity: 1,
       scale: 0.99,
       y: -60,
       borderRadius: '16px',
+      duration: 0.6,
+    })
+    gsap.to(stats_card_headings, {
+      color: '#8b81e4',
       duration: 0.6,
     })
     handleTitles(cardIndex)
@@ -122,81 +136,17 @@ function stats() {
       borderRadius: '8px',
       duration: 0.6,
     })
+    gsap.to(stats_card_headings, {
+      color: '#cbcbcd',
+      duration: 0.6,
+    })
     if (!isClicked) handleTitles(-1)
-  }
-
-  function clickIn(event) {
-    const box = event.currentTarget
-    const textContainer = box.lastElementChild
-    console.log(rotation)
-    console.log(isClicked)
-    if (!isClicked) {
-      rotation = gsap.getProperty(box, 'rotationZ')
-      left = gsap.getProperty(box, 'left')
-      top = gsap.getProperty(box, 'top')
-      gsap.to(box, {
-        y: 0,
-        width: '30%',
-        height: '70svh',
-        left: '35%',
-        top: '-15svh',
-        borderRadius: '8px',
-        scale: 1,
-        rotationZ: 0,
-        zIndex: 2,
-        duration: 0.6,
-        ease: 'power1.out',
-      })
-      gsap.to(blurOverlay, {
-        zIndex: 1,
-        opacity: 1,
-        duration: 0.6,
-      })
-      gsap.to(textContainer, {
-        yPercent: -100,
-        opacity: 1,
-        duration: 0.8,
-        delay: 0.2,
-        ease: 'power1.out',
-      })
-      isClicked = true
-    } else {
-      if (gsap.getProperty(box, 'zIndex') === 2) {
-        gsap.to(textContainer, {
-          yPercent: 0,
-          opacity: 0,
-          duration: 0.8,
-        })
-        gsap.to(box, {
-          width: '16%',
-          height: '40svh',
-          left: left,
-          top: top,
-          rotationZ: rotation,
-          zIndex: 0,
-          duration: 0.6,
-          delay: 0.1,
-          ease: 'power1.out',
-          onComplete: () => {
-            gsap.set(box, {
-              clearProps: 'width,height,left,top,rotation,zIndex',
-            })
-          },
-        })
-        gsap.to(blurOverlay, {
-          zIndex: 0,
-          opacity: 0,
-        })
-        isClicked = false
-      }
-    }
   }
 
   if (isDesktop()) {
     boxes.forEach((box, index) => {
       box.addEventListener('mouseenter', (event) => hoverIn(event, index))
       box.addEventListener('mouseleave', hoverOut)
-      box.addEventListener('click', clickIn)
     })
   }
 }

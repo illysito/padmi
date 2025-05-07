@@ -1,5 +1,8 @@
+import gsap from 'gsap'
+
 function numbers() {
   const headings = document.querySelectorAll('.numbers-h')
+  const tags = document.querySelectorAll('.numbers-tag')
   const headingsArray = Array.from(headings)
 
   const clubs = []
@@ -83,23 +86,23 @@ function numbers() {
   }
 
   function displayNumbers() {
-    let time = 20
+    let time = 40
 
-    let cityCounter = 0
+    let cityCounter = Math.floor(cityCount / 4)
     const cityInterval = setInterval(() => {
       headingsArray[0].textContent = cityCounter
       cityCounter++
       if (cityCounter > cityCount) clearInterval(cityInterval)
     }, time)
 
-    let clubCounter = 0
+    let clubCounter = Math.floor(clubCount / 4)
     const clubInterval = setInterval(() => {
       headingsArray[1].textContent = clubCounter
       clubCounter++
       if (clubCounter > clubCount) clearInterval(clubInterval)
     }, time)
 
-    let courtCounter = 0
+    let courtCounter = Math.floor(courtCount / 4)
     const courtInterval = setInterval(() => {
       headingsArray[2].textContent = courtCounter
       courtCounter++
@@ -118,6 +121,16 @@ function numbers() {
       (entries, observer) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
+            gsap.to(headings, {
+              opacity: 1,
+              yPercent: -100,
+              duration: 1,
+              ease: 'linear',
+            })
+            gsap.from(tags, {
+              opacity: 0,
+              duration: 1,
+            })
             displayNumbers()
             observer.unobserve(entry.target) // run once
           }
