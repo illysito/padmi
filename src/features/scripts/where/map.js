@@ -16,8 +16,10 @@ function map() {
       city_data_wrapper: document.querySelector('.city-data-wrapper'),
       club_h: document.querySelector('.is--club'),
       court_h: document.querySelector('.is--court'),
+      city_imgs_container: document.querySelector('.city-imgs'),
       city_imgs: document.querySelectorAll('.city-img'),
       world_img: document.querySelector('.is--world'),
+      scroll_div: document.querySelector('.scroll-div'),
       scroll_icon: document.querySelector('.scroll-icon'),
       // city names
       city_names_wrapper: document.querySelector('.city-names-wrapper'),
@@ -26,7 +28,8 @@ function map() {
       // clubs list
       clubs_card: document.querySelector('.clubs-card'),
       // const clubs_wrapper = document.querySelector('.clubs-wrapper')
-      clubs_list: document.querySelectorAll('.clubs-list'),
+      clubs_list: document.querySelector('.clubs-list'),
+      // clubs_list_2: document.querySelector('.clubs-list-2'),
       clubs_h: document.querySelector('.clubs-h'),
       club_p: document.querySelectorAll('.club-p'),
       // courts list
@@ -39,11 +42,12 @@ function map() {
   const domElements = queryDomElements()
 
   // needed DOM arrays
-  const cityImgsArray = Array.from(domElements.city_imgs)
-  const cityDotsArray = Array.from(domElements.city_dots)
-  const cityNamesArray = Array.from(domElements.city_names)
-  const elementsArray = Array.from(domElements.clubs_list)
-  const club_p_Array = Array.from(domElements.club_p)
+  let cityImgsArray = Array.from(domElements.city_imgs)
+  let cityDotsArray = Array.from(domElements.city_dots)
+  let cityNamesArray = Array.from(domElements.city_names)
+  // const elementsArray = Array.from(domElements.clubs_list)
+  let club_p_Array = Array.from(domElements.club_p)
+  console.log(club_p_Array)
 
   // DOM queries for MAP
   const map_wrapper = document.querySelector('.map')
@@ -53,13 +57,15 @@ function map() {
   // logic variables
   const hover_duration = 0.6
   let clubCardsDummy = false
-  let heights = []
-  // let currentIndex
   let margins = 36
   let info_offset = domElements.clubs_h.scrollHeight
-  domElements.clubs_list.forEach((c, index) => {
-    heights[index] = c.scrollHeight + margins + info_offset
-  })
+  let currentHeight = margins + info_offset
+  let currentCityIndex = 0
+  // let currentIndex
+  // meto en un array los heights iniciales de cada clubs p
+  // let info_offset_2 = 0
+  // let height_2 = 0
+  const indexOffsets = []
   const cities = []
   const clubs = []
   let clubCount = 0
@@ -159,6 +165,8 @@ function map() {
 
   // .............................. FUNCIONES .............................. //
 
+  // ··········· AUXILIARES ·········· //
+
   // generate randomCharacters
   let countIndex = 0
   let countChar = ''
@@ -218,102 +226,179 @@ function map() {
     }, time)
   }
 
-  // handle city on click
-  function handleCity(index) {
-    // opacity 0 to all club lists
-    gsap.to(domElements.clubs_list, {
-      opacity: 0,
-      duration: 0.2,
-      //prettier-ignore
-      zIndex: 0,
-    })
-    // opacity to current club list
-    gsap.to(elementsArray[index], {
-      opacity: 1,
-      duration: 0.6,
-      //prettier-ignore
-      zIndex: 10,
-    })
-    // hide all images
-    gsap.to(domElements.city_imgs, {
-      opacity: 0,
-      duration: 0.2,
-      //prettier-ignore
-      zIndex: 0,
-    })
-    // show current image
-    gsap.to(cityImgsArray[index], {
-      opacity: 1,
-      duration: 0.6,
-      //prettier-ignore
-      zIndex: 10,
-    })
-    // set correct height to club card
-    gsap.to(domElements.clubs_card, {
-      height: heights[index],
-      duration: 0.8,
-    })
-    // city dots to white
-    gsap.to(domElements.city_dots, {
-      backgroundColor: '#e5e7e1',
-      x: 0,
-      duration: 0.4,
-    })
-    // current dot to green
-    gsap.to(cityDotsArray[index - 1], {
-      backgroundColor: '#ceff05',
-      duration: 0.4,
-    })
-    // city names to white
-    gsap.to(domElements.city_names, {
-      color: '#e5e7e1',
-      duration: 0.4,
-    })
-    // current City to green
-    gsap.to(cityNamesArray[index - 1], {
-      color: '#ceff05',
-      duration: 0.4,
-    })
-
-    // CONTENT
-    let currentCity = cities[index - 1].name
-    generateCityName(currentCity)
-    let currentLat = cities[index - 1].lat.toFixed(2)
-    let currentLong = cities[index - 1].lng.toFixed(2)
-    domElements.coords.textContent = `${currentLat}º N ${currentLong}º W`
-    //prettier-ignore
-    domElements.clubs_h.textContent = `Clubs en ${cities[index - 1].name}`
-    // handleClub(cities[currentIndex - 1].firstClubIndex) // aquí estoy metiendo FCI de cada club: .....firstClubIndex
-    // reiniciar caja pistas
-    domElements.courts_wrapper.innerHTML = ''
-    // court_name.textContent = `Selecciona un club`
-    domElements.courts_h.textContent = `Pistas Padmi: `
+  // genero INDOOR los Index Offsets
+  function generateIndexOffsets() {
+    for (let i = 1; i < cities.length; i++) {
+      indexOffsets[0] = 0
+      indexOffsets[i] = indexOffsets[i - 1] + cities[i - 1].clubs
+    }
+    console.log(indexOffsets)
   }
 
-  // handle club on click
-  function handleClub(index) {
-    // name
-    // let currentClub = clubs[index].name
-    // generateClubName(currentClub)
+  // ············ UI ············ //
 
-    // courts
-    domElements.courts_wrapper.innerHTML = ''
-    // const courtNumbers = clubs[index].courts.split(' ')
-    // console.log(clubs[index].courts)
-    //prettier-ignore
-    const courtNumbers = [...clubs[index].courts.matchAll(/[·](.*?)[·]/g)].map(match => match[1])
-    // console.log(courtNumbers)
-    courtNumbers.forEach((court) => {
-      // console.log(court)
-      const courtContainer = document.createElement('div')
-      courtContainer.classList.add('court-container')
-      const courtName = document.createElement('h6')
-      courtName.classList.add('court-name')
-      courtName.textContent = `Pista ${court}`
-      courtContainer.appendChild(courtName)
-      domElements.courts_wrapper.appendChild(courtContainer)
+  // visualizar en UI la lista de clubes de cada ciudad
+  function displayCities() {
+    domElements.scroll_div.innerHTML = ''
+
+    // setting content
+    for (let i = 0; i < cities.length; i++) {
+      const cityNameContainer = document.createElement('div')
+      cityNameContainer.classList.add('city-name')
+      const cityPoint = document.createElement('div')
+      cityPoint.classList.add('city-point')
+      const cityHeader = document.createElement('h4')
+      cityHeader.classList.add('city-header')
+      cityHeader.textContent = cities[i].name
+      cityNameContainer.appendChild(cityPoint)
+      cityNameContainer.appendChild(cityHeader)
+      domElements.scroll_div.appendChild(cityNameContainer)
+    }
+    const scrollSpacer = document.createElement('div')
+    scrollSpacer.classList.add('scroll-spacer')
+    domElements.scroll_div.appendChild(scrollSpacer)
+
+    // resetting the list
+    domElements.city_names = document.querySelectorAll('.city-header')
+    domElements.city_dots = document.querySelectorAll('.city-point')
+    cityNamesArray = Array.from(domElements.city_names)
+    cityDotsArray = Array.from(domElements.city_dots)
+
+    // resetting the EVENT LISTENER
+    domElements.city_names.forEach((name, index) => {
+      name.addEventListener('click', () => {
+        currentCityIndex = index
+        flyToCity(index)
+        domElements.city_names_wrapper.style.pointerEvents = 'none'
+        // const n = event.currentTarget
+        // currentIndex = index + 1
+        // clubs to white
+        // momentaneous highlight
+        gsap.to(domElements.clubs_card, {
+          backgroundColor: '#8b81e422',
+          duration: hover_duration - 0.25,
+          ease: 'power1.inOut',
+          onComplete: () => {
+            gsap.to(domElements.clubs_card, {
+              backgroundColor: '#8b81e400',
+              duration: hover_duration - 0.25,
+              ease: 'power1.inOut',
+            })
+          },
+        })
+        // activate pointer events on clubs on first city click
+        if (!clubCardsDummy) {
+          gsap.set(domElements.clubs_card, {
+            pointerEvents: 'auto',
+            onComplete: () => {
+              domElements.clubs_card.style.pointerEvents = 'auto'
+              clubCardsDummy = true
+            },
+          })
+        }
+        handleCity(index + 1)
+        updateCount(index + 1)
+      })
+      name.addEventListener('mouseover', (event) => {
+        const n = event.currentTarget
+        gsap.to(n, {
+          x: 8,
+          duration: 0.3,
+        })
+      })
+      name.addEventListener('mouseleave', (event) => {
+        const n = event.currentTarget
+        gsap.to(n, {
+          x: 0,
+          duration: 0.3,
+        })
+        gsap.to(cityDotsArray[index], {
+          x: 0,
+          duration: 0.3,
+        })
+      })
     })
-    domElements.courts_h.textContent = `Pistas Padmi: ${clubs[index].courtNumber}`
+  }
+
+  function displayImages() {
+    // setting content
+    for (let i = 0; i < cities.length; i++) {
+      const cityImg = document.createElement('img')
+      cityImg.classList.add('city-img', 'is--hidden')
+      // cityImg.src = cities[i].imgURL
+      cityImg.src =
+        'https://drive.google.com/uc?export=view&id=1eragilIyZB4kZqfaFs__fexPsi3n3Ncl'
+
+      domElements.city_imgs_container.appendChild(cityImg)
+    }
+
+    // reset node & array
+    domElements.city_imgs = document.querySelectorAll('.city-img')
+    cityImgsArray = Array.from(domElements.city_imgs)
+  }
+
+  // visualizar en UI la lista de clubes de cada ciudad
+  function displayClubs(index) {
+    domElements.clubs_list.innerHTML = ''
+
+    // turning the ·alsfh· string into an array
+    const clubNames = [...cities[index].clubNames.matchAll(/[·](.*?)[·]/g)].map(
+      (match) => match[1]
+    )
+
+    // setting content
+    clubNames.forEach((club) => {
+      const clubContainer = document.createElement('div')
+      clubContainer.classList.add('club-names-wrapper')
+      const clubTitle = document.createElement('p')
+      clubTitle.classList.add('club-p')
+      clubTitle.textContent = `${club}`
+      clubContainer.appendChild(clubTitle)
+      domElements.clubs_list.appendChild(clubContainer)
+    })
+
+    // setting the height
+    currentHeight =
+      document.querySelector('.clubs-wrapper').scrollHeight +
+      margins +
+      info_offset
+
+    // resetting the list
+    domElements.club_p = document.querySelectorAll('.club-p')
+    club_p_Array = Array.from(domElements.club_p)
+
+    // resetting the EVENT LISTENER
+    domElements.club_p.forEach((club, index) => {
+      club.addEventListener('click', (event) => {
+        flyToClub(index + indexOffsets[currentCityIndex])
+        // clubs_wrapper.style.pointerEvents = 'none'
+        const n = event.currentTarget
+        // console.log(index)
+        gsap.to(domElements.club_p, {
+          opacity: 0.4,
+          duration: 0.4,
+        })
+        gsap.to(n, {
+          opacity: 1,
+          duration: 0.4,
+        })
+        handleClub(index + indexOffsets[currentCityIndex])
+      })
+      club.addEventListener('mouseover', (event) => {
+        const n = event.currentTarget
+        gsap.to(n, {
+          x: 8,
+          duration: 0.4,
+        })
+      })
+      club.addEventListener('mouseleave', (event) => {
+        const n = event.currentTarget
+        gsap.to(n, {
+          x: 0,
+          duration: 0.4,
+        })
+      })
+    })
   }
 
   // update club & courts counter on main card
@@ -341,6 +426,87 @@ function map() {
     // i = clubs[currentIndex - 1]
   }
 
+  // ·········· IMPORTANTES ··········· //
+
+  // handle city on click
+  function handleCity(index) {
+    displayClubs(index - 1)
+
+    function animation() {
+      // hide all images
+      gsap.to(domElements.city_imgs, {
+        opacity: 0,
+        duration: 0.2,
+        //prettier-ignore
+        zIndex: 0,
+      })
+      // show current image
+      gsap.to(cityImgsArray[index], {
+        opacity: 1,
+        duration: 0.6,
+        //prettier-ignore
+        zIndex: 10,
+      })
+      // set correct height to club card
+      gsap.to(domElements.clubs_card, {
+        height: currentHeight,
+        duration: 0.8,
+      })
+      // city dots to white
+      gsap.to(domElements.city_dots, {
+        backgroundColor: '#e5e7e1',
+        x: 0,
+        duration: 0.4,
+      })
+      // current dot to green
+      gsap.to(cityDotsArray[index - 1], {
+        backgroundColor: '#ceff05',
+        duration: 0.4,
+      })
+      // city names to white
+      gsap.to(domElements.city_names, {
+        color: '#e5e7e1',
+        duration: 0.4,
+      })
+      // current City to green
+      gsap.to(cityNamesArray[index - 1], {
+        color: '#ceff05',
+        duration: 0.4,
+      })
+    }
+    animation()
+
+    let currentCity = cities[index - 1].name
+    generateCityName(currentCity)
+
+    let currentLat = cities[index - 1].lat.toFixed(2)
+    let currentLong = cities[index - 1].lng.toFixed(2)
+
+    domElements.coords.textContent = `${currentLat}º N ${currentLong}º W`
+    domElements.clubs_h.textContent = `Clubs en ${cities[index - 1].name}`
+    domElements.courts_wrapper.innerHTML = ''
+    domElements.courts_h.textContent = `Pistas Padmi: `
+  }
+
+  // handle club on click
+  function handleClub(index) {
+    // Cada vez que hago click en un club, se recompone el HTML que muestra las PISTAS de ese CLUB
+    domElements.courts_wrapper.innerHTML = ''
+    const courtNumbers = [...clubs[index].courts.matchAll(/[·](.*?)[·]/g)].map(
+      (match) => match[1]
+    )
+    courtNumbers.forEach((court) => {
+      const courtContainer = document.createElement('div')
+      courtContainer.classList.add('court-container')
+      const courtName = document.createElement('h6')
+      courtName.classList.add('court-name')
+      courtName.textContent = `Pista ${court}`
+      courtContainer.appendChild(courtName)
+      domElements.courts_wrapper.appendChild(courtContainer)
+    })
+    domElements.courts_h.textContent = `Pistas Padmi: ${clubs[index].courtNumber}`
+  }
+
   // fetch cities data
   async function fetchDataCities() {
     //prettier-ignore
@@ -363,18 +529,19 @@ function map() {
         let name = columns[0]?.trim().replace(/"/g, '')
         let stringLng = columns[1]?.trim().replace(',', '.').replace(/"/g, '')
         let stringLat = columns[2]?.trim().replace(',', '.').replace(/"/g, '')
-        let club = columns[3]?.trim().replace(/"/g, '')
+        let clubNumber = columns[3]?.trim().replace(/"/g, '')
         let court = columns[4]?.trim().replace(/"/g, '')
-        let frst_clb_index = columns[5]?.trim().replace(/"/g, '')
+        let clbName = columns[5]?.trim().replace(/"/g, '')
+        let imgURL = columns[6]?.trim().replace(/"/g, '')
+        // let frst_clb_index = columns[5]?.trim().replace(/"/g, '')
 
         if (!stringLng || !stringLat) {
           console.log('Longitude or Latitude is empty or invalid')
         } else {
           lng = parseFloat(stringLng)
           lat = parseFloat(stringLat)
-          club = parseFloat(club)
+          clubNumber = parseFloat(clubNumber)
           court = parseFloat(court)
-          frst_clb_index = parseFloat(frst_clb_index)
         }
 
         if (isNaN(lat) || isNaN(lng)) {
@@ -387,12 +554,15 @@ function map() {
           name,
           lat,
           lng,
-          clubs: club,
+          clubs: clubNumber,
           courts: court,
-          firstClubIndex: frst_clb_index,
+          clubNames: clbName,
+          imgURL: imgURL,
         })
-        // console.log(cities)
       })
+      generateIndexOffsets()
+      displayCities()
+      displayImages()
     } catch (error) {
       console.error('Error loading Google Sheets data:', error)
     }
@@ -431,6 +601,7 @@ function map() {
           clubCity: clb_city,
         })
       })
+      console.log(clubs)
     } catch (error) {
       console.error('Error loading Google Sheets data:', error)
     }
@@ -448,6 +619,7 @@ function map() {
       }
     }
     console.log('City matched to CITIES: ' + cities[cityToHandleIndex].name)
+    currentCityIndex = cityToHandleIndex
     handleCity(cityToHandleIndex + 1)
     updateCount(cityToHandleIndex + 1)
   }
@@ -516,14 +688,16 @@ function map() {
           const currentMarker = event.currentTarget
           const markersArrayIndex = markersArray.indexOf(currentMarker)
           matchCity(markersArrayIndex)
-          gsap.to(domElements.club_p, {
-            color: '#e5e7e133',
-            duration: 0.4,
-          })
-          gsap.to(club_p_Array[markersArrayIndex + 1], {
-            color: '#e5e7e1',
-            duration: 0.4,
-          })
+
+          gsap.to(
+            domElements.club_p[
+              markersArrayIndex - indexOffsets[currentCityIndex]
+            ],
+            {
+              opacity: 1,
+              duration: 0.4,
+            }
+          )
           handleClub(markersArrayIndex)
           // activate pointer events on clubs on first marker click
           if (!clubCardsDummy) {
@@ -561,13 +735,11 @@ function map() {
         return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t
       },
     })
-    // if (markers[cities[index].firstClubIndex]) {
-    //   markers[cities[index].firstClubIndex].togglePopup()
-    // }
   }
 
   // fly to club
   function flyToClub(index) {
+    console.log('fly index: ' + index)
     if (isMobile()) {
       window.scrollTo({
         top: 0,
@@ -603,98 +775,6 @@ function map() {
   // .............................. EVENT LISTENING .............................. //
 
   function setUpEventListeners() {
-    // cities list
-    domElements.city_names.forEach((name, index) => {
-      name.addEventListener('click', () => {
-        flyToCity(index)
-        domElements.city_names_wrapper.style.pointerEvents = 'none'
-        // const n = event.currentTarget
-        // currentIndex = index + 1
-        // clubs to white
-        gsap.to(domElements.club_p, {
-          color: '#e5e7e1',
-          duration: 0.4,
-        })
-        // momentaneous highlight
-        gsap.to(domElements.clubs_card, {
-          backgroundColor: '#8b81e422',
-          duration: hover_duration - 0.25,
-          ease: 'power1.inOut',
-          onComplete: () => {
-            gsap.to(domElements.clubs_card, {
-              backgroundColor: '#8b81e400',
-              duration: hover_duration - 0.25,
-              ease: 'power1.inOut',
-            })
-          },
-        })
-        // activate pointer events on clubs on first city click
-        if (!clubCardsDummy) {
-          gsap.set(domElements.clubs_card, {
-            pointerEvents: 'auto',
-            onComplete: () => {
-              domElements.clubs_card.style.pointerEvents = 'auto'
-              clubCardsDummy = true
-            },
-          })
-        }
-        // handleCity()
-        handleCity(index + 1)
-        updateCount(index + 1)
-      })
-      name.addEventListener('mouseover', (event) => {
-        const n = event.currentTarget
-        gsap.to(n, {
-          x: 8,
-          duration: 0.3,
-        })
-      })
-      name.addEventListener('mouseleave', (event) => {
-        const n = event.currentTarget
-        gsap.to(n, {
-          x: 0,
-          duration: 0.3,
-        })
-        gsap.to(cityDotsArray[index], {
-          x: 0,
-          duration: 0.3,
-        })
-      })
-    })
-
-    // clubs list
-    domElements.club_p.forEach((club, index) => {
-      club.addEventListener('click', (event) => {
-        flyToClub(index - 1)
-        // clubs_wrapper.style.pointerEvents = 'none'
-        const n = event.currentTarget
-        // console.log(index)
-        gsap.to(domElements.club_p, {
-          color: '#e5e7e144',
-          duration: 0.4,
-        })
-        gsap.to(n, {
-          color: '#e5e7e1',
-          duration: 0.4,
-        })
-        handleClub(index - 1) // aquí index - 1 porque hay un primer elemento dummy: - (guion solo)
-      })
-      club.addEventListener('mouseover', (event) => {
-        const n = event.currentTarget
-        gsap.to(n, {
-          x: 8,
-          duration: 0.4,
-        })
-      })
-      club.addEventListener('mouseleave', (event) => {
-        const n = event.currentTarget
-        gsap.to(n, {
-          x: 0,
-          duration: 0.4,
-        })
-      })
-    })
-
     // ------------------------ HOVER  ------------------------
 
     // card (highlighting)

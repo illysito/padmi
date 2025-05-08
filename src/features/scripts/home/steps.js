@@ -9,17 +9,28 @@ function steps() {
   const glasses = document.querySelectorAll('.steps-txt-glass')
   const glassesArray = Array.from(glasses)
   const lines = document.querySelectorAll('.joint-line')
+  console.log(lines)
   const linesArray = Array.from(lines)
   // const wrappersArray = Array.from(wrappers)
   // const claim_img = document.querySelector('.iphone-img')
   const glassesArray_1 = [glassesArray[0], glassesArray[1], glassesArray[2]]
   const glassesArray_2 = [glassesArray[3], glassesArray[4], glassesArray[5]]
-  const glassesArray_3 = [glassesArray[6], glassesArray[7], glassesArray[8]]
-  const glassesArray_4 = [glassesArray[9], glassesArray[10], glassesArray[11]]
+  const glassesArray_3 = [glassesArray[6], glassesArray[7]]
+  const glassesArray_4 = [
+    glassesArray[8],
+    glassesArray[9],
+    glassesArray[10],
+    glassesArray[11],
+  ]
   const linesArray_1 = [linesArray[0], linesArray[1], linesArray[2]]
   const linesArray_2 = [linesArray[3], linesArray[4], linesArray[5]]
-  const linesArray_3 = [linesArray[6], linesArray[7], linesArray[8]]
-  const linesArray_4 = [linesArray[9], linesArray[10], linesArray[11]]
+  const linesArray_3 = [linesArray[6], linesArray[7]]
+  const linesArray_4 = [
+    linesArray[8],
+    linesArray[9],
+    linesArray[10],
+    linesArray[11],
+  ]
 
   console.log(linesArray)
   console.log(linesArray_1)
