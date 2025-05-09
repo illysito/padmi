@@ -3,6 +3,17 @@ import maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 
 function map() {
+  // Detect touch devices
+  let isTouch = false
+
+  window.addEventListener(
+    'touchstart',
+    () => {
+      isTouch = true
+    },
+    { once: true }
+  )
+
   // DOM queries for MAP NAVIGATION
   function queryDomElements() {
     return {
@@ -300,6 +311,7 @@ function map() {
         updateCount(index + 1)
       })
       name.addEventListener('mouseover', (event) => {
+        if (isTouch) return
         const n = event.currentTarget
         gsap.to(n, {
           x: 8,
@@ -307,6 +319,7 @@ function map() {
         })
       })
       name.addEventListener('mouseleave', (event) => {
+        if (isTouch) return
         const n = event.currentTarget
         gsap.to(n, {
           x: 0,
@@ -320,6 +333,7 @@ function map() {
     })
   }
 
+  // visualizar imagenes de cada ciudad
   function displayImages() {
     // setting content
     for (let i = 0; i < cities.length; i++) {
@@ -391,6 +405,7 @@ function map() {
         handleClub(index + indexOffsets[currentCityIndex])
       })
       club.addEventListener('mouseover', (event) => {
+        if (isTouch) return
         const n = event.currentTarget
         gsap.to(n, {
           x: 8,
@@ -398,6 +413,7 @@ function map() {
         })
       })
       club.addEventListener('mouseleave', (event) => {
+        if (isTouch) return
         const n = event.currentTarget
         gsap.to(n, {
           x: 0,
@@ -785,6 +801,7 @@ function map() {
 
     // card (highlighting)
     domElements.card.addEventListener('mouseover', (event) => {
+      if (isTouch) return
       const card = event.currentTarget
       gsap.to(card, {
         backgroundColor: '#8b81e410',
@@ -792,6 +809,7 @@ function map() {
       })
     })
     domElements.card.addEventListener('mouseleave', (event) => {
+      if (isTouch) return
       const card = event.currentTarget
       gsap.to(card, {
         backgroundColor: '#ffffff00',
@@ -801,6 +819,7 @@ function map() {
 
     // clubs & courts cards (higlighting)
     domElements.clubs_card.addEventListener('mouseover', (event) => {
+      if (isTouch) return
       const card = event.currentTarget
       gsap.to(card, {
         backgroundColor: '#8b81e410',
@@ -808,6 +827,7 @@ function map() {
       })
     })
     domElements.clubs_card.addEventListener('mouseleave', (event) => {
+      if (isTouch) return
       const card = event.currentTarget
       gsap.to(card, {
         backgroundColor: '#ffffff00',
@@ -815,6 +835,7 @@ function map() {
       })
     })
     domElements.courts_card.addEventListener('mouseover', (event) => {
+      if (isTouch) return
       const card = event.currentTarget
       gsap.to(card, {
         backgroundColor: '#8b81e410',
@@ -822,6 +843,7 @@ function map() {
       })
     })
     domElements.courts_card.addEventListener('mouseleave', (event) => {
+      if (isTouch) return
       const card = event.currentTarget
       gsap.to(card, {
         backgroundColor: '#ffffff00',
