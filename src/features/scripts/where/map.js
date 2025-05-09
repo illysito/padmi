@@ -46,8 +46,8 @@ function map() {
   let cityDotsArray = Array.from(domElements.city_dots)
   let cityNamesArray = Array.from(domElements.city_names)
   // const elementsArray = Array.from(domElements.clubs_list)
-  let club_p_Array = Array.from(domElements.club_p)
-  console.log(club_p_Array)
+  // let club_p_Array = Array.from(domElements.club_p)
+  // console.log(club_p_Array)
 
   // DOM queries for MAP
   const map_wrapper = document.querySelector('.map')
@@ -232,7 +232,7 @@ function map() {
       indexOffsets[0] = 0
       indexOffsets[i] = indexOffsets[i - 1] + cities[i - 1].clubs
     }
-    console.log(indexOffsets)
+    // console.log(indexOffsets)
   }
 
   // ············ UI ············ //
@@ -325,9 +325,15 @@ function map() {
     for (let i = 0; i < cities.length; i++) {
       const cityImg = document.createElement('img')
       cityImg.classList.add('city-img', 'is--hidden')
-      // cityImg.src = cities[i].imgURL
-      cityImg.src =
-        'https://drive.google.com/uc?export=view&id=1eragilIyZB4kZqfaFs__fexPsi3n3Ncl'
+
+      const URL = cities[i].imgURL
+      // console.log(URL)
+      const match = URL.match(/\/d\/([^/]+)/)
+      const id = match ? match[1] : null
+      const SRC = 'https://drive.google.com/thumbnail?id=' + id + '&sz=s800'
+      // console.log(SRC)
+
+      cityImg.src = SRC
 
       domElements.city_imgs_container.appendChild(cityImg)
     }
@@ -365,7 +371,7 @@ function map() {
 
     // resetting the list
     domElements.club_p = document.querySelectorAll('.club-p')
-    club_p_Array = Array.from(domElements.club_p)
+    // club_p_Array = Array.from(domElements.club_p)
 
     // resetting the EVENT LISTENER
     domElements.club_p.forEach((club, index) => {
@@ -601,7 +607,7 @@ function map() {
           clubCity: clb_city,
         })
       })
-      console.log(clubs)
+      // console.log(clubs)
     } catch (error) {
       console.error('Error loading Google Sheets data:', error)
     }
