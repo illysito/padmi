@@ -70,7 +70,7 @@ function menu() {
       })
       gsap.to(menu_screen, {
         delay: 0.1,
-        yPercent: 100,
+        yPercent: 130,
         duration: 1.4,
         ease: 'power2.inOut',
       })
