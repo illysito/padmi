@@ -9,7 +9,6 @@ function menu() {
   const menu_link = document.querySelectorAll('.menu-link')
   const burger = document.querySelector('.ham-button')
   const back_wrapper = document.querySelector('.back-wrapper')
-  const balls = document.querySelectorAll('.ball')
   const os = document.querySelector('.os-links')
   const os_links = document.querySelectorAll('.os-heading')
 
@@ -43,12 +42,6 @@ function menu() {
   })
 
   // MENU SCREEN
-  gsap.to(balls, {
-    rotate: 360,
-    duration: 8,
-    repeat: -1,
-    ease: 'linear',
-  })
 
   let width = burger.clientWidth
 
@@ -133,7 +126,6 @@ function menu() {
       link.addEventListener('click', (event) => {
         const l = event.currentTarget
         const h = l.firstElementChild
-        const ball = l.lastElementChild
         burger.style.pointerEvents = 'none'
         menu_screen.style.pointerEvents = 'none'
         gsap.to(menu_header, {
@@ -159,23 +151,12 @@ function menu() {
           x: 0,
           duration: 0.4,
         })
-        gsap.to(ball, {
-          scale: 0,
-          x: 0,
-          duration: 0.4,
-        })
       })
       link.addEventListener('mouseover', (event) => {
         const l = event.currentTarget
         const h = l.firstElementChild
-        const ball = l.lastElementChild
         gsap.to(h, {
-          x: 50,
-          duration: 0.4,
-        })
-        gsap.to(ball, {
-          scale: 0.6,
-          x: 0,
+          x: 24,
           duration: 0.4,
         })
         if (index == 4) {
@@ -189,13 +170,7 @@ function menu() {
       link.addEventListener('mouseleave', (event) => {
         const l = event.currentTarget
         const h = l.firstElementChild
-        const ball = l.lastElementChild
         gsap.to(h, {
-          x: 0,
-          duration: 0.4,
-        })
-        gsap.to(ball, {
-          scale: 0,
           x: 0,
           duration: 0.4,
         })
