@@ -5,8 +5,10 @@ gsap.registerPlugin(ScrollTrigger)
 
 function bento() {
   const bento_section = document.querySelector('.bento_section')
+  const snippets = document.querySelectorAll('.snippet')
   const columns = document.querySelectorAll('.bento-column')
   // const central_column = document.querySelector('.is--central')
+  let snippetsArray = Array.from(snippets)
   let columnsArray = Array.from(columns)
 
   // Shuffle columns
@@ -17,30 +19,46 @@ function bento() {
     }
     return array
   }
+  snippetsArray = shuffle(snippetsArray)
   columnsArray = shuffle(columnsArray)
 
   gsap.to(bento_section, {
     scrollTrigger: {
       trigger: bento_section,
       start: 'top top',
-      end: 'bottom top',
+      end: 'bottom -50%',
       pin: true,
       scrub: 1,
       markers: false,
     },
   })
 
-  gsap.to(columnsArray, {
+  gsap.to(snippetsArray, {
     opacity: 1,
-    stagger: 0.1,
-    duration: 0.4,
+    stagger: 0.6,
+    duration: 0.6,
     scrollTrigger: {
       trigger: bento_section,
-      start: 'top top',
+      start: 'top 25%',
       end: 'bottom top',
       scrub: 1,
       markers: false,
     },
+  })
+
+  columnsArray.forEach((col, index) => {
+    console.log(index)
+    gsap.to(col, {
+      y: 80 * index,
+      scrollTrigger: {
+        trigger: bento_section,
+        start: 'bottom bottom',
+        end: 'bottom -300%',
+        // pin: true,
+        scrub: 1,
+        markers: false,
+      },
+    })
   })
 }
 
