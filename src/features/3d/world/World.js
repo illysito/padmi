@@ -43,9 +43,9 @@ class World {
       // this.initPaddle()
       this.initLights(-1, 2.4, 0, 20, 0xfffbf6, true)
       this.initDirLights(1, 1, 0)
-      this.initPadmiCam(0, 0, 0, -2)
-      this.initPadmiCam(0, 0, 0, 2)
-      this.initStarfield(60)
+      this.initPadmiCam(0, -0.6, 0, 1)
+      this.initPadmiCam(0, -0.6, 0, 1)
+      // this.initStarfield(60)
     }
 
     //prettier-ignore

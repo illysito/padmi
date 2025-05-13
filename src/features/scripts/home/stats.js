@@ -116,7 +116,7 @@ function stats() {
       duration: 0.6,
     })
     gsap.to(stats_card_headings, {
-      color: '#8b81e4',
+      color: '#ceff05',
       duration: 0.6,
     })
     handleTitles(cardIndex)
