@@ -47,7 +47,7 @@ function bento() {
   })
 
   columnsArray.forEach((col, index) => {
-    console.log(index)
+    // console.log(index)
     gsap.to(col, {
       y: 80 * index,
       scrollTrigger: {
