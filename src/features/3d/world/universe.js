@@ -6,7 +6,8 @@ function world(container, index) {
   let lastScrollY = window.scrollY
 
   function isDesktopOrTablet() {
-    return window.innerWidth >= 768
+    // return window.innerWidth >= 768
+    return true
   }
 
   if (isDesktopOrTablet()) {
