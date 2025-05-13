@@ -9,6 +9,11 @@ import { color_shift_frag, color_shift_vertex } from '../shaders/sh_color_shift.
 import { warp_type_frag, warp_type_vertex } from '../shaders/sh_warp_type.js'
 
 async function createPlane() {
+  function isMobile() {
+    // return window.innerWidth >= 768
+    return window.innerWidth <= 478
+  }
+
   async function updateCanvasTexture(template) {
     //prettier-ignore
     // console.log(isLightMode)
@@ -39,7 +44,8 @@ async function createPlane() {
   const canvasW = renderedCanvas.width
   const canvasH = renderedCanvas.height
   const aspect = canvasW / canvasH
-  const planeH = 5.4
+  let planeH = 5.4
+  if (isMobile) planeH = 1
   const planeW = planeH * aspect
 
   //prettier-ignore
