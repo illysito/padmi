@@ -15,6 +15,11 @@ body {
   overflow: hidden;
 }
 
+.club-logo {
+  width: 12%;
+  height: auto;
+}
+
 /* MAP */
 
 .map {
