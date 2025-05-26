@@ -85,8 +85,8 @@ function map() {
   const map = new maplibregl.Map({
     container: 'map',
     style: `https://api.maptiler.com/maps/5af093ac-6e4a-49cb-b247-bd629a603481/style.json?key=OFwEOATP6EiKKl7TcWZ6`,
-    center: [-15, 32],
-    zoom: 1.2,
+    center: [-4, 40],
+    zoom: 4.2,
     attributionControl: false,
   })
 

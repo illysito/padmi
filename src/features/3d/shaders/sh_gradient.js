@@ -117,6 +117,8 @@ void main() {
   vec4 color3 = rgb(vec4(1.0, 0.0, 1.0, 1.0));
   vec4 color4 = rgb(vec4(20.0, 100.0, 20.0, 1.0));
 
+  color1 = rgb(vec4(0.0,0.0,255.0,255.0));
+
   // LIGHT MODE
 
   // vec4 color1 = rgb(vec4(255.0, 249.0, 244.0, 255.0));
@@ -244,8 +246,8 @@ void main() {
   // vec4 base = vec4(0.89, 0.9, 0.88, 1.0);
 
   // vColor = vec4(0.5, 0.5, 0.5, 1.0); // GRIS
-  vColor = rgb(vec4(119.0, 100.0, 228.0, 255.0)); // LILA
-  // vColor = rgb(vec4(175.0, 255.0, 10.0, 255.0)); // VERDE
+  // vColor = rgb(vec4(119.0, 100.0, 228.0, 255.0)); // LILA
+  vColor = rgb(vec4(30.0, 20.0, 255.0, 255.0)); // AZUL
   // vColor = rgb(vec4(255.0, 251.0, 248.0, 255.0)); // BLANCO
   vColor.r += 0.15 * u_mouseX * u_mouseY;
 
