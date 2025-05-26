@@ -74,6 +74,15 @@ function runClubFunctions() {
     // scrollScale = gsap.utils.mapRange(0, 2000, 0, 2, scrollY)
     // scrollHelper.textContent = scrollScale
   })
+  gsap.to(scrollHelper, {
+    opacity: 0,
+    scrollTrigger: {
+      trigger: '.elements',
+      start: 'top 50%',
+      end: 'top top',
+      scrub: true,
+    },
+  })
 }
 
 function runWhereFunctions() {

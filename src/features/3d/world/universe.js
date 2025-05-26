@@ -56,7 +56,7 @@ function world(container, index) {
     } else if (index == 1) {
       window.addEventListener('scroll', () => {
         lastScrollY = window.scrollY
-        let stopScroll = 5800
+        let stopScroll = 7000
         // stopScroll = 6000
         if (lastScrollY > stopScroll && !hasClaimBeenObserved) {
           world.stop()

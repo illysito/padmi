@@ -81,7 +81,7 @@ function createPadmiCam(x, y, z, id) {
         // group.rotation.z =
         //   0.08 * Math.sin(id * counter) + 0.02 * scrollRotation * id * damp
         group.position.y = scrollPosition * positionDamp
-        console.log(group.position.y)
+        // console.log(group.position.y)
       }
 
       window.addEventListener('scroll', () => {
@@ -91,8 +91,8 @@ function createPadmiCam(x, y, z, id) {
         scrollRotation = scrollY
 
         // MOVE
-        if (scrollY >= 5000) {
-          scrollPosition = scrollY - 5000
+        if (scrollY >= 6000) {
+          scrollPosition = scrollY - 6000
         } else {
           scrollPosition = 0
         }

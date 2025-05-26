@@ -27,7 +27,7 @@ function logoMarquee() {
     } catch (error) {
       console.error('Error loading Google Sheets data:', error)
     }
-    console.log(URLS)
+    // console.log(URLS)
   }
 
   function createImages() {
@@ -52,7 +52,7 @@ function logoMarquee() {
       } else {
         img_width = 72 / ((URLS.length + 1) / 2)
       }
-      console.log(img_width)
+      // console.log(img_width)
 
       IMGS.push(img)
       IMGS_2.push(img2)
@@ -67,7 +67,7 @@ function logoMarquee() {
   }
 
   function attachImages() {
-    console.log(containersArray)
+    // console.log(containersArray)
     const c1 = containersArray[0]
     const c2 = containersArray[1]
     const c3 = containersArray[2]
