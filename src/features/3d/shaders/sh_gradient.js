@@ -6,6 +6,7 @@ precision highp float;
 uniform float u_time;
 uniform float u_mouseX;
 uniform float u_mouseY;
+uniform float u_colorValue;
 uniform vec2 u_aspect;
 
 varying vec2 vUv;
@@ -113,11 +114,13 @@ void main() {
   // DARK MODE
 
   vec4 color1 = rgb(vec4(255.0, 249.0, 244.0, 255.0));
-  vec4 color2 = rgb(vec4(0.0, 0.0, 1.0, 0.5));
-  vec4 color3 = rgb(vec4(1.0, 0.0, 1.0, 1.0));
-  vec4 color4 = rgb(vec4(20.0, 100.0, 20.0, 1.0));
+  vec4 color2 = rgb(vec4(0.0, 0.0, 0.0, 0.5));
+  vec4 color3 = rgb(vec4(255.0, 255.0, 1.0, 1.0));
+  vec4 color4 = rgb(vec4(255.0, 250.0, 0.0, 1.0));
 
-  color1 = rgb(vec4(0.0,0.0,255.0,255.0));
+  // color1 = rgb(vec4(0.0,0.0,255.0,255.0));
+  // color1 = rgb(vec4(u_colorValue,u_colorValue,255.0,255.0));
+  // color2 = rgb(vec4(u_colorValue,u_colorValue,255.0,255.0));
 
   // LIGHT MODE
 
@@ -137,8 +140,6 @@ void main() {
   vec4 outColor = mix(color, vertexColor, 4.0 * uv.x);
   gl_FragColor = vertexColor;
   gl_FragColor = outColor;
-  // gl_FragColor = vec4(uv, 0.0, 1.0);
-  // gl_FragColor = color;
 }
 `
 
@@ -150,6 +151,7 @@ varying vec4 vColor;
 
 uniform float u_mouseX;
 uniform float u_mouseY;
+uniform float u_colorValue;
 
 vec4 rgb(vec4 color){
   color.x /= 255.0;
@@ -247,9 +249,13 @@ void main() {
 
   // vColor = vec4(0.5, 0.5, 0.5, 1.0); // GRIS
   // vColor = rgb(vec4(119.0, 100.0, 228.0, 255.0)); // LILA
-  vColor = rgb(vec4(30.0, 20.0, 255.0, 255.0)); // AZUL
+  vColor = rgb(vec4(30.0, 250.0, 255.0, 255.0)); // AZUL
   // vColor = rgb(vec4(255.0, 251.0, 248.0, 255.0)); // BLANCO
   vColor.r += 0.15 * u_mouseX * u_mouseY;
+
+  // MOUSE COLOR:
+  // vec4 mouseColor = rgb(vec4(255.0,255.0,255.0,255.0));
+  // vColor = mix(vColor,mouseColor,u_colorValue);
 
   vec2 noiseCoord = vUv * vec2(3.0, 4.0);
   float noise = snoise(vec3(vec2(noiseCoord.x * 0.002 * u_time, noiseCoord.y * 0.001 * u_time), 0.85 * u_time));
@@ -257,7 +263,7 @@ void main() {
   // noise = 1.0;
 
   // vColor = mix(base, vColor, 0.4 * noise);
-  vColor *= 0.65 * noise; // original: 0.65
+  vColor *= 1.0 * noise; // original: 0.65
   // vColor = mix(vColor, base, noise);
   // vColor = clamp(vColor, vec4(0.1), vec4(1.0));
 

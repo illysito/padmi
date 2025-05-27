@@ -13,6 +13,7 @@ function createGradPlane() {
     u_time: { value: 1600.0 + 100.0 * Math.random() },
     u_mouseX: { value: 0.0 },
     u_mouseY: { value: 0.0 },
+    u_colorValue: { value: 0.0 },
   }
 
   const fragmentShader = grad_frag
@@ -50,6 +51,37 @@ function createGradPlane() {
     uniforms.u_mouseX.value = mouseX
     uniforms.u_mouseY.value = mouseY
   })
+
+  // COLOR PICKER (REMOVE FINALLY)
+  // const slider = document.querySelector('.slider')
+  // const handle = document.querySelector('.handle')
+  // let isDragging = false
+  // let MAX_VALUE = 1.0
+  // handle.addEventListener('mousedown', () => {
+  //   isDragging = true
+  // })
+  // window.addEventListener('mouseup', () => {
+  //   isDragging = false
+  // })
+  // window.addEventListener('mousemove', (e) => {
+  //   if (isDragging) {
+  //     let sliderRect = slider.getBoundingClientRect()
+  //     let handleRect = handle.getBoundingClientRect()
+  //     // determino la x inicial (0) como la posición de mi ratón menos el borde del rectángulo
+  //     let x = e.clientX - sliderRect.left
+  //     x = Math.max(0, Math.min(x, sliderRect.width - handleRect.width))
+  //     handle.style.left = x + 'px'
+
+  //     uniforms.u_colorValue.value = gsap.utils.mapRange(
+  //       0,
+  //       sliderRect.width,
+  //       0,
+  //       MAX_VALUE,
+  //       x
+  //     )
+  //     console.log(uniforms.u_colorValue.value)
+  //   }
+  // })
 
   return mesh
 }
