@@ -132,7 +132,8 @@ void main() {
   // OUTPUT
 
   // vec4 color = texture2D(u_texture, coords - distortion);
-  vec4 color = redChannel + greenChannel + blueChannel;
+  vec4 color = redChannel + greenChannel + 1.01*blueChannel;
+  color *= 1.0;
 
   gl_FragColor = color;
 }

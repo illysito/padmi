@@ -5,7 +5,7 @@ gsap.registerPlugin(ScrollTrigger)
 
 import world from './features/3d/world/universe'
 import world_2 from './features/3d/world/universe_2'
-// import world_3 from './features/3d/world/universe_3'
+import world_3 from './features/3d/world/universe_3'
 //
 // import cameraTexts from './features/scripts/club/camera_texts'
 import logoMarquee from './features/scripts/club/logo_marquee'
@@ -34,7 +34,7 @@ import './styles/style.css'
 const body = document.body
 const world_container = document.querySelector('.world-container')
 const world_2_container = document.querySelector('.world-2-container')
-// const world_3_container = document.querySelector('.world-3-container')
+const world_3_container = document.querySelector('.world-3-container')
 // const particles_container = document.querySelector('.particles-container')
 const club_container = document.querySelector('.club-container')
 
@@ -98,12 +98,19 @@ function runLegalsFunctions() {
   console.log('welcome to Legals')
 }
 
-runGeneralFunctions()
+function runAuxFunctions() {
+  console.log('Aux!')
+  world_2(world_2_container)
+  world_3(world_3_container)
+}
+
+if (!body.classList.contains('body__aux')) runGeneralFunctions()
 if (body.classList.contains('body__home')) runHomeFunctions()
 if (body.classList.contains('body__club')) runClubFunctions()
 if (body.classList.contains('body__where')) runWhereFunctions()
 if (body.classList.contains('body__contact')) runContactFunctions()
 if (body.classList.contains('body__legals')) runLegalsFunctions()
+if (body.classList.contains('body__aux')) runAuxFunctions()
 
 window.addEventListener('load', () => {
   ScrollTrigger.refresh()

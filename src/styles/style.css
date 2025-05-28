@@ -176,3 +176,39 @@ body,
   width: 300px;
   height: 300px;
 }
+
+/* STEPS Crear Partido */
+
+#step-1 {
+  transform: translateY(240%);
+}
+#step-2 {
+  transform: translateY(260%);
+}
+#step-3 {
+  transform: translateY(56%);
+}
+#step-4 {
+  transform: translateY(-110%);
+}
+#step-5 {
+  transform: translateY(190%);
+}
+#step-6 {
+  transform: translateY(0%);
+}
+#step-7 {
+  transform: translateY(0%);
+}
+#step-8 {
+  transform: translateY(0%);
+}
+#step-9 {
+  transform: translateY(76%);
+}
+#step-10 {
+  transform: translateY(76%);
+}
+#step-11 {
+  transform: translateY(226%);
+}

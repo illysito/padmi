@@ -1,12 +1,22 @@
-import { WebGLRenderer } from 'three'
+import { WebGLRenderer, ReinhardToneMapping } from 'three'
+import * as THREE from 'three'
 
 function createRenderer() {
   const renderer = new WebGLRenderer({
-    antialias: true,
+    // antialias: true,
     alpha: true,
     preserveDrawingBuffer: true,
   })
+  renderer.setClearColor(0x000000, 0)
   renderer.physicallyCorrectLights = true
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+  renderer.toneMapping = ReinhardToneMapping // or ACESFilmicToneMapping
+  renderer.toneMappingExposure = 0.25
+  renderer.outputEncoding = THREE.sRGBEncoding
+  renderer.physicallyCorrectLights = true
+
+  renderer.setSize(window.innerWidth, window.innerHeight)
+
   // renderer.setClearColor(0x000000, 0)
 
   return renderer
