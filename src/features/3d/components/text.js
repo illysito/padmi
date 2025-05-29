@@ -5,6 +5,7 @@ import {
   // MeshLambertMaterial,
   // MeshPhysicalMaterial,
   // MeshBasicMaterial,
+  PointsMaterial,
   Group,
   BufferGeometry,
   BufferAttribute,
@@ -47,7 +48,8 @@ async function createText(text, x, y, z) {
   // create a geometry
   const textGeometry = new TextGeometry(text, {
     font: font,
-    size: 2,
+    size: 1.8,
+    // size: 3.6 / z,
     height: 0.05,
   })
   textGeometry.scale(0.5, 0.5, 0.0075)
@@ -78,51 +80,61 @@ async function createText(text, x, y, z) {
 
   const geometry = new BufferGeometry()
   geometry.setAttribute('position', new BufferAttribute(positions, 3))
+  geometry.setAttribute(
+    'aInitialPosition',
+    new BufferAttribute(positions.slice(), 3)
+  ) // ← clone original
   geometry.setAttribute('aSize', new BufferAttribute(sizes, 1))
 
   const uniforms = {
     u_time: { value: 1600.0 + 100.0 * Math.random() },
     u_mouseX: { value: 0.0 },
     u_mouseY: { value: 0.0 },
+    u_mouseZ: { value: 0.0 },
     u_prevMouseX: { value: 0.0 },
     u_prevMouseY: { value: 0.0 },
+    u_effectSelector: { value: 1.0 },
   }
 
   const material = new ShaderMaterial({
     uniforms,
     vertexShader: `
       attribute float aSize;
+      attribute vec3 aInitialPosition;
+
       varying float vAlpha;
+      varying float vDisplacement;
       varying vec3 vPosition;
 
       uniform float u_time;
       uniform float u_mouseX;
       uniform float u_mouseY;
+      uniform float u_mouseZ;
       uniform float u_prevMouseX;
       uniform float u_prevMouseY;
+      uniform float u_effectSelector;
 
       void main() {
         vAlpha = aSize / 4.0;
         vPosition = position;
 
-        vec2 mouseDirection = vec2(u_mouseX - u_prevMouseX, u_mouseY - u_prevMouseY);
-        vec3 pos = position;
+        vec3 pos = aInitialPosition;
+        vec3 mouse = vec3(u_mouseX, u_mouseY, u_mouseZ);
 
-        // Warp points by pushing them along mouse movement direction,
-        // scaled by distance from mouse (optional for smoother effect)
-        
-        // Compute vector from point to mouse position in XY plane:
-        vec2 pointXY = pos.xy;
-        vec2 toMouse = pointXY - vec2(u_mouseX, u_mouseY);
+        // Get vector from point to mouse position (XY plane)
+        vec3 toMouse = pos - mouse;
+        float dist = length(toMouse);
       
-        float distance = length(toMouse);
+        // Use smoothstep to create falloff based on distance
+        float radius = 0.5 * sin(u_time) + 2.0; // control size of warp area
+        float strength = 0.2 * sin(0.1 * u_time) + 1.2; // displacement intensity
       
-        // Optional: make warp stronger near mouse, fade out with distance
-        float warpEffect = smoothstep(0.5, 0.0, distance);
+        float influence = smoothstep(radius, 0.0, dist); // 1.0 near mouse, 0.0 at radius edge
       
-        // Apply warp offset along mouse direction, scaled by warpStrength and distance effect
-        float warpStrength = 4.0;
-        pos.xy += mouseDirection * warpStrength * warpEffect;
+        // Move outward from mouse (or inward by flipping sign)
+        vec3 displaced = pos + normalize(toMouse) * influence * strength;
+        vDisplacement = length(displaced - pos);
+        pos = mix(pos, displaced, u_effectSelector * influence);
       
         vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
         gl_PointSize = aSize * (10.0 / -mvPosition.z);
@@ -131,6 +143,7 @@ async function createText(text, x, y, z) {
     `,
     fragmentShader: `
       varying float vAlpha;
+      varying float vDisplacement;
       varying vec3 vPosition;
       
       uniform float u_time;
@@ -143,14 +156,19 @@ async function createText(text, x, y, z) {
 
         float dist = distance(gl_PointCoord, vec2(0.5));
         float alpha = smoothstep(0.48, 0.45, dist); // soft edge
+        float displacementAlpha = clamp(vDisplacement * 2.0, 1.0, 2.5);
         if (dist>0.5) discard;
 
-        gl_FragColor = vec4(1.0, 1.0, 1.0, vAlpha * alpha);
+        gl_FragColor = vec4(1.0, 1.0, 1.0, vAlpha * displacementAlpha * alpha);
       }
     `,
     transparent: true,
     depthWrite: false,
   })
+  console.log(material)
+
+  const material_2 = new PointsMaterial()
+  console.log(material_2)
 
   const points = new Points(geometry, material)
 
@@ -166,6 +184,8 @@ async function createText(text, x, y, z) {
     counter += delta
     uniforms.u_time.value = (uniforms.u_time.value + delta) % 10000
     group.rotation.x = 0.15 * Math.sin(counter)
+
+    uniforms.u_mouseZ.value = 0.81 * Math.sin(0.1 * counter)
 
     // mousePosition.x += (targetMousePosition.x - mousePosition.x) * easeFactor
     // mousePosition.y += (targetMousePosition.y - mousePosition.y) * easeFactor
@@ -189,6 +209,20 @@ async function createText(text, x, y, z) {
 
     uniforms.u_mouseX.value = mouseX
     uniforms.u_mouseY.value = mouseY
+  })
+
+  const effectButton = document.querySelector('.effect_button')
+  const effectText = document.querySelector('.effect_text')
+  let effectArray = [1.0, -1.8]
+  let effectIndex = 0
+  effectButton.addEventListener('click', () => {
+    effectIndex++
+    if (effectIndex == effectArray.length) {
+      effectIndex = 0
+    }
+    let displayedEffectIndex = effectIndex + 1
+    effectText.textContent = 'Efecto ' + displayedEffectIndex
+    uniforms.u_effectSelector.value = effectArray[effectIndex]
   })
 
   return group

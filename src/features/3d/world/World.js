@@ -1,5 +1,5 @@
 //LEGACY IMPORTS
-import * as THREE from 'three'
+// import * as THREE from 'three'
 import { Vector2 } from 'three'
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js'
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js'
@@ -42,8 +42,9 @@ class World {
     this.initPostprocessing()
     // INITS!!!!!
     if (index == 0) {
-      // this.initPlane()
-      this.initPaddle()
+      // this.initGradPlane()
+      this.initText('play smarter.')
+      // this.initPaddle()
       this.initLights(-2, 2, 3, 20, 0xfffbf6, false)
       // this.initStarfield(800)
     } else if (index == 1) {
@@ -71,35 +72,35 @@ class World {
 
   // BLOOM POST PROCESSING INIT
   initPostprocessing() {
-    const renderTarget = new THREE.WebGLRenderTarget(
-      window.innerWidth,
-      window.innerHeight,
-      {
-        format: THREE.RGBAFormat,
-        type: THREE.HalfFloatType,
-        encoding: THREE.sRGBEncoding,
-        depthBuffer: true,
-        stencilBuffer: false,
-        samples: 4,
-      }
-    )
-    renderTarget.texture.encoding = THREE.sRGBEncoding
-    renderTarget.texture.format = THREE.RGBAFormat
-    this.renderer.setClearColor(0x000000, 0) // black color, fully transparent
+    // const renderTarget = new THREE.WebGLRenderTarget(
+    //   window.innerWidth,
+    //   window.innerHeight,
+    //   {
+    //     format: THREE.RGBAFormat,
+    //     type: THREE.HalfFloatType,
+    //     encoding: THREE.sRGBEncoding,
+    //     depthBuffer: true,
+    //     stencilBuffer: false,
+    //     samples: 4,
+    //   }
+    // )
+    // renderTarget.texture.encoding = THREE.sRGBEncoding
+    // renderTarget.texture.format = THREE.RGBAFormat
+    // this.renderer.setClearColor(0x000000, 0) // black color, fully transparent
 
-    this.composer = new EffectComposer(this.renderer, renderTarget)
+    // this.composer = new EffectComposer(this.renderer, renderTarget)
 
     // Make sure to clear with alpha zero before rendering passes
     // this.composer.renderer.autoClearColor = false
 
-    this.composer = new EffectComposer(this.renderer, renderTarget)
+    this.composer = new EffectComposer(this.renderer)
 
     const renderPass = new RenderPass(this.scene, this.camera)
     const bloomPass = new UnrealBloomPass(
       new Vector2(window.innerWidth, window.innerHeight),
-      1.1, // strength
-      0.01, // radius
-      0.9 // threshold
+      1.2, // strength
+      0.4, // radius
+      0.85 // threshold
     )
     const fxaaPass = new ShaderPass(FXAAShader)
     const pixelRatio = this.renderer.getPixelRatio()
@@ -170,7 +171,7 @@ class World {
   async initText(text) {
     const type = await createText(text, 0, 0, 0)
     this.scene.add(type)
-    // loop.updatables.push(type)
+    this.loop.updatables.push(type)
   }
 
   initStarfield(starCount) {

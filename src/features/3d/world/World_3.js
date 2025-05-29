@@ -30,7 +30,7 @@ class World_3 {
 
     this.initPostprocessing()
     this.initText('play smarter.')
-    this.initPaddle()
+    // this.initPaddle()
     // this.initParticles()
     // this.initText('2')
     // this.initText('3')
@@ -55,7 +55,7 @@ class World_3 {
     const renderPass = new RenderPass(this.scene, this.camera)
     const bloomPass = new UnrealBloomPass(
       new Vector2(window.innerWidth, window.innerHeight),
-      1.5, // strength
+      0.8, // strength
       0.4, // radius
       0.85 // threshold
     )
