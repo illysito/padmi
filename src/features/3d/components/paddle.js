@@ -19,7 +19,7 @@ function createPaddle() {
             // emissie: new Color(0x00ff00),
             // emissive: new Color(0x5511f6),
             emissive: new Color(0x0000ff),
-            emissiveIntensity: 0.5,
+            emissiveIntensity: 2.5,
             transmission: 1.0,
             thickness: 2.0,
             ior: 1.5,

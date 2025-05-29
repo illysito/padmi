@@ -80,9 +80,9 @@ async function createPlane() {
     u_aspect: { value: [canvasW, canvasH] },
   }
 
-  const fragmentShader = frag_shaders[1]
+  const fragmentShader = frag_shaders[0]
 
-  const vertexShader = vert_shaders[1]
+  const vertexShader = vert_shaders[0]
 
   const material = new ShaderMaterial({
     uniforms,

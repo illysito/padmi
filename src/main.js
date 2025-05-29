@@ -52,6 +52,7 @@ function runHomeFunctions() {
   console.log('hey!')
   // if (world_container) {
   world(world_container, 0) // INaDEX 0 --> Paddle & Type
+  particles()
   // }
   hero()
   split()
