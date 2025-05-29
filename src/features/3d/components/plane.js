@@ -6,6 +6,10 @@ import { CanvasTexture, ShaderMaterial, PlaneGeometry, Mesh } from 'three'
 
 //prettier-ignore
 import { color_shift_frag, color_shift_vertex } from '../shaders/sh_color_shift.js'
+import {
+  warp_particles_frag,
+  warp_particles_vertex,
+} from '../shaders/sh_warp_particles.js'
 import { warp_type_frag, warp_type_vertex } from '../shaders/sh_warp_type.js'
 
 async function createPlane() {
@@ -53,11 +57,13 @@ async function createPlane() {
   //prettier-ignore
   const frag_shaders = [
     warp_type_frag,
+    warp_particles_frag,
     color_shift_frag
   ]
   //prettier-ignore
   const vert_shaders = [
     warp_type_vertex,
+    warp_particles_vertex,
     color_shift_vertex
   ]
 
@@ -74,9 +80,9 @@ async function createPlane() {
     u_aspect: { value: [canvasW, canvasH] },
   }
 
-  const fragmentShader = frag_shaders[0]
+  const fragmentShader = frag_shaders[1]
 
-  const vertexShader = vert_shaders[0]
+  const vertexShader = vert_shaders[1]
 
   const material = new ShaderMaterial({
     uniforms,

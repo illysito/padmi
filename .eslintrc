@@ -15,6 +15,7 @@
   "plugins": ["import", "sort-imports-es6-autofix"],
   "rules": {
     "@typescript-eslint/explicit-module-boundary-types": "off",
+    "no-unused-vars": "off",
     "import/order": [
       "error",
       {

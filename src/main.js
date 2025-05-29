@@ -27,6 +27,8 @@ import steps from './features/scripts/home/steps'
 //
 import map from './features/scripts/where/map'
 //
+import particles from './features/scripts/z/particles'
+//
 
 import './styles/style.css'
 
@@ -98,12 +100,19 @@ function runLegalsFunctions() {
   console.log('welcome to Legals')
 }
 
-runGeneralFunctions()
+function runAuxFunctions() {
+  world_2(world_2_container)
+  particles()
+}
+
+// runGeneralFunctions()
+if (!body.classList.contains('body__aux')) runGeneralFunctions()
 if (body.classList.contains('body__home')) runHomeFunctions()
 if (body.classList.contains('body__club')) runClubFunctions()
 if (body.classList.contains('body__where')) runWhereFunctions()
 if (body.classList.contains('body__contact')) runContactFunctions()
 if (body.classList.contains('body__legals')) runLegalsFunctions()
+if (body.classList.contains('body__aux')) runAuxFunctions()
 
 window.addEventListener('load', () => {
   ScrollTrigger.refresh()

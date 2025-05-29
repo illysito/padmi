@@ -35,7 +35,7 @@ class World {
     // INITS!!!!!
     if (index == 0) {
       this.initPlane()
-      this.initPaddle()
+      // this.initPaddle()
       this.initLights(-2, 2, 3, 20, 0xfffbf6, false)
       this.initStarfield(800)
     } else if (index == 1) {
