@@ -42,11 +42,11 @@ class World {
     this.initPostprocessing()
     // INITS!!!!!
     if (index == 0) {
-      // this.initGradPlane()
+      this.initGradPlane()
       this.initText('play smarter.')
       // this.initPaddle()
       this.initLights(-2, 2, 3, 20, 0xfffbf6, false)
-      // this.initStarfield(800)
+      this.initStarfield(800)
     } else if (index == 1) {
       // this.initTransmissionPlane()
       // this.initPaddle()
