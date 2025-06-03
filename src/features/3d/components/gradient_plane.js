@@ -6,8 +6,9 @@ import { grad_frag, grad_vertex } from '../shaders/sh_gradient.js'
 
 function createGradPlane() {
   //prettier-ignore
-  const planeH = 3 * 10
-  const planeW = 3 * 10
+  const size = 16
+  const planeH = size * 10
+  const planeW = size * 10
 
   const uniforms = {
     u_time: { value: 1600.0 + 100.0 * Math.random() },
@@ -35,6 +36,7 @@ function createGradPlane() {
   mesh.rotation.x = 114 * (Math.PI / 180)
   mesh.position.z = 8.5
   mesh.position.z = 6.5
+  mesh.position.z = 0
   mesh.position.y = 0.1
 
   mesh.tick = (delta) => {

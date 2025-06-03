@@ -1,4 +1,12 @@
 //LEGACY IMPORTS
+// import * as THREE from 'three'
+import { Vector2 } from 'three'
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js'
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js'
+import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js'
+import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js'
+import { FXAAShader } from 'three/examples/jsm/shaders/FXAAShader.js'
+
 import { createBall } from '../components/ball.js'
 import { createCamera } from '../components/camera.js'
 import { createDirLight } from '../components/directional_light.js'
@@ -31,11 +39,13 @@ class World {
     this.index = index
     // adding canvas element to the webflow container
     container.append(this.renderer.domElement)
-
+    this.initPostprocessing()
     // INITS!!!!!
     if (index == 0) {
-      this.initPlane()
-      this.initPaddle()
+      // this.initGradPlane()
+      this.initText('play smarter.')
+      // this.initText('smarter.')
+      // this.initPaddle()
       this.initLights(-2, 2, 3, 20, 0xfffbf6, false)
       this.initStarfield(800)
     } else if (index == 1) {
@@ -49,12 +59,67 @@ class World {
     }
 
     //prettier-ignore
+    // const resizer = new Resizer(container, this.camera, this.renderer)
+    // resizer.onResize = () => {
+    //   this.render()
+    // }
+    // BLOOM RESIZER
     const resizer = new Resizer(container, this.camera, this.renderer)
     resizer.onResize = () => {
+      this.composer.setSize(container.clientWidth, container.clientHeight)
       this.render()
     }
   }
 
+  // BLOOM POST PROCESSING INIT
+  initPostprocessing() {
+    // const renderTarget = new THREE.WebGLRenderTarget(
+    //   window.innerWidth,
+    //   window.innerHeight,
+    //   {
+    //     format: THREE.RGBAFormat,
+    //     type: THREE.HalfFloatType,
+    //     encoding: THREE.sRGBEncoding,
+    //     depthBuffer: true,
+    //     stencilBuffer: false,
+    //     samples: 4,
+    //   }
+    // )
+    // renderTarget.texture.encoding = THREE.sRGBEncoding
+    // renderTarget.texture.format = THREE.RGBAFormat
+    // this.renderer.setClearColor(0x000000, 0) // black color, fully transparent
+
+    // this.composer = new EffectComposer(this.renderer, renderTarget)
+
+    // Make sure to clear with alpha zero before rendering passes
+    // this.composer.renderer.autoClearColor = false
+
+    this.composer = new EffectComposer(this.renderer)
+
+    const renderPass = new RenderPass(this.scene, this.camera)
+    const bloomPass = new UnrealBloomPass(
+      new Vector2(window.innerWidth, window.innerHeight),
+      1.2, // strength
+      0.4, // radius
+      0.85 // threshold
+    )
+    const fxaaPass = new ShaderPass(FXAAShader)
+    const pixelRatio = this.renderer.getPixelRatio()
+    fxaaPass.material.uniforms['resolution'].value.x =
+      1 / (window.innerWidth * pixelRatio)
+    fxaaPass.material.uniforms['resolution'].value.y =
+      1 / (window.innerHeight * pixelRatio)
+
+    this.composer.addPass(renderPass)
+    console.log(bloomPass)
+    this.composer.addPass(bloomPass)
+    this.composer.addPass(fxaaPass)
+
+    // Override loop’s render if needed
+    this.loop.renderOverride = () => {
+      this.composer.render()
+    }
+  }
   // async initText() {
   //   const type = await createText('PADMI') // Await the result of createText
   //   scene.add(type) // Add the loaded text to the scene
@@ -108,7 +173,7 @@ class World {
   async initText(text) {
     const type = await createText(text, 0, 0, 0)
     this.scene.add(type)
-    // loop.updatables.push(type)
+    this.loop.updatables.push(type)
   }
 
   initStarfield(starCount) {
@@ -131,8 +196,8 @@ class World {
 
   // 2. Render the scene
   render() {
-    this.renderer.render(this.scene, this.camera)
-    // this.composer.render()
+    // this.renderer.render(this.scene, this.camera)
+    this.composer.render()
   }
 
   start() {

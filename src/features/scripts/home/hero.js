@@ -14,7 +14,7 @@ function hero() {
     const h1 = document.querySelectorAll('.h1')
     // const h2 = document.querySelectorAll('.h2')
     const hero = document.querySelector('.hero')
-    const hero_section = document.querySelector('.scene__section')
+    // const hero_section = document.querySelector('.scene__section')
     // const nav_container = document.querySelector('.nav-container')
     const claim = document.querySelector('.claim-heading')
     const download = document.querySelector('.download-heading')
@@ -78,17 +78,17 @@ function hero() {
     })
 
     // PARALLAX
-    gsap.to(hero_section, {
-      y: 40,
-      scale: 0.9,
-      scrollTrigger: {
-        trigger: hero_section,
-        start: 'bottom 98%',
-        end: 'bottom 50%',
-        scrub: 2,
-        markers: false,
-      },
-    })
+    // gsap.to(hero_section, {
+    //   y: 40,
+    //   // scale: 0.9,
+    //   scrollTrigger: {
+    //     trigger: hero_section,
+    //     start: 'bottom 98%',
+    //     end: 'bottom 50%',
+    //     scrub: 2,
+    //     markers: false,
+    //   },
+    // })
     gsap.to(hero, {
       autoAlpha: 0,
       scrollTrigger: {
