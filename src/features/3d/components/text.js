@@ -53,7 +53,7 @@ async function createText(text, x, y, z) {
     // size: 3.6 / z,
     height: 0.05,
   })
-  textGeometry.scale(0.5, 0.5, 0.0075)
+  textGeometry.scale(0.5, 0.5, 0.005)
 
   textGeometry.computeBoundingBox()
   const box = textGeometry.boundingBox
@@ -64,7 +64,7 @@ async function createText(text, x, y, z) {
   const tempMesh = new Mesh(textGeometry)
   const sampler = new MeshSurfaceSampler(tempMesh).build()
 
-  const count = 30000 // Increase for more density
+  const count = 130000 // Increase for more density
   const positions = new Float32Array(count * 3)
   for (let i = 0; i < count; i++) {
     const pos = new Vector3()
@@ -76,7 +76,7 @@ async function createText(text, x, y, z) {
 
   const sizes = new Float32Array(count)
   for (let i = 0; i < count; i++) {
-    sizes[i] = 0.76 * (2.5 + Math.random() * 1.5)
+    sizes[i] = 0.25 * (4.5 + Math.random() * 1.5)
   }
 
   const geometry = new BufferGeometry()
@@ -107,6 +107,7 @@ async function createText(text, x, y, z) {
   }
 
   const material = new ShaderMaterial({
+    blending: THREE.AdditiveBlending,
     uniforms,
     vertexShader: `
       attribute float aSize;
@@ -127,7 +128,7 @@ async function createText(text, x, y, z) {
       uniform float u_effectSelector2;
 
       void main() {
-        vAlpha = aSize / 4.0;
+        vAlpha = aSize / 2.0;
         vPosition = position;
 
         vec3 pos = aInitialPosition;
@@ -143,7 +144,7 @@ async function createText(text, x, y, z) {
         float dist = length(toMouse);
       
         // Use smoothstep to create falloff based on distance
-        float radius = 0.5 * sin(u_time) + 2.0; // control size of warp area 0.5
+        float radius = 0.5 * sin(u_time) + 1.5; // control size of warp area 0.5
         float strength = 0.2 * sin(0.1 * u_time) + 1.2; // displacement intensity 0.2
       
         float influence = smoothstep(radius, 0.0, dist); // 1.0 near mouse, 0.0 at radius edge
@@ -177,7 +178,9 @@ async function createText(text, x, y, z) {
         float displacementAlpha = clamp(vDisplacement * 2.0, 1.0, 2.5);
         if (dist>0.5) discard;
 
-        gl_FragColor = vec4(1.0, 1.0, 1.6, vAlpha * displacementAlpha * alpha);
+        vec3 glowColor = vec3(0.6, 0.6, 1.0); // warm glow
+
+        gl_FragColor = vec4(glowColor, vAlpha * displacementAlpha * alpha);
       }
     `,
     transparent: true,
@@ -215,28 +218,6 @@ async function createText(text, x, y, z) {
       currentAttr.array[i] +=
         (initialAttr.array[i] - currentAttr.array[i]) * 0.02
     }
-
-    // Now displace based on mouse
-    // for (let i = 0; i < count; i++) {
-    //   const i3 = i * 3
-    //   const x = currentAttr.array[i3 + 0]
-    //   const y = currentAttr.array[i3 + 1]
-    //   const z = currentAttr.array[i3 + 2]
-
-    //   // Compute mouse influence (same math as shader)
-    //   const dx = x - uniforms.u_mouseX.value
-    //   const dy = y - uniforms.u_mouseY.value
-    //   const dz = z - uniforms.u_mouseZ.value
-    //   const dist = Math.sqrt(dx * dx + dy * dy + dz * dz)
-
-    //   const radius = 4.0
-    //   const strength = 1.5
-    //   const influence = Math.max(0, 1.0 - dist / radius)
-
-    //   posAttr.array[i3 + 0] = x + dx * influence * strength
-    //   posAttr.array[i3 + 1] = y + dy * influence * strength
-    //   posAttr.array[i3 + 2] = z + dz * influence * strength
-    // }
 
     posAttr.needsUpdate = true
     currentAttr.needsUpdate = true

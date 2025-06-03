@@ -42,8 +42,9 @@ class World {
     this.initPostprocessing()
     // INITS!!!!!
     if (index == 0) {
-      this.initGradPlane()
+      // this.initGradPlane()
       this.initText('play smarter.')
+      // this.initText('smarter.')
       // this.initPaddle()
       this.initLights(-2, 2, 3, 20, 0xfffbf6, false)
       this.initStarfield(800)
@@ -110,6 +111,7 @@ class World {
       1 / (window.innerHeight * pixelRatio)
 
     this.composer.addPass(renderPass)
+    console.log(bloomPass)
     this.composer.addPass(bloomPass)
     this.composer.addPass(fxaaPass)
 
