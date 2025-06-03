@@ -20,6 +20,7 @@ import nav from './features/scripts/general/nav'
 //
 import bento from './features/scripts/home/bento'
 import claim from './features/scripts/home/claim'
+import claim_2 from './features/scripts/home/claim_2'
 import hero from './features/scripts/home/hero'
 import split from './features/scripts/home/split'
 import stats from './features/scripts/home/stats'
@@ -27,7 +28,7 @@ import steps from './features/scripts/home/steps'
 //
 import map from './features/scripts/where/map'
 //
-// import particles from './features/scripts/z/particles'
+import particles from './features/scripts/z/particles'
 //
 
 import './styles/style.css'
@@ -51,12 +52,27 @@ function runGeneralFunctions() {
 function runHomeFunctions() {
   console.log('hey!')
   // if (world_container) {
-  world(world_container, 0) // INaDEX 0 --> Paddle & Type
+  world(world_container, 0) // INDEX 0 --> Paddle & Type
   // particles()
   // }
   hero()
   split()
   claim()
+  stats()
+  bento()
+  steps()
+}
+
+function runHomeFunctions2() {
+  console.log('hey!')
+  // if (world_container) {
+  world(world_container, 2) // INDEX 0 --> Paddle & Type
+  particles()
+  // }
+  hero()
+  split()
+  claim()
+  claim_2()
   stats()
   bento()
   steps()
@@ -109,6 +125,7 @@ function runAuxFunctions() {
 
 if (!body.classList.contains('body__aux')) runGeneralFunctions()
 if (body.classList.contains('body__home')) runHomeFunctions()
+if (body.classList.contains('body__home__2')) runHomeFunctions2()
 if (body.classList.contains('body__club')) runClubFunctions()
 if (body.classList.contains('body__where')) runWhereFunctions()
 if (body.classList.contains('body__contact')) runContactFunctions()

@@ -56,6 +56,14 @@ class World {
       this.initPadmiCam(0, -0.6, 0, 1)
       this.initPadmiCam(0, -0.6, 0, 1)
       // this.initStarfield(60)
+    } else if (index == 2) {
+      // this.initGradPlane()
+      // this.initText('play smarter.')
+      // this.initText('smarter.')
+      // this.initPaddle()
+      this.initBall()
+      this.initLights(-2, 2, 3, 20, 0xfffbf6, false)
+      this.initStarfield(800)
     }
 
     //prettier-ignore
@@ -73,27 +81,6 @@ class World {
 
   // BLOOM POST PROCESSING INIT
   initPostprocessing() {
-    // const renderTarget = new THREE.WebGLRenderTarget(
-    //   window.innerWidth,
-    //   window.innerHeight,
-    //   {
-    //     format: THREE.RGBAFormat,
-    //     type: THREE.HalfFloatType,
-    //     encoding: THREE.sRGBEncoding,
-    //     depthBuffer: true,
-    //     stencilBuffer: false,
-    //     samples: 4,
-    //   }
-    // )
-    // renderTarget.texture.encoding = THREE.sRGBEncoding
-    // renderTarget.texture.format = THREE.RGBAFormat
-    // this.renderer.setClearColor(0x000000, 0) // black color, fully transparent
-
-    // this.composer = new EffectComposer(this.renderer, renderTarget)
-
-    // Make sure to clear with alpha zero before rendering passes
-    // this.composer.renderer.autoClearColor = false
-
     this.composer = new EffectComposer(this.renderer)
 
     const renderPass = new RenderPass(this.scene, this.camera)
@@ -111,7 +98,7 @@ class World {
       1 / (window.innerHeight * pixelRatio)
 
     this.composer.addPass(renderPass)
-    if (this.index == 0) this.composer.addPass(bloomPass)
+    if (this.index == 0 || this.index == 3) this.composer.addPass(bloomPass)
     this.composer.addPass(fxaaPass)
 
     // Override loop’s render if needed
