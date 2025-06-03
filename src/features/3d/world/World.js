@@ -111,8 +111,7 @@ class World {
       1 / (window.innerHeight * pixelRatio)
 
     this.composer.addPass(renderPass)
-    console.log(bloomPass)
-    this.composer.addPass(bloomPass)
+    if (this.index == 0) this.composer.addPass(bloomPass)
     this.composer.addPass(fxaaPass)
 
     // Override loop’s render if needed
