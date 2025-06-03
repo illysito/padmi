@@ -201,11 +201,13 @@ async function createText(text, x, y, z) {
   group.position.set(x, y, z)
 
   let counter = 0
+  let scrollY = 0
   group.tick = (delta) => {
     counter += delta
     uniforms.u_time.value = (uniforms.u_time.value + delta) % 10000
-    group.rotation.x = 0.15 * Math.sin(counter)
-
+    console.log(scrollY)
+    group.rotation.x = 0.15 * Math.sin(counter) - 0.005 * scrollY
+    group.position.z = -0.005 * scrollY
     uniforms.u_mouseZ.value = 0 * Math.sin(0.1 * counter) + 0.1
 
     // EASING
@@ -241,6 +243,10 @@ async function createText(text, x, y, z) {
 
     uniforms.u_mouseX.value = mouseX
     uniforms.u_mouseY.value = mouseY
+  })
+
+  window.addEventListener('scroll', () => {
+    scrollY = window.scrollY
   })
 
   const effectButton = document.querySelector('.effect_button')
