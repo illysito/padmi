@@ -22,11 +22,6 @@ import {
 import { MeshSurfaceSampler } from 'three/addons/math/MeshSurfaceSampler.js'
 
 function createBall() {
-  // font loading
-  // resource URL
-  // const url_light =
-  //   'https://raw.githubusercontent.com/illysito/NeueRegrade/d5a1e43aab6950247fdceecc09c74ff8e0172b80/Neue%20Regrade_Bold.json'
-
   // create a geometry
   const ballGeometry = new SphereGeometry(2, 30, 30)
 
@@ -162,38 +157,19 @@ function createBall() {
 
   const points = new Points(geometry, material)
 
-  // const type = new Mesh(textGeometry, mat)
   const group = new Group()
   group.add(points)
-
-  // place the text
-  // group.position.set(x, y, z)
 
   let counter = 0
   let scrollY = 0
   group.tick = (delta) => {
     counter += delta
     uniforms.u_time.value = (uniforms.u_time.value + delta) % 10000
-    console.log(scrollY)
     group.rotation.x += 0.01 * (0.15 * Math.sin(counter) - 0.005 * scrollY)
     group.rotation.y += 0.01 * (0.15 * Math.cos(counter) - 0.005 * scrollY)
     group.rotation.z += 0.01 * (0.15 * Math.sin(counter) - 0.005 * scrollY)
     group.position.z = -0.005 * scrollY
     uniforms.u_mouseZ.value = 0.1 * Math.sin(0.1 * counter) + 0.1
-
-    // EASING
-    const posAttr = geometry.attributes.position
-    const currentAttr = geometry.attributes.aCurrentPosition
-    const initialAttr = geometry.attributes.aInitialPosition
-
-    for (let i = 0; i < count * 3; i++) {
-      // Ease current position back toward initial
-      currentAttr.array[i] +=
-        (initialAttr.array[i] - currentAttr.array[i]) * 0.02
-    }
-
-    posAttr.needsUpdate = true
-    currentAttr.needsUpdate = true
   }
 
   window.addEventListener('mousemove', (event) => {
