@@ -12,7 +12,7 @@ function claim_2() {
     const wrapper = document.createElement('div')
     wrapper.style.overflow = 'hidden'
     wrapper.style.display = 'inline-block'
-    wrapper.style.lineHeight = '0.98em'
+    wrapper.style.lineHeight = '0.9em'
 
     char.parentNode.insertBefore(wrapper, char)
     wrapper.appendChild(char)

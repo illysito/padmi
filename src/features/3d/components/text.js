@@ -43,14 +43,18 @@ async function createText(text, x, y, z) {
   const url_light =
     'https://raw.githubusercontent.com/illysito/padmi/refs/heads/main/MADE%20Outer%20Sans_Bold.json'
 
+  // const url_light =
+  //   'https://raw.githubusercontent.com/illysito/padmi/refs/heads/main/Mango%20Grotesque_Bold.json'
+
   const font = await loadFont(url_light)
   console.log(font.data)
 
   // create a geometry
   const textGeometry = new TextGeometry(text, {
     font: font,
-    size: 1.8,
-    // size: 3.6 / z,
+    // size: 1.8,
+    size: 1.4,
+    // size: 3.4,
     height: 0.05,
   })
   textGeometry.scale(0.5, 0.5, 0.005)
@@ -171,6 +175,11 @@ async function createText(text, x, y, z) {
       uniform float u_prevMouseX;
       uniform float u_prevMouseY;
 
+      float hash(vec3 pos, float scale) {
+        vec3 gridPos = floor(pos * scale);
+        return fract(sin(dot(gridPos ,vec3(12.9898,78.233, 45.164))) * 43758.5453);
+      }
+
       void main() {
 
         float dist = distance(gl_PointCoord, vec2(0.5));
@@ -179,6 +188,9 @@ async function createText(text, x, y, z) {
         if (dist>0.5) discard;
 
         vec3 glowColor = vec3(0.6, 0.6, 1.0); // warm glow
+        // Random value per point
+        float rnd = hash(vPosition, 20.0);
+        glowColor = rnd < 0.05 ? vec3(0.6, 1.0, 0.2) : vec3(0.6, 0.6, 0.9); // green or white
 
         gl_FragColor = vec4(glowColor, vAlpha * displacementAlpha * alpha);
       }
@@ -260,7 +272,7 @@ async function createText(text, x, y, z) {
     }
     let displayedEffectIndex = effectIndex + 1
     console.log(effectIndex)
-    effectText.textContent = 'Efecto ' + displayedEffectIndex
+    effectText.textContent = 'Efecto ' + (displayedEffectIndex / 2 + 0.5)
     uniforms.u_effectSelector.value = effectArray[effectIndex]
     uniforms.u_effectSelector2.value = effectArray[effectIndex + 1]
     console.log('hey')

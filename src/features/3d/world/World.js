@@ -43,7 +43,9 @@ class World {
     // INITS!!!!!
     if (index == 0) {
       // this.initGradPlane()
-      this.initText('play smarter.')
+      // this.initText('play smarter.')
+      this.initText('PLAY SMARTER.')
+      // this.initText('P  L  A  Y     S  M  A  R  T  E  R  .')
       // this.initText('smarter.')
       // this.initPaddle()
       this.initLights(-2, 2, 3, 20, 0xfffbf6, false)
@@ -60,9 +62,9 @@ class World {
       // this.initGradPlane()
       // this.initText('play smarter.')
       // this.initText('smarter.')
-      // this.initPaddle()
-      this.initBall()
-      this.initLights(-2, 2, 3, 20, 0xfffbf6, false)
+      this.initPaddle()
+      // this.initBall()
+      // this.initLights(-2, 2, 3, 20, 0xfffbf6, false)
       this.initStarfield(800)
     }
 
@@ -87,8 +89,8 @@ class World {
     const bloomPass = new UnrealBloomPass(
       new Vector2(window.innerWidth, window.innerHeight),
       1.2, // strength
-      0.4, // radius
-      0.85 // threshold
+      0.8, // radius
+      0.658 // threshold
     )
     const fxaaPass = new ShaderPass(FXAAShader)
     const pixelRatio = this.renderer.getPixelRatio()
@@ -98,7 +100,7 @@ class World {
       1 / (window.innerHeight * pixelRatio)
 
     this.composer.addPass(renderPass)
-    if (this.index == 0 || this.index == 3) this.composer.addPass(bloomPass)
+    if (this.index == 0 || this.index == 2) this.composer.addPass(bloomPass)
     this.composer.addPass(fxaaPass)
 
     // Override loop’s render if needed

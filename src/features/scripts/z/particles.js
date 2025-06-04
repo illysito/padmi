@@ -5,7 +5,7 @@ function particles() {
   let ctx
   let textCoordinates
   let particlesArray = []
-  let spread = 3
+  let spread = 1
   let adjustX = (1 * window.innerWidth) / (2 * spread)
   let adjustY = (1 * window.innerHeight) / (2 * spread)
   let counter = 0
@@ -61,12 +61,12 @@ function particles() {
   const mouse = {
     x: 0,
     y: 0,
-    radius: 120,
+    radius: 100,
   }
 
   window.addEventListener('mousemove', (event) => {
     mouse.x = event.clientX
-    mouse.y = event.pageY
+    mouse.y = event.clientY
   })
   //#endregion
 
@@ -84,7 +84,7 @@ function particles() {
     }
 
     draw() {
-      ctx.fillStyle = `rgba(200, 200, 255, ${this.opacity})`
+      ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`
       ctx.beginPath()
       // ctx.drawImage(
       //   glowImage,
@@ -157,16 +157,16 @@ function particles() {
   const count = 6000
   function createBallArray() {
     for (let i = 0; i < count; i++) {
-      const radius = 80 * Math.cbrt(Math.random()) // or Math.cbrt(Math.random()) for uniform inner volume
+      const radius = 160 * Math.cbrt(Math.random()) // or Math.cbrt(Math.random()) for uniform inner volume
       const theta = Math.random() * Math.PI * 2
       const phi = Math.acos(2 * Math.random() - 1)
 
       const x = radius * Math.sin(phi) * Math.cos(theta) + adjustX
       const y = radius * Math.sin(phi) * Math.sin(theta) + adjustY
-      const z = radius * Math.cos(phi)
+      // const z = radius * Math.cos(phi)
 
       particlesArray.push(
-        new Particle(x * spread, y * spread, Math.random() * 1.2, z)
+        new Particle(x * spread, y * spread, Math.random() * 1, 255)
       )
     }
   }

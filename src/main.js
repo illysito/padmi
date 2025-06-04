@@ -28,7 +28,7 @@ import steps from './features/scripts/home/steps'
 //
 import map from './features/scripts/where/map'
 //
-import particles from './features/scripts/z/particles'
+// import particles from './features/scripts/z/particles'
 //
 
 import './styles/style.css'
@@ -67,7 +67,7 @@ function runHomeFunctions2() {
   console.log('hey!')
   // if (world_container) {
   world(world_container, 2) // INDEX 0 --> Paddle & Type
-  particles()
+  // particles()
   // }
   hero()
   split()

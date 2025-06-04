@@ -26,6 +26,7 @@ function createPaddle() {
             roughness: 0.013,
             metalness: 0.0,
             reflectivity: 0.4,
+            wireframe: true,
           })
         }
       })
@@ -37,7 +38,7 @@ function createPaddle() {
       }
       // SCALE
       // Should be 0.15 for DESKTOP and 0.10 for TABLET --> 950/9500 = 0.10 ; 1440/9500 = 0.1515 --> 9500 is OK!
-      let scale = window.innerWidth / 9600
+      let scale = (1.6 * window.innerWidth) / 9600
       if (isMobile()) scale = window.innerWidth / 4000
       paddle.scale.set(scale, scale, scale)
 
@@ -74,8 +75,8 @@ function createPaddle() {
         paddle.position.x = gsap.utils.mapRange(
           0,
           window.innerWidth,
-          -0.15,
-          0.15,
+          -0.05,
+          0.05,
           lastMouseX
         )
       }

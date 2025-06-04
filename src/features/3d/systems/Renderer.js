@@ -11,7 +11,7 @@ function createRenderer() {
   renderer.physicallyCorrectLights = true
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
   renderer.toneMapping = ReinhardToneMapping // or ACESFilmicToneMapping
-  renderer.toneMappingExposure = 0.25
+  renderer.toneMappingExposure = 0.15
   renderer.outputEncoding = THREE.sRGBEncoding
   renderer.physicallyCorrectLights = true
 
