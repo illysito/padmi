@@ -52,8 +52,8 @@ async function createText(text, x, y, z) {
   // create a geometry
   const textGeometry = new TextGeometry(text, {
     font: font,
-    // size: 1.8,
-    size: 1.4,
+    size: 1.8,
+    // size: 1.4,
     // size: 3.4,
     height: 0.05,
   })
@@ -210,7 +210,7 @@ async function createText(text, x, y, z) {
   group.add(points)
 
   // place the text
-  group.position.set(x, y, z)
+  group.position.set(x, y + 0.32, z)
 
   let counter = 0
   let scrollY = 0

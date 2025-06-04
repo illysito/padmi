@@ -43,8 +43,8 @@ class World {
     // INITS!!!!!
     if (index == 0) {
       // this.initGradPlane()
-      // this.initText('play smarter.')
-      this.initText('PLAY SMARTER.')
+      this.initText('play smarter.')
+      // this.initText('PLAY SMARTER.')
       // this.initText('P  L  A  Y     S  M  A  R  T  E  R  .')
       // this.initText('smarter.')
       // this.initPaddle()
