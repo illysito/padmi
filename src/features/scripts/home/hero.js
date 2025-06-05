@@ -6,8 +6,8 @@ gsap.registerPlugin(ScrollTrigger)
 
 function hero() {
   function isDesktopOrTablet() {
-    // return window.innerWidth >= 768
-    return true
+    return window.innerWidth >= 768
+    // return true
   }
   // ELEMENTS
   if (isDesktopOrTablet()) {
