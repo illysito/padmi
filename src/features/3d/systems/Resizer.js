@@ -8,13 +8,20 @@ const setSize = (container, camera, renderer) => {
   renderer.setPixelRatio(window.devicePixelRatio)
 }
 
+function isDesktopOrTablet() {
+  return window.innerWidth >= 768
+  // return true
+}
+
 class Resizer {
   constructor(container, camera, renderer) {
     setSize(container, camera, renderer)
-    window.addEventListener('resize', () => {
-      setSize(container, camera, renderer)
-      this.onResize()
-    })
+    if (isDesktopOrTablet()) {
+      window.addEventListener('resize', () => {
+        setSize(container, camera, renderer)
+        this.onResize()
+      })
+    }
   }
   onResize() {
     console.log('resizing!')
