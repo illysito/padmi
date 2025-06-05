@@ -4,7 +4,8 @@ body {
   overflow: visible;
 }
 
-.hero {
+.hero,
+.scene-section {
   height: calc(var(--vh, 1vh) * 100);
 }
 
