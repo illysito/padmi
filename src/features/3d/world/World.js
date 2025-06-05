@@ -28,6 +28,10 @@ import { Resizer } from '../systems/Resizer.js'
 // let scene
 // let renderer
 // let loop
+function isDesktopOrTablet() {
+  return window.innerWidth >= 768
+  // return true
+}
 
 class World {
   // 1. Create an instance of the World app
@@ -42,9 +46,16 @@ class World {
     this.initPostprocessing()
     // INITS!!!!!
     if (index == 0) {
-      this.initText('play smarter.')
-      this.initLights(-2, 2, 3, 20, 0xfffbf6, false)
-      this.initStarfield(800)
+      if (isDesktopOrTablet()) {
+        this.initText('play smarter.')
+        this.initLights(-2, 2, 3, 20, 0xfffbf6, false)
+        this.initStarfield(800)
+      } else {
+        this.initPaddle()
+        this.initLights(-2, 2, 3, 20, 0xfffbf6, false)
+        this.initStarfield(800)
+        // console.log('mobile 3d is running!')
+      }
     } else if (index == 1) {
       this.initLights(-1, 1, 10, 20, 0xfffbf6, true)
       this.initDirLights(1, 1, 0)
