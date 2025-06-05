@@ -42,29 +42,17 @@ class World {
     this.initPostprocessing()
     // INITS!!!!!
     if (index == 0) {
-      // this.initGradPlane()
       this.initText('play smarter.')
-      // this.initText('PLAY SMARTER.')
-      // this.initText('P  L  A  Y     S  M  A  R  T  E  R  .')
-      // this.initText('smarter.')
-      // this.initPaddle()
       this.initLights(-2, 2, 3, 20, 0xfffbf6, false)
       this.initStarfield(800)
     } else if (index == 1) {
-      // this.initTransmissionPlane()
-      // this.initPaddle()
-      this.initLights(-1, 2.4, 0, 20, 0xfffbf6, true)
+      this.initLights(-1, 1, 10, 20, 0xfffbf6, true)
       this.initDirLights(1, 1, 0)
       this.initPadmiCam(0, -0.6, 0, 1)
       this.initPadmiCam(0, -0.6, 0, 1)
-      // this.initStarfield(60)
+      this.initStarfield(60)
     } else if (index == 2) {
-      // this.initGradPlane()
-      // this.initText('play smarter.')
-      // this.initText('smarter.')
       this.initPaddle()
-      // this.initBall()
-      // this.initLights(-2, 2, 3, 20, 0xfffbf6, false)
       this.initStarfield(800)
     }
 
@@ -86,12 +74,23 @@ class World {
     this.composer = new EffectComposer(this.renderer)
 
     const renderPass = new RenderPass(this.scene, this.camera)
-    const bloomPass = new UnrealBloomPass(
-      new Vector2(window.innerWidth, window.innerHeight),
-      1.2, // strength
-      0.8, // radius
-      0.658 // threshold
-    )
+    let bloomPass
+    if (this.index == 0) {
+      bloomPass = new UnrealBloomPass(
+        new Vector2(window.innerWidth, window.innerHeight),
+        1.2, // strength
+        0.8, // radius
+        0.658 // threshold
+      )
+    } else if (this.index == 1) {
+      bloomPass = new UnrealBloomPass(
+        new Vector2(window.innerWidth, window.innerHeight),
+        0.33, // strength
+        0.2, // radius
+        0.8 // threshold
+      )
+    }
+
     const fxaaPass = new ShaderPass(FXAAShader)
     const pixelRatio = this.renderer.getPixelRatio()
     fxaaPass.material.uniforms['resolution'].value.x =
@@ -100,7 +99,7 @@ class World {
       1 / (window.innerHeight * pixelRatio)
 
     this.composer.addPass(renderPass)
-    if (this.index == 0 || this.index == 2) this.composer.addPass(bloomPass)
+    if (bloomPass) this.composer.addPass(bloomPass)
     this.composer.addPass(fxaaPass)
 
     // Override loop’s render if needed

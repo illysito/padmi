@@ -14,6 +14,7 @@ function nav() {
   const nav_container = document.querySelector('.nav-container')
   const button = document.querySelectorAll('.button')
   const links = document.querySelectorAll('.nav-link')
+  const logo = document.querySelector('.padmi-badge')
   // const body = document.body
 
   // INIT ANIMATION
@@ -28,7 +29,12 @@ function nav() {
     duration: 2,
     ease: 'power2.out',
   })
-
+  gsap.to(logo, {
+    yPercent: 100,
+    opacity: 1,
+    duration: 1.2,
+    ease: 'power2.inOut',
+  })
   // HOME ANIMATION
   // if (body.classList.contains('body__home')) {
   //   gsap.to(nav_container, {

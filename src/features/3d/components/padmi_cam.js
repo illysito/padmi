@@ -1,5 +1,5 @@
 //prettier-ignore
-// import { gsap } from 'gsap'
+import { gsap } from 'gsap'
 import {
   // MeshPhysicalMaterial,
   // Color,
@@ -14,11 +14,11 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 function createPadmiCam(x, y, z, id) {
   return new Promise((resolve) => {
     const loader = new GLTFLoader()
-    const url =
-      'https://raw.githubusercontent.com/illysito/padmi/324aaea6d43fb321156b1392ffe6a92d6d71aef0/Round_SecurityCam_V01.glb'
-
     // const url =
-    //   'https://cdn.jsdelivr.net/gh/illysito/padmi@main/objPaddle.glb'
+    //   'https://raw.githubusercontent.com/illysito/padmi/324aaea6d43fb321156b1392ffe6a92d6d71aef0/Round_SecurityCam_V01.glb'
+
+    const url =
+      'https://raw.githubusercontent.com/illysito/padmi/fc0a986f850ea7992a516612ebffe0f03eb72450/Security_Dome_Camera_0529085519_texture.glb'
 
     loader.load(url, (gltf) => {
       const cam = gltf.scene
@@ -26,12 +26,14 @@ function createPadmiCam(x, y, z, id) {
       cam.traverse((child) => {
         if (child.isMesh) {
           // child.material.color.set(0xff0000)
-          child.material.emissive.set(0x210053)
-          // child.material.emissive.set(0xfffbf6)
-          child.material.emissiveIntensity = 0.1 // Emissive intensity
-          child.material.reflectivity = 1.0
-          child.material.metalness = 1.0
-          child.material.roughness = 0.1
+          // child.material.emissive.set(0x210053)
+          child.material.emissive.set(0x8b81e4)
+          child.material.emissiveIntensity = 0.0 // Emissive intensity
+          child.material.reflectivity = 0.0
+          child.material.metalness = 0.0
+          child.material.roughness = 1.0
+          child.material.color.set(0x8b81e4)
+          child.material.wireframe = true
         }
       })
 
@@ -40,7 +42,7 @@ function createPadmiCam(x, y, z, id) {
       group.add(cam)
 
       // SCALE & POSITION
-      const scale = window.innerWidth / 4000
+      const scale = window.innerWidth / 1000
       cam.scale.set(scale, scale, scale)
       cam.position.set(x, 4, 0 * id)
 
@@ -58,6 +60,7 @@ function createPadmiCam(x, y, z, id) {
       let scrollY = 0
 
       let scrollRotation = 0
+      let scrollPositionScale = 0
       let rotationFactor = 0.01
       let scrollPosition = 0
 
@@ -67,10 +70,12 @@ function createPadmiCam(x, y, z, id) {
         counter += delta
         positionCounter -= delta
         positionCounter -= 3.2 * positionCounter * delta
+
         // INITIAL ANIMATION
         if (positionCounter > -1) {
           cam.position.y = positionCounter
         }
+
         // ROTATION
         group.rotation.z =
           -0.02 * Math.sin(id * counter * 0.6) +
@@ -78,10 +83,10 @@ function createPadmiCam(x, y, z, id) {
         group.rotation.x =
           -0.005 * Math.cos(id * counter * 0.8) +
           -0.001 * scrollRotation * id * rotationDamp
-        // group.rotation.z =
-        //   0.08 * Math.sin(id * counter) + 0.02 * scrollRotation * id * damp
+
+        // POSITION
         group.position.y = scrollPosition * positionDamp
-        // console.log(group.position.y)
+        group.position.z = scrollPositionScale * positionDamp
       }
 
       window.addEventListener('scroll', () => {
@@ -89,6 +94,7 @@ function createPadmiCam(x, y, z, id) {
 
         // ROTATION
         scrollRotation = scrollY
+        scrollPositionScale = gsap.utils.mapRange(0, 6000, 0, 400, scrollY)
 
         // MOVE
         if (scrollY >= 6000) {

@@ -9,7 +9,7 @@ gsap.registerPlugin(ScrollTrigger)
 function splitClub() {
   // ELEMENTS
   // Camera heading
-  const cam_heading = document.querySelector('.cam-heading')
+  // const cam_heading = document.querySelector('.cam-heading')
   const cam_p = document.querySelector('.cam-p')
   const heading_wrapper = document.querySelector('.heading-cont')
   // Camera features
@@ -20,21 +20,21 @@ function splitClub() {
   const padmi_features_p = document.querySelectorAll('.elements-txt')
   const padmi_features_h = document.querySelectorAll('.elements-h')
 
-  const splitHeading = new SplitType(cam_heading, { types: 'lines' })
+  // const splitHeading = new SplitType(cam_heading, { types: 'lines' })
   const splitHeadingP = new SplitType(cam_p, { types: 'lines' })
 
   // HEADINGS
   function splitHeadings() {
     // Main heading
-    splitHeading.lines.forEach((line) => {
-      const wrapper = document.createElement('div')
-      wrapper.style.overflow = 'visible'
-      wrapper.style.display = 'block'
-      wrapper.style.height = '1em'
+    // splitHeading.lines.forEach((line) => {
+    //   const wrapper = document.createElement('div')
+    //   wrapper.style.overflow = 'visible'
+    //   wrapper.style.display = 'block'
+    //   wrapper.style.height = '1em'
 
-      line.parentNode.insertBefore(wrapper, line)
-      wrapper.appendChild(line)
-    })
+    //   line.parentNode.insertBefore(wrapper, line)
+    //   wrapper.appendChild(line)
+    // })
 
     // Paragraph
     splitHeadingP.lines.forEach((line) => {
@@ -53,13 +53,13 @@ function splitClub() {
       opacity: 1,
       duration: 0.8,
     })
-    gsap.from([splitHeading.lines, splitHeadingP.lines], {
-      opacity: 0,
-      yPercent: 100,
-      duration: 1,
-      ease: 'power1.out',
-      stagger: 0.2,
-    })
+    // gsap.from([splitHeading.lines, splitHeadingP.lines], {
+    //   opacity: 0,
+    //   yPercent: 100,
+    //   duration: 1,
+    //   ease: 'power1.out',
+    //   stagger: 0.2,
+    // })
   }
   splitHeadings()
   animateHeadings()

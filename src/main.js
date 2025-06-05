@@ -7,9 +7,9 @@ import world from './features/3d/world/universe'
 import world_2 from './features/3d/world/universe_2'
 import world_3 from './features/3d/world/universe_3'
 //
-// import cameraTexts from './features/scripts/club/camera_texts'
 import logoMarquee from './features/scripts/club/logo_marquee'
 import numbers from './features/scripts/club/numbers'
+import restoreOpacity from './features/scripts/club/restore_opacity'
 import splitClub from './features/scripts/club/split_club'
 //
 import contact from './features/scripts/contact/contact'
@@ -38,7 +38,6 @@ const body = document.body
 const world_container = document.querySelector('.world-container')
 const world_2_container = document.querySelector('.world-2-container')
 const world_3_container = document.querySelector('.world-3-container')
-// const particles_container = document.querySelector('.particles-container')
 const club_container = document.querySelector('.club-container')
 
 function runGeneralFunctions() {
@@ -80,7 +79,7 @@ function runHomeFunctions2() {
 
 function runClubFunctions() {
   world(club_container, 1)
-  // cameraTexts()
+  restoreOpacity()
   splitClub()
   logoMarquee()
   numbers()
