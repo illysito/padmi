@@ -33,6 +33,11 @@ import map from './features/scripts/where/map'
 
 import './styles/style.css'
 
+function isDesktopOrTablet() {
+  return window.innerWidth >= 768
+  // return true
+}
+
 // MAIN! //
 const body = document.body
 const world_container = document.querySelector('.world-container')
@@ -56,7 +61,11 @@ function runHomeFunctions() {
   // }
   hero()
   split()
-  claim()
+  if (isDesktopOrTablet()) {
+    claim()
+  } else {
+    claim_2()
+  }
   stats()
   bento()
   steps()
