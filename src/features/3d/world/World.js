@@ -49,11 +49,11 @@ class World {
       if (isDesktopOrTablet()) {
         this.initText('play smarter.')
         this.initLights(-2, 2, 3, 20, 0xfffbf6, false)
-        this.initStarfield(800)
+        this.initStarfield(200)
       } else {
         this.initPaddle()
         this.initLights(-2, 2, 3, 20, 0xfffbf6, false)
-        this.initStarfield(800)
+        this.initStarfield(200)
         // console.log('mobile 3d is running!')
       }
     } else if (index == 1) {

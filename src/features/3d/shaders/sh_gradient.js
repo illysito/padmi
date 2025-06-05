@@ -263,7 +263,7 @@ void main() {
   // noise = 1.0;
 
   // vColor = mix(base, vColor, 0.4 * noise);
-  vColor *= 1.0 * noise; // original: 0.65
+  vColor *= 0.45 * noise; // original: 0.65
   // vColor = mix(vColor, base, noise);
   // vColor = clamp(vColor, vec4(0.1), vec4(1.0));
 
