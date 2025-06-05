@@ -39,7 +39,7 @@ function createPaddle() {
       // SCALE
       // Should be 0.15 for DESKTOP and 0.10 for TABLET --> 950/9500 = 0.10 ; 1440/9500 = 0.1515 --> 9500 is OK!
       let scale = (1.6 * window.innerWidth) / 9600
-      if (isMobile()) scale = window.innerWidth / 4000
+      if (isMobile()) scale = window.innerWidth / 3400
       paddle.scale.set(scale, scale, scale)
 
       // POSITION
@@ -58,13 +58,16 @@ function createPaddle() {
       const damping = 0.9 // How quickly it slows down when the mouse stops moving
 
       let paddleRotationX = 0
+      let rotationBias = -60
+      if (isMobile()) rotationBias = -45
 
       // LOOP
       let counter = 0
       paddle.tick = (delta) => {
         counter += 0.5 * delta
         paddle.rotation.x = -90 * toRad + Math.sin(counter) * 20 * toRad
-        paddle.rotation.y = -60 * toRad + Math.cos(counter) * 20 * toRad
+        paddle.rotation.y =
+          rotationBias * toRad + Math.cos(counter) * 20 * toRad
         paddle.rotation.z =
           Math.sin(0.5 * counter) * 360 * toRad + paddleRotationX // Apply rotation to X axis
         // Damping effect applied even if mouse is moving
@@ -82,24 +85,26 @@ function createPaddle() {
       }
 
       // ANIMATION
-      window.addEventListener('mousemove', (event) => {
-        const currentMouseX = event.clientX
-        // Calculate mouse movement (velocity)
-        const deltaX = currentMouseX - lastMouseX
-        // If there is movement, update rotational speed
-        if (Math.abs(deltaX) > 6) {
-          rotationalSpeedX += deltaX * acceleration
-          // Cap the rotational speed to a maximum value
-          // prettier-ignore
-          rotationalSpeedX = Math.min(Math.max(rotationalSpeedX, -maxSpeed), maxSpeed)
-        }
-        // Update last mouse position
-        lastMouseX = currentMouseX
-      })
+      if (!isMobile()) {
+        window.addEventListener('mousemove', (event) => {
+          const currentMouseX = event.clientX
+          // Calculate mouse movement (velocity)
+          const deltaX = currentMouseX - lastMouseX
+          // If there is movement, update rotational speed
+          if (Math.abs(deltaX) > 6) {
+            rotationalSpeedX += deltaX * acceleration
+            // Cap the rotational speed to a maximum value
+            // prettier-ignore
+            rotationalSpeedX = Math.min(Math.max(rotationalSpeedX, -maxSpeed), maxSpeed)
+          }
+          // Update last mouse position
+          lastMouseX = currentMouseX
+        })
 
-      window.addEventListener('scroll', () => {
-        scroll = window.scrollY
-      })
+        window.addEventListener('scroll', () => {
+          scroll = window.scrollY
+        })
+      }
 
       resolve(paddle)
     })
