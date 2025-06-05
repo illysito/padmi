@@ -45,6 +45,7 @@ function createPaddle() {
 
       // POSITION
       paddle.position.z = 2
+      if (isMobile()) paddle.position.y = -0.12
 
       // ROTATION
       let toRad = Math.PI / 180
