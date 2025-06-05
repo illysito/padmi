@@ -15,7 +15,8 @@ function createRenderer() {
   renderer.outputEncoding = THREE.sRGBEncoding
   renderer.physicallyCorrectLights = true
 
-  renderer.setSize(window.innerWidth, window.innerHeight)
+  // renderer.setSize(window.innerWidth, window.innerHeight)
+  renderer.setSize(window.innerWidth, window.visualViewport.height)
 
   // renderer.setClearColor(0x000000, 0)
 
