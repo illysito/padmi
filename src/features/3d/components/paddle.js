@@ -39,7 +39,8 @@ function createPaddle() {
       // SCALE
       // Should be 0.15 for DESKTOP and 0.10 for TABLET --> 950/9500 = 0.10 ; 1440/9500 = 0.1515 --> 9500 is OK!
       let scale = (1.6 * window.innerWidth) / 9600
-      if (isMobile()) scale = window.innerWidth / 3400
+      // if (isMobile()) scale = window.innerWidth / 3400
+      if (isMobile()) scale = 0.11
       paddle.scale.set(scale, scale, scale)
 
       // POSITION
