@@ -11,6 +11,12 @@ import {
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 // import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js'
 
+function isMobile() {
+  // return window.innerWidth >= 768
+  // console.log('isMob!')
+  return window.innerWidth <= 478
+}
+
 function createPadmiCam(x, y, z, id) {
   return new Promise((resolve) => {
     const loader = new GLTFLoader()
@@ -42,7 +48,12 @@ function createPadmiCam(x, y, z, id) {
       group.add(cam)
 
       // SCALE & POSITION
-      const scale = window.innerWidth / 1000
+      let positionBias = 0
+      let scale = window.innerWidth / 1000
+      if (isMobile()) {
+        scale = window.innerWidth / 500
+        group.position.y = 0.5
+      }
       cam.scale.set(scale, scale, scale)
       cam.position.set(x, 4, 0 * id)
 
