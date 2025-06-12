@@ -265,18 +265,20 @@ async function createText(text, x, y, z) {
   const effectText = document.querySelector('.effect_text')
   let effectArray = [1.0, 0.0, -1.8, 0.0, 1.0, 1.0, -1.8, 1.0]
   let effectIndex = 0
-  effectButton.addEventListener('click', () => {
-    effectIndex += 2
-    if (effectIndex == effectArray.length) {
-      effectIndex = 0
-    }
-    let displayedEffectIndex = effectIndex + 1
-    console.log(effectIndex)
-    effectText.textContent = 'Efecto ' + (displayedEffectIndex / 2 + 0.5)
-    uniforms.u_effectSelector.value = effectArray[effectIndex]
-    uniforms.u_effectSelector2.value = effectArray[effectIndex + 1]
-    console.log('hey')
-  })
+  if (effectButton) {
+    effectButton.addEventListener('click', () => {
+      effectIndex += 2
+      if (effectIndex == effectArray.length) {
+        effectIndex = 0
+      }
+      let displayedEffectIndex = effectIndex + 1
+      console.log(effectIndex)
+      effectText.textContent = 'Efecto ' + (displayedEffectIndex / 2 + 0.5)
+      uniforms.u_effectSelector.value = effectArray[effectIndex]
+      uniforms.u_effectSelector2.value = effectArray[effectIndex + 1]
+      console.log('hey')
+    })
+  }
 
   return group
 }

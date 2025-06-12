@@ -135,7 +135,7 @@ function runLegalsFunctions() {
 
 function runAuxFunctions() {
   console.log('Aux!')
-  world_2(world_2_container)
+  // world_2(world_2_container)
   world_3(world_3_container)
 }
 

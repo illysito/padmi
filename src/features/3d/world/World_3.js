@@ -13,6 +13,7 @@ import { createParticles } from '../components/particles.js'
 import { createLight } from '../components/point_light.js'
 import { createScene } from '../components/scene.js'
 import { createText } from '../components/text.js'
+import { createTorus } from '../components/torus.js'
 import { Loop_3 } from '../systems/Loop_3.js'
 import { createRenderer } from '../systems/Renderer.js'
 import { Resizer } from '../systems/Resizer.js'
@@ -21,26 +22,19 @@ import { Resizer } from '../systems/Resizer.js'
 class World_3 {
   // 1. Create an instance of the World app
   constructor(container) {
+    this.isWhite = true
     this.camera = createCamera()
-    this.scene = createScene()
+    this.scene = createScene(this.isWhite)
     this.renderer = createRenderer()
     this.loop = new Loop_3(this.camera, this.scene, this.renderer)
     // adding canvas element to the webflow container
     container.append(this.renderer.domElement)
 
     this.initPostprocessing()
-    this.initText('play smarter.')
-    // this.initPaddle()
-    // this.initParticles()
-    // this.initText('2')
-    // this.initText('3')
+    // this.initText('hey!')
+    this.initTorus()
     this.initLights()
 
-    // const resizer = new Resizer(container, this.camera, this.renderer)
-    // resizer.onResize = () => {
-    //   this.render()
-    // }
-    // BLOOM RESIZER
     const resizer = new Resizer(container, this.camera, this.renderer)
     resizer.onResize = () => {
       this.composer.setSize(container.clientWidth, container.clientHeight)
@@ -55,7 +49,7 @@ class World_3 {
     const renderPass = new RenderPass(this.scene, this.camera)
     const bloomPass = new UnrealBloomPass(
       new Vector2(window.innerWidth, window.innerHeight),
-      0.8, // strength
+      0.2, // strength
       0.4, // radius
       0.85 // threshold
     )
@@ -67,7 +61,7 @@ class World_3 {
       1 / (window.innerHeight * pixelRatio)
 
     this.composer.addPass(renderPass)
-    this.composer.addPass(bloomPass)
+    if (!this.isWhite) this.composer.addPass(bloomPass)
     this.composer.addPass(fxaaPass)
 
     // Override loop’s render if needed
@@ -86,6 +80,12 @@ class World_3 {
     const paddle = await createPaddle()
     this.scene.add(paddle)
     this.loop.updatables.push(paddle)
+  }
+
+  initTorus() {
+    const torus = createTorus()
+    this.scene.add(torus)
+    this.loop.updatables.push(torus)
   }
 
   initLights() {
