@@ -11,19 +11,13 @@ function hero() {
   }
   // ELEMENTS
   if (isDesktopOrTablet()) {
-    const h1 = document.querySelectorAll('.h1')
-    // const h2 = document.querySelectorAll('.h2')
     const hero = document.querySelector('.hero')
-    // const hero_section = document.querySelector('.scene__section')
-    // const nav_container = document.querySelector('.nav-container')
     const claim = document.querySelector('.claim-heading')
-    const download = document.querySelector('.download-heading')
-    // const button = document.querySelectorAll('.button')
+    const download_wrapper = document.querySelector('.download-h-wrapper')
+    const download = document.querySelectorAll('.download-heading')
     const badge = document.querySelectorAll('.app-badge')
     const world_container = document.querySelector('.world-container')
-    // to secretly fade out
-    const template = document.querySelector('.scene-template')
-    const overlay = document.querySelector('.scene-overlay')
+    const qr = document.querySelector('.qr')
 
     // SPLIT
     const splitClaim = new SplitType(claim, { types: 'lines' })
@@ -37,37 +31,12 @@ function hero() {
       wrapper.appendChild(line)
     })
 
-    gsap.from(h1, {
-      yPercent: -100,
-      scaleY: 0.01,
-      duration: 1.6,
-      stagger: 0.1,
-      ease: 'power3.out',
-    })
-
-    gsap.from(world_container, {
-      scale: 0.8,
-      duration: 1.7,
-      ease: 'power2.inOut',
-    })
-
     gsap.to(world_container, {
+      scale: 1,
       opacity: 1,
       filter: 'blur(0px)',
-      duration: 1.9,
+      duration: 1.7,
       ease: 'power2.inOut',
-      onComplete: () => {
-        gsap.to(template, {
-          opacity: 0, // PONER Y QUITAR OVERLAY NEGRO
-          duration: 0.3,
-          onComplete: () => {
-            gsap.to(overlay, {
-              opacity: 0,
-              duration: 0.3,
-            })
-          },
-        })
-      },
     })
 
     gsap.to([badge, download], {
@@ -77,18 +46,6 @@ function hero() {
       ease: 'power2.inOut',
     })
 
-    // PARALLAX
-    // gsap.to(hero_section, {
-    //   y: 40,
-    //   // scale: 0.9,
-    //   scrollTrigger: {
-    //     trigger: hero_section,
-    //     start: 'bottom 98%',
-    //     end: 'bottom 50%',
-    //     scrub: 2,
-    //     markers: false,
-    //   },
-    // })
     gsap.to(hero, {
       autoAlpha: 0,
       scrollTrigger: {
@@ -98,6 +55,19 @@ function hero() {
         scrub: 1,
         markers: false,
       },
+    })
+
+    download_wrapper.addEventListener('mouseover', () => {
+      gsap.to(qr, {
+        opacity: 1,
+        duration: 0.4,
+      })
+    })
+    download_wrapper.addEventListener('mouseleave', () => {
+      gsap.to(qr, {
+        opacity: 0,
+        duration: 0.4,
+      })
     })
   }
 }

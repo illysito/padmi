@@ -137,7 +137,7 @@ function stats() {
       duration: 0.6,
     })
     gsap.to(stats_card_headings, {
-      color: '#0a0b0b',
+      color: '#e5e7e1',
       duration: 0.6,
     })
     if (!isClicked) handleTitles(-1)

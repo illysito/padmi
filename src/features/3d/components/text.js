@@ -47,7 +47,7 @@ async function createText(text, x, y, z) {
   //   'https://raw.githubusercontent.com/illysito/padmi/refs/heads/main/Mango%20Grotesque_Bold.json'
 
   const font = await loadFont(url_light)
-  console.log(font.data)
+  // console.log(font.data)
 
   // create a geometry
   const textGeometry = new TextGeometry(text, {
@@ -190,7 +190,7 @@ async function createText(text, x, y, z) {
         vec3 glowColor = vec3(0.6, 0.6, 1.0); // warm glow
         // Random value per point
         float rnd = hash(vPosition, 20.0);
-        glowColor = rnd < 0.05 ? vec3(0.6, 1.0, 0.2) : vec3(0.6, 0.6, 0.9); // green or white
+        glowColor = rnd < 0.05 ? vec3(0.9, 0.2, 0.9) : vec3(0.6, 0.6, 0.9); // green or white
 
         gl_FragColor = vec4(glowColor, vAlpha * displacementAlpha * alpha);
       }
@@ -198,10 +198,10 @@ async function createText(text, x, y, z) {
     transparent: true,
     depthWrite: false,
   })
-  console.log(material)
+  // console.log(material)
 
-  const material_2 = new PointsMaterial()
-  console.log(material_2)
+  // const material_2 = new PointsMaterial()
+  // console.log(material_2)
 
   const points = new Points(geometry, material)
 
@@ -217,7 +217,7 @@ async function createText(text, x, y, z) {
   group.tick = (delta) => {
     counter += delta
     uniforms.u_time.value = (uniforms.u_time.value + delta) % 10000
-    console.log(scrollY)
+    // console.log(scrollY)
     group.rotation.x = 0.15 * Math.sin(counter) - 0.005 * scrollY
     group.position.z = -0.005 * scrollY
     uniforms.u_mouseZ.value = 0 * Math.sin(0.1 * counter) + 0.1
@@ -272,11 +272,11 @@ async function createText(text, x, y, z) {
         effectIndex = 0
       }
       let displayedEffectIndex = effectIndex + 1
-      console.log(effectIndex)
+      // console.log(effectIndex)
       effectText.textContent = 'Efecto ' + (displayedEffectIndex / 2 + 0.5)
       uniforms.u_effectSelector.value = effectArray[effectIndex]
       uniforms.u_effectSelector2.value = effectArray[effectIndex + 1]
-      console.log('hey')
+      // console.log('hey')
     })
   }
 

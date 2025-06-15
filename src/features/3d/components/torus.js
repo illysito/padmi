@@ -4,13 +4,12 @@ import {
   Color,
   TorusGeometry,
   TextureLoader,
-  Group,
-  Points,
   Mesh,
 } from 'three'
 
 function createTorus() {
   let size = 1
+  let qMulti = 2
 
   const loader = new TextureLoader()
   const texture = loader.load(
@@ -21,7 +20,12 @@ function createTorus() {
   //   'https://raw.githubusercontent.com/illysito/lukyanov-illya/0ac9f07ff3a27d8cba97e91463a15697f9206352/Noche63_3.png'
   // )
 
-  const torusGeometry = new TorusGeometry(2 * size, 0.8 * size, 30, 100)
+  const torusGeometry = new TorusGeometry(
+    2 * size,
+    0.8 * size,
+    qMulti * 30,
+    qMulti * 100
+  )
 
   const uniforms = {
     u_time: { value: 1600.0 + 100.0 * Math.random() },
@@ -65,14 +69,21 @@ function createTorus() {
 
         vec2 repeat = vec2(4.0, 7.0);
         uv = fract(uv * repeat + vec2(0.35 * u_time, 0.5 * u_time));
+        // uv = mod(uv * repeat + vec2(0.35 * u_time, 0.5 * u_time), 1.0);
         // uv.y += sin(u_time);
+
+        if(uv.y < 0.01 || uv.y > 0.99){
+          discard;
+        }
 
         vec4 txtr = texture2D(u_texture, uv);
 
         vec4 baseColor = vec4(0.2, 0.2, 1.0, 0.9);
-        // if(txtr.w == 1.0){
-        //   txtr += baseColor;
-        // }
+        if(txtr.r == txtr.g && txtr.g == txtr.b){
+          txtr.r = 1.0;
+          txtr.g = 0.2;
+          txtr.b = 0.2;
+        }
         gl_FragColor = txtr;
 
       }

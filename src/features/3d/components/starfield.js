@@ -105,12 +105,12 @@ function createStarfield(starCount) {
   const clock = new Clock()
 
   mesh.renderOrder = 10
-  let direction = 1
+  // let direction = 1
   let counter = 0
   mesh.tick = (delta) => {
     counter++
     uniforms.u_time.value = clock.getElapsedTime()
-    mesh.position.z += delta * mouseY * direction * 0.5
+    // mesh.position.z += delta * mouseY * direction * 0.5
     mesh.position.x = 0.075 * Math.sin(0.01 * counter)
     mesh.position.y = 0.075 * Math.cos(0.01 * counter)
     // mesh.rotation.y = 0.25 * mouseX
@@ -119,11 +119,11 @@ function createStarfield(starCount) {
     // mesh.rotation.x = -0.1 * mouseY
     mesh.rotation.x -= delta * gsap.utils.mapRange(0, 1, -1, 1, mouseY) * 0.0325
     // mesh.position.x += delta * mouseX
-    if (mesh.position.z >= 0) {
-      direction = -1
-    } else if (mesh.position.z <= -12) {
-      direction = 1
-    }
+    // if (mesh.position.z >= 0) {
+    //   direction = -1
+    // } else if (mesh.position.z <= -12) {
+    //   direction = 1
+    // }
   }
 
   let lastMouseMove = 0

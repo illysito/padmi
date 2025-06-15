@@ -4,7 +4,7 @@ import SplitType from 'split-type'
 
 gsap.registerPlugin(ScrollTrigger)
 
-function claim_2() {
+function claim_mobile() {
   const overlay = document.querySelector('.scene-overlay-2')
   const claim_heading = document.querySelectorAll('.playsmarter-heading')
   const splitHeading = new SplitType(claim_heading, { types: 'chars' })
@@ -61,4 +61,4 @@ function claim_2() {
   })
 }
 
-export default claim_2
+export default claim_mobile

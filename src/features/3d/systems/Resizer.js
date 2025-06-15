@@ -1,6 +1,6 @@
 const setSize = (container, camera, renderer) => {
   // Set the camera's aspect ratio
-  camera.aspect = container.clientWidth / window.visualViewport.height
+  camera.aspect = container.clientWidth / container.clientHeight
   camera.updateProjectionMatrix()
   // update the size of the renderer AND the canvas
   renderer.setSize(container.clientWidth, container.clientHeight)

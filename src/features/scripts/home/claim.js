@@ -30,17 +30,6 @@ function claim() {
       },
     })
   })
-
-  // gsap.to(claim_img, {
-  //   y: -100,
-  //   scrollTrigger: {
-  //     trigger: claim_text,
-  //     start: 'top 50%',
-  //     end: 'bottom -50%',
-  //     scrub: 2,
-  //     markers: false,
-  //   },
-  // })
 }
 
 export default claim

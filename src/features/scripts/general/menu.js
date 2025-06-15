@@ -44,6 +44,36 @@ function menu() {
   // MENU SCREEN
 
   let width = burger.clientWidth
+  let direction = 1
+
+  function restoreBurger() {
+    burger.style.pointerEvents = 'none'
+    menu_screen.style.pointerEvents = 'none'
+    gsap.to(burger, {
+      width: width,
+      duration: 1.2,
+      ease: 'power3.inOut',
+    })
+    gsap.to(menu_header, {
+      yPercent: 100,
+      duration: 1.2,
+      ease: 'power1.inOut',
+      onComplete: () => {
+        burger.style.pointerEvents = 'auto'
+        menu_screen.style.pointerEvents = 'auto'
+      },
+    })
+    gsap.to(menu_screen, {
+      yPercent: 0,
+      duration: 1.4,
+      ease: 'power2.inOut',
+    })
+    gsap.to(os, {
+      opacity: 0,
+      y: '50%',
+      duration: 0.4,
+    })
+  }
 
   if (burger) {
     burger.addEventListener('click', (event) => {
@@ -151,12 +181,18 @@ function menu() {
           x: 0,
           duration: 0.4,
         })
+        restoreBurger()
       })
       link.addEventListener('mouseover', (event) => {
         const l = event.currentTarget
         const h = l.firstElementChild
+        if (h.classList.contains('download')) {
+          direction = -1
+        } else {
+          direction = 1
+        }
         gsap.to(h, {
-          x: 24,
+          x: 24 * direction,
           duration: 0.4,
         })
         if (index == 4) {
@@ -216,34 +252,7 @@ function menu() {
       })
     })
 
-    back_wrapper.addEventListener('click', () => {
-      burger.style.pointerEvents = 'none'
-      menu_screen.style.pointerEvents = 'none'
-      gsap.to(burger, {
-        width: width,
-        duration: 1.2,
-        ease: 'power3.inOut',
-      })
-      gsap.to(menu_header, {
-        yPercent: 100,
-        duration: 1.2,
-        ease: 'power1.inOut',
-        onComplete: () => {
-          burger.style.pointerEvents = 'auto'
-          menu_screen.style.pointerEvents = 'auto'
-        },
-      })
-      gsap.to(menu_screen, {
-        yPercent: 0,
-        duration: 1.4,
-        ease: 'power2.inOut',
-      })
-      gsap.to(os, {
-        opacity: 0,
-        y: '50%',
-        duration: 0.4,
-      })
-    })
+    back_wrapper.addEventListener('click', restoreBurger)
     back_wrapper.addEventListener('mouseover', (event) => {
       const l = event.currentTarget
       gsap.to(l, {

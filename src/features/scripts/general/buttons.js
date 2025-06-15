@@ -2,69 +2,116 @@ import { gsap } from 'gsap'
 import SplitType from 'split-type'
 
 function buttons() {
-  const buttons = document.querySelectorAll('.button')
+  if (document.body.classList.contains('body__home')) {
+    const button_wrapper = document.querySelector('.download-h-wrapper')
+    const txt = document.querySelector('.download-heading')
+    const txt_hidden = txt.nextElementSibling
 
-  buttons.forEach((button) => {
-    const but_wrapper = button.firstElementChild
-    const but_text = but_wrapper.firstElementChild
-    const but_text_hidden = but_text.nextElementSibling
-    const splitText = new SplitType(but_text, { types: 'chars' })
-    const splitText2 = new SplitType(but_text_hidden, { types: 'chars' })
+    const splitTxt = new SplitType(txt, {
+      types: 'chars',
+    })
+    const splitTxtHidden = new SplitType(txt_hidden, {
+      types: 'chars',
+    })
 
     const stag = 0.016
 
-    function hoverIn() {
-      gsap.to(button, {
-        scale: 0.9,
-        duration: 0.2,
-        backgroundColor: '#ffffff00',
-        ease: 'power2.out',
-      })
-
-      gsap.to(splitText.chars, {
+    button_wrapper.addEventListener('mouseenter', () => {
+      gsap.to(splitTxt.chars, {
         yPercent: -102,
-        color: '#cbcbcd',
         duration: 0.4,
         ease: 'power1.out',
         stagger: stag,
       })
-
-      gsap.to(splitText2.chars, {
+      gsap.to(splitTxtHidden.chars, {
         yPercent: -100,
-        color: '#cbcbcd',
         duration: 0.4,
         ease: 'power1.out',
         stagger: stag,
       })
-    }
-
-    function hoverOut() {
-      gsap.to(splitText.chars, {
+    })
+    button_wrapper.addEventListener('mouseleave', () => {
+      gsap.to(splitTxt.chars, {
         yPercent: 0,
-        color: '#0a0b0b',
         duration: 0.4,
         ease: 'power2.out',
         stagger: stag,
       })
 
-      gsap.to(splitText2.chars, {
+      gsap.to(splitTxtHidden.chars, {
         yPercent: 0,
-        color: '#0a0b0b',
         duration: 0.4,
         ease: 'power2.out',
         stagger: stag,
       })
+    })
+  }
 
-      gsap.to(button, {
-        scale: 1,
-        duration: 0.4,
-        backgroundColor: '#ceff05',
-        ease: 'power2.out',
+  if (document.body.classList.contains('body__club')) {
+    const button_wrapper = document.querySelectorAll('.butt')
+
+    button_wrapper.forEach((butt) => {
+      const o_hidden_cont = butt.firstElementChild
+      const txt = o_hidden_cont.firstElementChild
+      const txt_hidden = txt.nextElementSibling
+
+      const splitTxt = new SplitType(txt, {
+        types: 'chars',
       })
-    }
-    button.addEventListener('mouseenter', hoverIn)
-    button.addEventListener('mouseleave', hoverOut)
-  })
+      const splitTxtHidden = new SplitType(txt_hidden, {
+        types: 'chars',
+      })
+
+      const stag = 0.016
+      butt.addEventListener('mouseenter', (event) => {
+        const wrapper = event.currentTarget
+
+        gsap.to(wrapper, {
+          backgroundColor: '#ceff05',
+          duration: 0.4,
+        })
+
+        gsap.to(splitTxt.chars, {
+          yPercent: -102,
+          color: '#0e0e0e',
+          duration: 0.4,
+          ease: 'power1.out',
+          stagger: stag,
+        })
+        gsap.to(splitTxtHidden.chars, {
+          yPercent: -100,
+          color: '#0e0e0e',
+          duration: 0.4,
+          ease: 'power1.out',
+          stagger: stag,
+        })
+      })
+      butt.addEventListener('mouseleave', (event) => {
+        const wrapper = event.currentTarget
+
+        gsap.to(wrapper, {
+          backgroundColor: '#00000021',
+          duration: 0.4,
+        })
+
+        gsap.to(splitTxt.chars, {
+          yPercent: 0,
+          color: '#cbcbcd',
+          duration: 0.4,
+          ease: 'power2.out',
+          stagger: stag,
+        })
+
+        gsap.to(splitTxtHidden.chars, {
+          yPercent: 0,
+          color: '#cbcbcd',
+          duration: 0.4,
+          ease: 'power2.out',
+          stagger: stag,
+        })
+      })
+    })
+  }
 }
 
 export default buttons

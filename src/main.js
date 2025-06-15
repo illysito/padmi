@@ -9,6 +9,7 @@ import world_3 from './features/3d/world/universe_3'
 //
 import logoMarquee from './features/scripts/club/logo_marquee'
 import numbers from './features/scripts/club/numbers'
+import pricing from './features/scripts/club/pricing'
 import restoreOpacity from './features/scripts/club/restore_opacity'
 import splitClub from './features/scripts/club/split_club'
 //
@@ -20,11 +21,13 @@ import nav from './features/scripts/general/nav'
 //
 import bento from './features/scripts/home/bento'
 import claim from './features/scripts/home/claim'
-import claim_2 from './features/scripts/home/claim_2'
+import claim_mobile from './features/scripts/home/claim_mobile'
 import hero from './features/scripts/home/hero'
+import scroll_line from './features/scripts/home/scroll_line'
 import split from './features/scripts/home/split'
 import stats from './features/scripts/home/stats'
 import steps from './features/scripts/home/steps'
+import tech from './features/scripts/home/tech'
 //
 import map from './features/scripts/where/map'
 //
@@ -52,6 +55,8 @@ const world_container = document.querySelector('.world-container')
 const world_2_container = document.querySelector('.world-2-container')
 const world_3_container = document.querySelector('.world-3-container')
 const club_container = document.querySelector('.club-container')
+const particles_container = document.querySelector('.particles-container')
+const starfield_container = document.querySelector('.starfield-container')
 
 function runGeneralFunctions() {
   world_2(world_2_container)
@@ -62,9 +67,9 @@ function runGeneralFunctions() {
 }
 
 function runHomeFunctions() {
-  console.log('hey!')
   // if (world_container) {
   world(world_container, 0) // INDEX 0 --> Paddle & Type
+  world(starfield_container, 4)
   // particles()
   // }
   hero()
@@ -72,26 +77,14 @@ function runHomeFunctions() {
   if (isDesktopOrTablet()) {
     claim()
   } else {
-    claim_2()
+    claim_mobile()
+    console.log('claim 2 is running!')
   }
   stats()
   bento()
   steps()
-}
-
-function runHomeFunctions2() {
-  console.log('hey!')
-  // if (world_container) {
-  world(world_container, 2) // INDEX 0 --> Paddle & Type
-  // particles()
-  // }
-  hero()
-  split()
-  claim()
-  claim_2()
-  stats()
-  bento()
-  steps()
+  scroll_line()
+  tech()
 }
 
 function runClubFunctions() {
@@ -100,6 +93,7 @@ function runClubFunctions() {
   splitClub()
   logoMarquee()
   numbers()
+  pricing()
 
   // SCROLL HELP!
   const scrollHelper = document.querySelector('.scroll-guide')
@@ -125,7 +119,7 @@ function runWhereFunctions() {
 }
 
 function runContactFunctions() {
-  // world(particles_container, 1) // INDEX 1 --> Particles
+  world(particles_container, 3) // INDEX 1 --> Particles
   contact()
 }
 
@@ -136,12 +130,11 @@ function runLegalsFunctions() {
 function runAuxFunctions() {
   console.log('Aux!')
   // world_2(world_2_container)
-  world_3(world_3_container)
+  world_3(world_3_container, 1)
 }
 
 if (!body.classList.contains('body__aux')) runGeneralFunctions()
 if (body.classList.contains('body__home')) runHomeFunctions()
-if (body.classList.contains('body__home__2')) runHomeFunctions2()
 if (body.classList.contains('body__club')) runClubFunctions()
 if (body.classList.contains('body__where')) runWhereFunctions()
 if (body.classList.contains('body__contact')) runContactFunctions()

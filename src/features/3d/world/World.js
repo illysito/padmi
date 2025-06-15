@@ -50,6 +50,7 @@ class World {
         this.initText('play smarter.')
         this.initLights(-2, 2, 3, 20, 0xfffbf6, false)
         this.initStarfield(200)
+        // this.initBall()
       } else {
         this.initPaddle()
         this.initLights(-2, 2, 3, 20, 0xfffbf6, false)
@@ -59,12 +60,19 @@ class World {
     } else if (index == 1) {
       this.initLights(-1, 1, 10, 20, 0xfffbf6, true)
       this.initDirLights(1, 1, 0)
+      this.initDirLights(1, -4, 0)
       this.initPadmiCam(0, -0.6, 0, 1)
-      this.initPadmiCam(0, -0.6, 0, 1)
+      // this.initPadmiCam(0, -0.6, 0, 1)
       this.initStarfield(60)
     } else if (index == 2) {
       this.initPaddle()
       this.initStarfield(800)
+    } else if (index == 3) {
+      this.initStarfield(100)
+    } else if (index == 4) {
+      this.initBall()
+      this.initLights(-2, 2, 3, 20, 0xfffbf6, false)
+      this.initStarfield(400)
     }
 
     //prettier-ignore
@@ -96,7 +104,14 @@ class World {
     } else if (this.index == 1) {
       bloomPass = new UnrealBloomPass(
         new Vector2(window.innerWidth, window.innerHeight),
-        0.33, // strength
+        0.26, // strength
+        0.2, // radius
+        0.8 // threshold
+      )
+    } else {
+      bloomPass = new UnrealBloomPass(
+        new Vector2(window.innerWidth, window.innerHeight),
+        0.0, // strength
         0.2, // radius
         0.8 // threshold
       )
@@ -200,12 +215,12 @@ class World {
 
   start() {
     this.loop.start()
-    console.log('World has resumed')
+    console.log('World ' + this.index + ' has resumed ')
   }
 
   stop() {
     this.loop.stop()
-    console.log('World has stopped')
+    console.log('World ' + this.index + ' has stopped ')
   }
 }
 

@@ -19,9 +19,36 @@ function bento() {
     }
     return array
   }
-  snippetsArray = shuffle(snippetsArray)
+
+  function symmetry(array) {
+    const newArray = []
+    newArray[0] = array[9]
+    newArray[1] = array[10]
+    newArray[2] = array[11]
+    newArray[3] = array[6]
+    newArray[4] = array[7]
+    newArray[5] = array[8]
+    newArray[6] = array[12]
+    newArray[7] = array[13]
+    newArray[8] = array[14]
+    newArray[9] = array[3]
+    newArray[10] = array[4]
+    newArray[11] = array[5]
+    newArray[12] = array[15]
+    newArray[13] = array[16]
+    newArray[14] = array[17]
+    newArray[15] = array[0]
+    newArray[16] = array[1]
+    newArray[17] = array[2]
+    newArray[18] = array[18]
+    newArray[19] = array[19]
+    newArray[20] = array[20]
+    return newArray
+  }
+  snippetsArray = symmetry(snippetsArray)
   columnsArray = shuffle(columnsArray)
 
+  // pin
   gsap.to(bento_section, {
     scrollTrigger: {
       trigger: bento_section,
@@ -39,13 +66,14 @@ function bento() {
     duration: 0.6,
     scrollTrigger: {
       trigger: bento_section,
-      start: 'top 25%',
+      start: 'top 68%',
       end: 'bottom top',
       scrub: 1,
       markers: false,
     },
   })
 
+  // parallax
   columnsArray.forEach((col, index) => {
     // console.log(index)
     gsap.to(col, {

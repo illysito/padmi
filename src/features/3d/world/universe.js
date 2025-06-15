@@ -18,14 +18,12 @@ function world(container, index) {
     world.start()
 
     // STOP LOOP WHEN MENU IS CLICKED
-    if (index == 0 || index == 1) {
-      hamburger.addEventListener('click', () => {
-        setTimeout(() => world.stop(), 800)
-      })
-      back_button.addEventListener('click', () => {
-        setTimeout(() => world.start(), 700)
-      })
-    }
+    hamburger.addEventListener('click', () => {
+      setTimeout(() => world.stop(), 800)
+    })
+    back_button.addEventListener('click', () => {
+      setTimeout(() => world.start(), 700)
+    })
 
     // STOP LOOP WHEN UNOBSERVED (INTERSECTION OBSERVER METHOD)
     if (index == 0) {
@@ -65,6 +63,27 @@ function world(container, index) {
           world.start()
           hasClaimBeenObserved = false
         }
+      })
+    } else if (index == 4) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              world.start()
+              hasClaimBeenObserved = true
+            } else {
+              world.stop()
+              hasClaimBeenObserved = false
+            }
+          })
+        },
+        { threshold: 0.1 }
+      )
+
+      observer.observe(container)
+
+      window.addEventListener('scroll', () => {
+        lastScrollY = window.scrollY
       })
     }
   }

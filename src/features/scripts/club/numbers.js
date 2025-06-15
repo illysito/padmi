@@ -1,4 +1,7 @@
 import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
 
 function numbers() {
   const headings = document.querySelectorAll('.numbers-h')
@@ -117,6 +120,16 @@ function numbers() {
   function observeNumbers() {
     const trigger = document.querySelector('.numbers') // or any element wrapping your counters
 
+    gsap.to(tags, {
+      opacity: 1,
+      scrollTrigger: {
+        trigger: tags,
+        start: 'top bottom',
+        end: 'top 65%',
+        markers: false,
+      },
+    })
+
     const observer = new IntersectionObserver(
       (entries, observer) => {
         entries.forEach((entry) => {
@@ -124,12 +137,9 @@ function numbers() {
             gsap.to(headings, {
               opacity: 1,
               yPercent: -100,
-              duration: 1,
-              ease: 'linear',
-            })
-            gsap.from(tags, {
-              opacity: 0,
-              duration: 1,
+              duration: 1.2,
+              ease: 'power1.inOut',
+              stagger: 0.2,
             })
             displayNumbers()
             observer.unobserve(entry.target) // run once

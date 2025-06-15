@@ -7,6 +7,7 @@ import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js'
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js'
 import { FXAAShader } from 'three/examples/jsm/shaders/FXAAShader.js'
 
+import { createBall } from '../components/ball.js'
 import { createCamera } from '../components/camera.js'
 import { createPaddle } from '../components/paddle.js'
 import { createParticles } from '../components/particles.js'
@@ -21,7 +22,7 @@ import { Resizer } from '../systems/Resizer.js'
 
 class World_3 {
   // 1. Create an instance of the World app
-  constructor(container) {
+  constructor(container, index) {
     this.isWhite = true
     this.camera = createCamera()
     this.scene = createScene(this.isWhite)
@@ -32,8 +33,13 @@ class World_3 {
 
     this.initPostprocessing()
     // this.initText('hey!')
-    this.initTorus()
-    this.initLights()
+    if (index == 1) {
+      this.initTorus()
+      this.initLights()
+    }
+    if (index == 2) {
+      this.initBall()
+    }
 
     const resizer = new Resizer(container, this.camera, this.renderer)
     resizer.onResize = () => {
@@ -92,6 +98,12 @@ class World_3 {
     const light = createLight(-2, 2, 3, 20, 0xfffbf6)
     this.scene.add(light)
     // loop.updatables.push(light)
+  }
+
+  initBall() {
+    const ball = createBall()
+    this.scene.add(ball)
+    this.loop.updatables.push(ball)
   }
 
   initParticles() {
