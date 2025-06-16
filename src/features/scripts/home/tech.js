@@ -11,6 +11,7 @@ function tech() {
   const tech_title = document.querySelectorAll('.tech-title')
   const download_txt = document.querySelector('.download-cta')
   const starfield_container = document.querySelector('.starfield-container')
+  const download_link = document.querySelector('.download-link-wrapper')
 
   gsap.to(starfield_container, {
     opacity: 1,
@@ -50,7 +51,7 @@ function tech() {
     },
   })
 
-  gsap.to(download_txt, {
+  gsap.to([download_txt, download_link.firstElementChild], {
     opacity: 1,
     yPercent: -100,
     duration: 0.8,
@@ -87,6 +88,28 @@ function tech() {
           markers: false,
         },
       })
+    })
+  })
+
+  download_link.addEventListener('mouseover', (e) => {
+    const j = e.currentTarget.firstElementChild
+    const i = j.firstElementChild
+    console.log(i)
+    gsap.to(i, {
+      opacity: 0.9,
+      color: '#8b81e4',
+      duration: 0.2,
+      ease: 'none',
+    })
+  })
+  download_link.addEventListener('mouseleave', (e) => {
+    const j = e.currentTarget.firstElementChild
+    const i = j.firstElementChild
+    gsap.to(i, {
+      opacity: 1,
+      color: '#ceff05',
+      duration: 0.2,
+      ease: 'none',
     })
   })
 }

@@ -2,7 +2,10 @@ import { gsap } from 'gsap'
 import SplitType from 'split-type'
 
 function buttons() {
-  if (document.body.classList.contains('body__home')) {
+  if (
+    document.body.classList.contains('body__home') ||
+    document.body.classList.contains('body__contact')
+  ) {
     const button_wrapper = document.querySelector('.download-h-wrapper')
     const txt = document.querySelector('.download-heading')
     const txt_hidden = txt.nextElementSibling
