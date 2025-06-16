@@ -16,6 +16,7 @@ import splitClub from './features/scripts/club/split_club'
 import contact from './features/scripts/contact/contact'
 //
 import buttons from './features/scripts/general/buttons'
+import footer from './features/scripts/general/footer'
 import menu from './features/scripts/general/menu'
 import nav from './features/scripts/general/nav'
 //
@@ -85,6 +86,7 @@ function runHomeFunctions() {
   steps()
   scroll_line()
   tech()
+  footer()
 }
 
 function runClubFunctions() {
@@ -94,6 +96,7 @@ function runClubFunctions() {
   logoMarquee()
   numbers()
   pricing()
+  footer()
 
   // SCROLL HELP!
   const scrollHelper = document.querySelector('.scroll-guide')

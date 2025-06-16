@@ -30,6 +30,13 @@ body {
   height: auto;
 }
 
+.footer-col-h,
+.footer-col-p,
+.footer-mention-p,
+.padmi-logo-h {
+  transform: translateY(100%);
+}
+
 /* MAP */
 
 .map {

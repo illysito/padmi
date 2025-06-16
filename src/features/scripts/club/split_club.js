@@ -9,7 +9,6 @@ gsap.registerPlugin(ScrollTrigger)
 function splitClub() {
   // ELEMENTS
   // Camera heading
-  // const cam_heading = document.querySelector('.cam-heading')
   const cam_p = document.querySelector('.cam-p')
   const heading_wrapper = document.querySelector('.heading-cont')
   // Camera features
@@ -18,7 +17,9 @@ function splitClub() {
   const cam_feature_wrappers = document.querySelectorAll('.cam-p-wrapper')
   // Padmi features
   const padmi_features_p = document.querySelectorAll('.elements-txt')
-  const padmi_features_h = document.querySelectorAll('.elements-h')
+  const padmi_features_h = document.querySelectorAll('.elements-title')
+  // Padmi features IMGS
+  const img = document.querySelectorAll('.club-img')
 
   // const splitHeading = new SplitType(cam_heading, { types: 'lines' })
   const splitHeadingP = new SplitType(cam_p, { types: 'lines' })
@@ -185,6 +186,22 @@ function splitClub() {
     })
   }
   splitAnimatePadmiFeatures()
+
+  function parallax() {
+    img.forEach((img) => {
+      gsap.to(img, {
+        y: 16,
+        scrollTrigger: {
+          trigger: img,
+          start: 'top bottom',
+          end: 'top top',
+          scrub: true,
+          markers: false,
+        },
+      })
+    })
+  }
+  parallax()
 }
 
 export default splitClub

@@ -10,6 +10,7 @@ function contact() {
   const heading = document.querySelector('.contact-heading')
   const contact_line = document.querySelector('.contact-p')
   const icon = document.querySelector('.send-icon')
+  const icon_link = document.querySelectorAll('.social-link')
 
   const hover_duration = 0.4
 
@@ -18,17 +19,6 @@ function contact() {
     duration: 1.5,
     ease: 'power2.inOut',
   })
-
-  // gsap.to([heading, contact_line], {
-  //   y: 200,
-  //   scrollTrigger: {
-  //     trigger: form,
-  //     start: 'top 90%',
-  //     scrub: true,
-  //     markers: false,
-  //   },
-  //   ease: 'none',
-  // })
 
   gsap.to(icon, {
     rotateZ: 360, // Better than rotation
@@ -103,6 +93,25 @@ function contact() {
     gsap.to(icon, {
       y: 0,
       duration: 0.6,
+    })
+  })
+
+  icon_link.forEach((link) => {
+    link.addEventListener('mouseover', (e) => {
+      const i = e.currentTarget
+      gsap.to(i, {
+        scale: 0.9,
+        duration: 0.3,
+        ease: 'power1.out',
+      })
+    })
+    link.addEventListener('mouseleave', (e) => {
+      const i = e.currentTarget
+      gsap.to(i, {
+        scale: 1,
+        duration: 0.3,
+        ease: 'power1.out',
+      })
     })
   })
 }
