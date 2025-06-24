@@ -27,7 +27,7 @@ import hero from './features/scripts/home/hero'
 import scroll_line from './features/scripts/home/scroll_line'
 import split from './features/scripts/home/split'
 import stats from './features/scripts/home/stats'
-import steps from './features/scripts/home/steps'
+import steps from './features/scripts/home/steps_vert'
 import tech from './features/scripts/home/tech'
 //
 import map from './features/scripts/where/map'

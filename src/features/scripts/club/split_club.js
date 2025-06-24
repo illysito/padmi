@@ -190,11 +190,11 @@ function splitClub() {
   function parallax() {
     img.forEach((img) => {
       gsap.to(img, {
-        y: 16,
+        y: 46,
         scrollTrigger: {
           trigger: img,
           start: 'top bottom',
-          end: 'top top',
+          end: 'top -50%',
           scrub: true,
           markers: false,
         },

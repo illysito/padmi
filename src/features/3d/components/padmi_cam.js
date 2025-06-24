@@ -26,6 +26,9 @@ function createPadmiCam(x, y, z, id) {
     const url =
       'https://raw.githubusercontent.com/illysito/padmi/fc0a986f850ea7992a516612ebffe0f03eb72450/Security_Dome_Camera_0529085519_texture.glb'
 
+    // const url =
+    //   'https://raw.githubusercontent.com/illysito/padmi/17be280b610e2b4002a3d1731083566dec63d391/Security_Dome_Camera_0617105727_texture.glb'
+
     loader.load(url, (gltf) => {
       const cam = gltf.scene
 
