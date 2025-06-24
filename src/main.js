@@ -24,6 +24,7 @@ import bento from './features/scripts/home/bento'
 import claim from './features/scripts/home/claim'
 import claim_mobile from './features/scripts/home/claim_mobile'
 import hero from './features/scripts/home/hero'
+import highlights from './features/scripts/home/highlights'
 import scroll_line from './features/scripts/home/scroll_line'
 import split from './features/scripts/home/split'
 import stats from './features/scripts/home/stats'
@@ -82,6 +83,7 @@ function runHomeFunctions() {
     console.log('claim 2 is running!')
   }
   stats()
+  highlights()
   bento()
   steps()
   scroll_line()
@@ -127,7 +129,7 @@ function runContactFunctions() {
 }
 
 function runLegalsFunctions() {
-  console.log('welcome to Legals')
+  footer()
 }
 
 function runAuxFunctions() {
