@@ -12,6 +12,7 @@ function highligths() {
   if (isDesktopOrTablet()) {
     const highlight_section = document.querySelector('.highlights')
     const videos = document.querySelectorAll('.iphone-vid')
+    const overlays = document.querySelectorAll('.iphone-vid-overlay')
     const headings = document.querySelectorAll('.highlight-h')
 
     gsap.to(highlight_section, {
@@ -34,7 +35,7 @@ function highligths() {
       })
     })
 
-    gsap.to(videos, {
+    gsap.to([videos, overlays], {
       xPercent: -200,
       scrollTrigger: {
         trigger: highlight_section,

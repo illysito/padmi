@@ -5,6 +5,11 @@ body {
   padding: 0;
 }
 
+html.blocked,
+body.blocked {
+  overflow: hidden !important;
+}
+
 body {
   -webkit-tap-highlight-color: transparent;
   outline: none;
@@ -14,6 +19,11 @@ body {
 .hero,
 .scene-section {
   height: calc(var(--vh, 1vh) * 100);
+}
+
+.cookies.not-active {
+  display: 'none';
+  z-index: -30;
 }
 
 /* MISC */

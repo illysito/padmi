@@ -6,6 +6,7 @@ function buttons() {
     document.body.classList.contains('body__home') ||
     document.body.classList.contains('body__contact')
   ) {
+    // HERO BUTTON
     const button_wrapper = document.querySelector('.download-h-wrapper')
     const txt = document.querySelector('.download-heading')
     const txt_hidden = txt.nextElementSibling

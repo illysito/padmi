@@ -11,7 +11,7 @@ function claim() {
     y: 60,
     scrollTrigger: {
       trigger: claim_text,
-      start: 'top bottom',
+      start: 'top 30%',
       end: 'bottom top',
       scrub: 2,
       markers: false,
