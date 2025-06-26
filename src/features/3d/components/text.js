@@ -190,7 +190,7 @@ async function createText(text, x, y, z) {
         vec3 glowColor = vec3(0.6, 0.6, 1.0); // warm glow
         // Random value per point
         float rnd = hash(vPosition, 20.0);
-        glowColor = rnd < 0.05 ? vec3(0.2, 0.9, 0.2) : vec3(0.6, 0.6, 0.9); // green or white
+        glowColor = rnd < 0.25 ? vec3(0.8, 1, 0.01) : vec3(0.6, 0.6, 0.9); // green or white
 
         gl_FragColor = vec4(glowColor, vAlpha * displacementAlpha * alpha);
       }
