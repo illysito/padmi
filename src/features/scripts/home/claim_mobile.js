@@ -28,6 +28,17 @@ function claim_mobile() {
     wrapper.appendChild(line)
   })
 
+  const iphone_img = document.querySelector('.iphone-img-mobile')
+  gsap.to(iphone_img, {
+    opacity: 1,
+    scrollTrigger: {
+      trigger: iphone_img,
+      start: 'top 80%',
+      end: 'bottom 40%',
+      scrub: true,
+    },
+  })
+
   gsap.from(splitHeading.chars, {
     xPercent: -120,
     duration: 0.8,
