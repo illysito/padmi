@@ -36,10 +36,6 @@ function claim() {
         },
       })
     })
-  } else {
-    gsap.set(claim_img, {
-      yPercent: 50,
-    })
   }
 }
 

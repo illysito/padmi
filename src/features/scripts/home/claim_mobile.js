@@ -5,6 +5,7 @@ import SplitType from 'split-type'
 gsap.registerPlugin(ScrollTrigger)
 
 function claim_mobile() {
+  const claim_img = document.querySelector('.iphone-img')
   const overlay = document.querySelector('.scene-overlay-2')
   const claim_heading = document.querySelectorAll('.playsmarter-heading')
   const splitHeading = new SplitType(claim_heading, { types: 'chars' })
@@ -58,6 +59,10 @@ function claim_mobile() {
     opacity: 0,
     duration: 1.4,
     ease: 'power1.out',
+  })
+
+  gsap.set(claim_img, {
+    yPercent: -50,
   })
 }
 
