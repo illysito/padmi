@@ -21,21 +21,22 @@ import {
 } from 'three'
 import { MeshSurfaceSampler } from 'three/addons/math/MeshSurfaceSampler.js'
 
-function createBall() {
+function createBall(radius, cnt) {
   // create a geometry
-  const ballGeometry = new SphereGeometry(1, 30, 30)
+  const ballGeometry = new SphereGeometry(radius, 30, 30)
 
   const tempMesh = new Mesh(ballGeometry)
   const sampler = new MeshSurfaceSampler(tempMesh).build()
 
-  const count = 100000 // Increase for more density
+  const count = cnt // Increase for more density
   const positions = new Float32Array(count * 3)
   for (let i = 0; i < count; i++) {
-    const pos = new Vector3()
+    let pos = new Vector3()
     sampler.sample(pos)
-    positions[i * 3 + 0] = pos.x
-    positions[i * 3 + 1] = pos.y
-    positions[i * 3 + 2] = pos.z
+    // pos *= radius
+    positions[i * 3 + 0] = pos.x * radius
+    positions[i * 3 + 1] = pos.y * radius
+    positions[i * 3 + 2] = pos.z * radius
   }
 
   const sizes = new Float32Array(count)

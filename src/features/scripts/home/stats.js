@@ -26,12 +26,12 @@ function stats() {
     'Pad ID',
   ]
   const descriptionsArray = [
-    'Padmi ofrece estadísticas en tiempo real coninformación detallada sobre tu partido, contándotecuándo eres un genio y cuáles son tus puntos flacos.',
+    'Padmi ofrece estadísticas en tiempo real con información detallada sobre tu partido, contándote cuándo eres un genio y cuáles son tus puntos flacos.',
+    'Podrás observar cuántos intercambios han finalizado en winners y errores, además del porcentaje de bolas pasadas al otro lado de la red.',
     'Compara tu rendimiento con el de otros jugadores dentro de la app y descubre quién domina en cada aspecto del juego.',
-    'Mide el total de impactos que has ejecutado, proporcionándote un desglose detallado del volumen y la frecuencia de tu juego.',
     'Detectamos y registramos la velocidad de cada impacto con precisión milimétrica, proporcionando información clave para optimizar tu rendimiento.',
     'Visualiza tu patrón de movimiento durante el partido, con un análisis detallado de las zonas que más has cubierto.',
-    'Podrás observar cuántos intercambios han finalizado en winners y errores, además del porcentaje de bolas pasadas al otro lado de la red.',
+    'Mide el total de impactos que has ejecutado, proporcionándote un desglose detallado del volumen y la frecuencia de tu juego.',
     'Registra la distancia total que te has desplazado en la pista para medir tu esfuerzo y resistencia en cada partido.',
     'Obtén datos detallados sobre la velocidad de tu saque, la efectividad de tus primeros y segundos servicios, y el número de dobles faltas.',
     'Tu cromo digital: toda tu información de rendimiento, estadísticas y nivel en un solo lugar. Personalizable y en constante evolución con cada partido.',

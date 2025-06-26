@@ -30,7 +30,6 @@ import { Resizer } from '../systems/Resizer.js'
 // let loop
 function isDesktopOrTablet() {
   return window.innerWidth >= 768
-  // return true
 }
 
 class World {
@@ -70,7 +69,13 @@ class World {
     } else if (index == 3) {
       this.initStarfield(100)
     } else if (index == 4) {
-      this.initBall()
+      if (isDesktopOrTablet()) {
+        console.log('big ball')
+        this.initBall(1, 100000)
+      } else {
+        console.log('small ball')
+        this.initBall(0.6, 50000)
+      }
       this.initLights(-2, 2, 3, 20, 0xfffbf6, false)
       this.initStarfield(400)
     }
@@ -159,8 +164,8 @@ class World {
     this.render()
   }
 
-  initBall() {
-    const ball = createBall()
+  initBall(radius, count) {
+    const ball = createBall(radius, count)
     this.scene.add(ball)
     this.loop.updatables.push(ball)
   }

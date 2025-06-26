@@ -71,7 +71,7 @@ function tech() {
       const wrapper = document.createElement('div')
       wrapper.style.overflow = 'hidden'
       wrapper.style.display = 'block'
-      wrapper.style.height = '1.2em'
+      wrapper.style.height = '1.4em'
 
       line.parentNode.insertBefore(wrapper, line)
       wrapper.appendChild(line)
