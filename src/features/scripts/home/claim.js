@@ -4,15 +4,15 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 function claim() {
+  const claim_text = document.querySelectorAll('.claim-heading-wrapper')
+  const claim_img = document.querySelectorAll('.iphone-img')
+
   function isDesktopOrTablet() {
     return window.innerWidth >= 768
     // return true
   }
 
   if (isDesktopOrTablet()) {
-    const claim_text = document.querySelectorAll('.claim-heading-wrapper')
-    const claim_img = document.querySelectorAll('.iphone-img')
-
     gsap.to(claim_text, {
       y: 60,
       scrollTrigger: {
@@ -35,6 +35,10 @@ function claim() {
           markers: false,
         },
       })
+    })
+  } else {
+    gsap.set(claim_img, {
+      yPercent: 50,
     })
   }
 }
