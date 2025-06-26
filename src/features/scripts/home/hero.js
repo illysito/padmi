@@ -70,6 +70,21 @@ function hero() {
         duration: 0.4,
       })
     })
+  } else {
+    const moving_bg = document.querySelector('.moving-bg')
+    const claim_section = document.querySelector('.claim')
+    gsap.set(moving_bg, {
+      opacity: 0,
+    })
+    gsap.to(moving_bg, {
+      opacity: 1,
+      scrollTrigger: {
+        trigger: claim_section,
+        start: 'top 20%',
+        end: 'bottom top',
+        scrub: true,
+      },
+    })
   }
 }
 
