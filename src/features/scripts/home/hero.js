@@ -17,6 +17,7 @@ function hero() {
     const download = document.querySelectorAll('.download-heading')
     const badge = document.querySelectorAll('.app-badge')
     const world_container = document.querySelector('.world-container')
+    const motto = document.querySelector('.motto-hero')
     const qr = document.querySelector('.qr')
 
     // SPLIT
@@ -39,7 +40,7 @@ function hero() {
       ease: 'power2.inOut',
     })
 
-    gsap.to([badge, download], {
+    gsap.to([badge, download, motto], {
       scale: 1,
       opacity: 1,
       duration: 4,
@@ -62,10 +63,18 @@ function hero() {
         opacity: 1,
         duration: 0.4,
       })
+      gsap.to(motto, {
+        opacity: 0,
+        duration: 0.4,
+      })
     })
     download_wrapper.addEventListener('mouseleave', () => {
       gsap.to(qr, {
         opacity: 0,
+        duration: 0.4,
+      })
+      gsap.to(motto, {
+        opacity: 1,
         duration: 0.4,
       })
     })

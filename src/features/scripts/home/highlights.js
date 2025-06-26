@@ -35,7 +35,7 @@ function highligths() {
       })
     })
 
-    gsap.to([videos, overlays], {
+    gsap.to(videos, {
       xPercent: -200,
       scrollTrigger: {
         trigger: highlight_section,
