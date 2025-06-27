@@ -4,23 +4,13 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 function steps() {
-  const steps_section = document.querySelector('.steps')
-  const steps_wrapper = document.querySelectorAll('.steps-container')
-  const glasses = document.querySelectorAll('.steps-txt-glass')
   const steps_title = document.querySelector('.steps-head')
   const steps_heading = document.querySelectorAll('.steps-title')
-  const step_dots = document.querySelectorAll('.dot')
-  const glassesArray = Array.from(glasses)
-  const glassesArray_1 = [glassesArray[0], glassesArray[1], glassesArray[2]]
-  const glassesArray_2 = [glassesArray[3], glassesArray[4], glassesArray[5]]
-  const glassesArray_3 = [glassesArray[6], glassesArray[7]]
-  const glassesArray_4 = [
-    glassesArray[8],
-    glassesArray[9],
-    glassesArray[10],
-    glassesArray[11],
-  ]
-  const headingsArray = Array.from(steps_heading)
+  const dots = document.querySelectorAll('.step-dot')
+  const steps_wrappers = document.querySelectorAll('.is--step-h')
+  const steps_descriptions = document.querySelectorAll('.steps-txt')
+  const wrappers = document.querySelectorAll('.steps-txt-wrapper')
+  const images = document.querySelectorAll('.steps-iphone-img')
 
   gsap.to(steps_title, {
     opacity: 1,
@@ -44,116 +34,115 @@ function steps() {
     })
   })
 
-  gsap.to(step_dots, {
-    opacity: 1,
-    stagger: 0.1,
+  steps_descriptions.forEach((desc) => {
+    gsap.to(desc, {
+      opacity: 1,
+      yPercent: -100,
+      scrollTrigger: {
+        trigger: desc,
+        start: 'top 80%',
+        end: 'top 30%',
+        markers: false,
+      },
+    })
+  })
+
+  const first_heading = steps_wrappers[0].firstElementChild
+  const first_dot = first_heading.nextElementSibling
+  gsap.set(first_heading, {
+    x: 16,
+    color: '#ceff05',
+    fontWeight: 500,
+    duration: 0.4,
+  })
+  gsap.to(first_dot, {
+    scale: 1,
+    duration: 0.4,
     scrollTrigger: {
-      trigger: steps_heading,
+      trigger: first_dot,
       start: 'top 80%',
       end: 'top 30%',
     },
   })
 
-  const tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: steps_wrapper,
-      start: 'top top',
-      end: '+=6000',
-      scrub: 1,
-      pin: steps_section,
-      markers: false,
-      // anticipatePin: 1,
-    },
-  })
+  function movePhone(i) {
+    gsap.to(images, {
+      yPercent: -100 * i,
+      duration: 0.8,
+      ease: 'power1.inOut',
+    })
+  }
 
-  tl.to([glassesArray_1], {
-    opacity: 1,
-    duration: 1.6,
-    stagger: 0.2,
-  })
-  tl.to(steps_wrapper, {
-    xPercent: -100 / 4,
-    duration: 1,
-    ease: 'none',
-  })
-  tl.to(
-    headingsArray[0],
-    {
-      color: '#e5e7e1',
-      fontWeight: 200,
-      duration: 0.6,
-    },
-    '<'
-  )
-  tl.to(
-    headingsArray[1],
-    {
-      color: '#ceff05',
-      fontWeight: 500,
-      duration: 0.6,
-    },
-    '<'
-  )
-  tl.to([glassesArray_2], {
-    opacity: 1,
-    duration: 1.6,
-    stagger: 0.2,
-  })
-  tl.to(steps_wrapper, {
-    xPercent: -200 / 4,
-    duration: 1,
-    ease: 'none',
-  })
-  tl.to(
-    headingsArray[1],
-    {
-      color: '#e5e7e1',
-      fontWeight: 200,
-      duration: 0.6,
-    },
-    '<'
-  )
-  tl.to(
-    headingsArray[2],
-    {
-      color: '#ceff05',
-      fontWeight: 500,
-      duration: 0.6,
-    },
-    '<'
-  )
-  tl.to([glassesArray_3], {
-    opacity: 1,
-    duration: 1.6,
-    stagger: 0.2,
-  })
-  tl.to(steps_wrapper, {
-    xPercent: -300 / 4,
-    duration: 1,
-    ease: 'none',
-  })
-  tl.to(
-    headingsArray[2],
-    {
-      color: '#e5e7e1',
-      fontWeight: 200,
-      duration: 0.6,
-    },
-    '<'
-  )
-  tl.to(
-    headingsArray[3],
-    {
-      color: '#ceff05',
-      fontWeight: 500,
-      duration: 0.6,
-    },
-    '<'
-  )
-  tl.to([glassesArray_4], {
-    opacity: 1,
-    duration: 1.6,
-    stagger: 0.2,
+  let CLICKED = [1, 0, 0, 0]
+  steps_wrappers.forEach((w, index) => {
+    w.addEventListener('mouseover', (event) => {
+      const h = event.currentTarget.firstElementChild
+      const d = h.nextElementSibling
+      if (CLICKED[index] == 0) {
+        gsap.to(h, {
+          x: 16,
+          color: '#e5e7e1',
+          fontWeight: 500,
+          duration: 0.4,
+        })
+        gsap.to(d, {
+          scale: 1,
+          duration: 0.4,
+        })
+      }
+    })
+    w.addEventListener('mouseleave', (event) => {
+      const h = event.currentTarget.firstElementChild
+      const d = h.nextElementSibling
+      if (CLICKED[index] == 0) {
+        gsap.to(h, {
+          x: 0,
+          color: '#e5e7e1',
+          duration: 0.4,
+          fontWeight: 200,
+        })
+        gsap.to(d, {
+          scale: 0,
+          duration: 0.4,
+        })
+      }
+    })
+    w.addEventListener('click', (event) => {
+      CLICKED = [0, 0, 0, 0]
+      const h = event.currentTarget.firstElementChild
+      const d = h.nextElementSibling
+      gsap.to(steps_heading, {
+        x: 0,
+        color: '#e5e7e1',
+        duration: 0.4,
+        fontWeight: 200,
+      })
+      gsap.to(dots, {
+        scale: 0,
+        duration: 0.4,
+      })
+      gsap.to(h, {
+        x: 16,
+        color: '#ceff05',
+        fontWeight: 500,
+        duration: 0.4,
+        ease: 'power1.inOut',
+      })
+      gsap.to(d, {
+        scale: 1,
+        duration: 0.4,
+      })
+      gsap.to(wrappers, {
+        opacity: 0,
+        duration: 0.4,
+      })
+      gsap.to(wrappers[index], {
+        opacity: 1,
+        duration: 0.4,
+      })
+      CLICKED[index] = 1
+      movePhone(index)
+    })
   })
 }
 

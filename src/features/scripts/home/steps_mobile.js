@@ -3,14 +3,16 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
-function steps() {
-  const steps_title = document.querySelector('.steps-head')
-  const steps_heading = document.querySelectorAll('.steps-title')
-  const dots = document.querySelectorAll('.step-dot')
-  const steps_wrappers = document.querySelectorAll('.is--step-h')
+function steps_mobile() {
+  const steps_title = document.querySelector('.steps-head-mobile')
+  const steps_heading = document.querySelectorAll('.steps-title-mobile')
+  const dots = document.querySelectorAll('.step-dot-mobile')
+  const steps_wrappers = document.querySelectorAll('.is--step-h-mob')
   const steps_descriptions = document.querySelectorAll('.steps-txt')
-  const wrappers = document.querySelectorAll('.steps-txt-wrapper')
-  const images = document.querySelectorAll('.steps-iphone-img')
+  const wrappers = document.querySelectorAll('.steps-txt-wrapper-mob')
+  const images = document.querySelectorAll('.steps-iphone-img-mobile')
+
+  console.log(steps_heading)
 
   gsap.to(steps_title, {
     opacity: 1,
@@ -48,6 +50,7 @@ function steps() {
   })
 
   const first_heading = steps_wrappers[0].firstElementChild
+  console.log(first_heading.textContent)
   const first_dot = first_heading.nextElementSibling
   gsap.set(first_heading, {
     x: 16,
@@ -146,4 +149,4 @@ function steps() {
   })
 }
 
-export default steps
+export default steps_mobile
