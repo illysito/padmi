@@ -74,7 +74,7 @@ class World {
         this.initBall(1, 100000)
       } else {
         console.log('small ball')
-        this.initBall(0.6, 50000)
+        this.initBall(1, 50000)
       }
       this.initLights(-2, 2, 3, 20, 0xfffbf6, false)
       this.initStarfield(400)
