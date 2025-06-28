@@ -5,6 +5,7 @@ import SplitType from 'split-type'
 gsap.registerPlugin(ScrollTrigger)
 
 function claim_mobile() {
+  const download_icons = document.querySelectorAll('.app-badge')
   const claim_heading = document.querySelectorAll('.playsmarter-heading')
   const splitHeading = new SplitType(claim_heading, { types: 'chars' })
   splitHeading.chars.forEach((char) => {
@@ -39,6 +40,11 @@ function claim_mobile() {
     },
   })
 
+  gsap.to(download_icons, {
+    opacity: 1,
+    duration: 1.4,
+    ease: 'power1.inOut',
+  })
   gsap.from(splitHeading.chars, {
     xPercent: -120,
     duration: 0.8,

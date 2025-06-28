@@ -11,6 +11,7 @@ function menu() {
   const back_wrapper = document.querySelector('.back-wrapper')
   const os = document.querySelector('.os-links')
   const os_links = document.querySelectorAll('.os-heading')
+  const qr = document.querySelector('.qr-menu')
 
   const ease = 'power1.out'
 
@@ -187,7 +188,15 @@ function menu() {
         const l = event.currentTarget
         const h = l.firstElementChild
         if (h.classList.contains('download')) {
-          direction = -1
+          ;(direction = 0),
+            gsap.to(h, {
+              opacity: 0.8,
+              duration: 0.4,
+            })
+          gsap.to(qr, {
+            opacity: 1,
+            duration: 0.4,
+          })
         } else {
           direction = 1
         }
@@ -207,7 +216,12 @@ function menu() {
         const l = event.currentTarget
         const h = l.firstElementChild
         gsap.to(h, {
+          opacity: 1,
           x: 0,
+          duration: 0.4,
+        })
+        gsap.to(qr, {
+          opacity: 0,
           duration: 0.4,
         })
       })
