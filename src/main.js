@@ -86,9 +86,9 @@ function runHomeFunctions() {
   } else {
     claim_mobile()
     steps_mobile()
-    setTimeout(() => {
-      stats_mobile()
-    }, 5000)
+    // setTimeout(() => {
+    //   stats_mobile()
+    // }, 5000)
     // console.log('claim 2 is running!')
   }
   highlights()
