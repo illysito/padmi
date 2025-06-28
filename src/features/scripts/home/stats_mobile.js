@@ -8,6 +8,7 @@ function stats_mobile() {
   let duration = 0.4
 
   const expandedHeights = []
+  let expandedHeight = window.innerHeight * 0.28 + 40
   let collapsedHeight = 0
 
   acc_blocks.forEach((block, index) => {
@@ -35,7 +36,7 @@ function stats_mobile() {
       })
       // Expand current title
       gsap.to(acc_blocks[index], {
-        height: expandedHeights[index],
+        height: expandedHeight,
         duration: duration,
       })
       // blocks[index].style.display = 'flex'
