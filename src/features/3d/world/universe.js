@@ -2,31 +2,37 @@ import { World } from './World.js'
 
 function world(container, index) {
   const trigger = document.querySelector('.claim')
+  // const trigger_mobile = document
   let hasClaimBeenObserved = false
   let lastScrollY = window.scrollY
-
-  function isDesktopOrTablet() {
-    // return window.innerWidth >= 768
-    return true
+  let scrollDirection = 'down'
+  function updateScrollDirection() {
+    const currentScrollY = window.scrollY
+    scrollDirection = currentScrollY < lastScrollY ? 'up' : 'down'
+    lastScrollY = currentScrollY
   }
 
-  if (isDesktopOrTablet()) {
-    const world = new World(container, index)
-    const hamburger = document.querySelector('.ham-button')
-    const back_button = document.querySelector('.back-wrapper')
+  function isDesktopOrTablet() {
+    return window.innerWidth >= 768
+  }
 
-    world.start()
+  const world = new World(container, index)
+  const hamburger = document.querySelector('.ham-button')
+  const back_button = document.querySelector('.back-wrapper')
 
-    // STOP LOOP WHEN MENU IS CLICKED
-    hamburger.addEventListener('click', () => {
-      setTimeout(() => world.stop(), 800)
-    })
-    back_button.addEventListener('click', () => {
-      setTimeout(() => world.start(), 700)
-    })
+  world.start()
 
-    // STOP LOOP WHEN UNOBSERVED (INTERSECTION OBSERVER METHOD)
-    if (index == 0) {
+  // STOP LOOP WHEN MENU IS CLICKED
+  hamburger.addEventListener('click', () => {
+    setTimeout(() => world.stop(), 800)
+  })
+  back_button.addEventListener('click', () => {
+    setTimeout(() => world.start(), 700)
+  })
+
+  // STOP LOOP WHEN UNOBSERVED (INTERSECTION OBSERVER METHOD)
+  if (index == 0) {
+    if (isDesktopOrTablet()) {
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
@@ -43,6 +49,7 @@ function world(container, index) {
             }
           })
         },
+
         { threshold: 0.5 }
       )
 
@@ -51,41 +58,66 @@ function world(container, index) {
       window.addEventListener('scroll', () => {
         lastScrollY = window.scrollY
       })
-    } else if (index == 1) {
-      window.addEventListener('scroll', () => {
-        lastScrollY = window.scrollY
-        let stopScroll = 6500
-        // stopScroll = 6000
-        if (lastScrollY > stopScroll && !hasClaimBeenObserved) {
-          world.stop()
-          hasClaimBeenObserved = true
-        } else if (lastScrollY < stopScroll && hasClaimBeenObserved) {
-          world.start()
-          hasClaimBeenObserved = false
-        }
-      })
-    } else if (index == 4) {
+    } else {
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
-              world.start()
-              hasClaimBeenObserved = true
+              if (!hasClaimBeenObserved) {
+                world.stop()
+                hasClaimBeenObserved = true
+              }
             } else {
-              world.stop()
-              hasClaimBeenObserved = false
+              if (scrollDirection === 'up') {
+                world.start()
+                hasClaimBeenObserved = false
+              }
             }
           })
         },
-        { threshold: 0.1 }
+
+        { threshold: 0.85 }
       )
 
-      observer.observe(container)
+      observer.observe(trigger)
 
-      window.addEventListener('scroll', () => {
-        lastScrollY = window.scrollY
-      })
+      window.addEventListener('scroll', updateScrollDirection)
+      window.addEventListener('touchmove', updateScrollDirection)
     }
+  } else if (index == 1) {
+    window.addEventListener('scroll', () => {
+      lastScrollY = window.scrollY
+      let stopScroll = 6500
+      // stopScroll = 6000
+      if (lastScrollY > stopScroll && !hasClaimBeenObserved) {
+        world.stop()
+        hasClaimBeenObserved = true
+      } else if (lastScrollY < stopScroll && hasClaimBeenObserved) {
+        world.start()
+        hasClaimBeenObserved = false
+      }
+    })
+  } else if (index == 4) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            world.start()
+            hasClaimBeenObserved = true
+          } else {
+            world.stop()
+            hasClaimBeenObserved = false
+          }
+        })
+      },
+      { threshold: 0.1 }
+    )
+
+    observer.observe(container)
+
+    window.addEventListener('scroll', () => {
+      lastScrollY = window.scrollY
+    })
   }
 }
 

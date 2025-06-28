@@ -29,6 +29,7 @@ import highlights from './features/scripts/home/highlights'
 import scroll_line from './features/scripts/home/scroll_line'
 import split from './features/scripts/home/split'
 import stats from './features/scripts/home/stats'
+import stats_mobile from './features/scripts/home/stats_mobile'
 import steps from './features/scripts/home/steps'
 import steps_mobile from './features/scripts/home/steps_mobile'
 import tech from './features/scripts/home/tech'
@@ -81,12 +82,15 @@ function runHomeFunctions() {
   if (isDesktopOrTablet()) {
     claim()
     steps()
+    stats()
   } else {
     claim_mobile()
     steps_mobile()
+    setTimeout(() => {
+      stats_mobile()
+    }, 5000)
     // console.log('claim 2 is running!')
   }
-  stats()
   highlights()
   bento()
   scroll_line()
