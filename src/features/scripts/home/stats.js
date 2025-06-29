@@ -6,7 +6,7 @@ gsap.registerPlugin(ScrollTrigger)
 function stats() {
   function isDesktop() {
     //prettier-ignore
-    return window.innerWidth >= 991
+    return window.innerWidth >= 768
   }
   const stats_section = document.querySelector('.stats')
   const boxes = document.querySelectorAll('.stats_box')

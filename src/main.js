@@ -5,16 +5,18 @@ gsap.registerPlugin(ScrollTrigger)
 
 import world from './features/3d/world/universe'
 import world_2 from './features/3d/world/universe_2'
-import world_3 from './features/3d/world/universe_3'
+// import world_3 from './features/3d/world/universe_3'
 // CLUB
 import logoMarquee from './features/scripts/club/logo_marquee'
 import numbers from './features/scripts/club/numbers'
 import pricing from './features/scripts/club/pricing'
 import restoreOpacity from './features/scripts/club/restore_opacity'
 import splitClub from './features/scripts/club/split_club'
+import splitClubMobile from './features/scripts/club/split_club_mobile'
 // CONTACT
 import contact from './features/scripts/contact/contact'
 // GENERAL
+import aux_buttons from './features/scripts/general/aux_buttons'
 import buttons from './features/scripts/general/buttons'
 import cookies from './features/scripts/general/cookies'
 import footer from './features/scripts/general/footer'
@@ -51,7 +53,10 @@ window.addEventListener('orientationchange', setViewportHeight)
 
 function isDesktopOrTablet() {
   return window.innerWidth >= 768
-  // return true
+}
+
+function isMobile() {
+  return window.innerWidth <= 478
 }
 
 // MAIN! //
@@ -101,7 +106,11 @@ function runHomeFunctions() {
 function runClubFunctions() {
   world(club_container, 1)
   restoreOpacity()
-  splitClub()
+  if (isMobile()) {
+    splitClubMobile()
+  } else {
+    splitClub()
+  }
   logoMarquee()
   numbers()
   pricing()
@@ -141,11 +150,15 @@ function runLegalsFunctions() {
 
 function runAuxFunctions() {
   console.log('Aux!')
+  aux_buttons()
   // world_2(world_2_container)
-  world_3(world_3_container, 1)
+  // world_3(world_3_container, 1)
 }
 
-if (!body.classList.contains('body__legals')) {
+if (
+  !body.classList.contains('body__legals') &&
+  !body.classList.contains('body__aux')
+) {
   setTimeout(() => {
     cookies()
   }, 1200)

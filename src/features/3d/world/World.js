@@ -1,4 +1,5 @@
 //LEGACY IMPORTS
+import gsap from 'gsap'
 // import * as THREE from 'three'
 import { Vector2 } from 'three'
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js'
@@ -31,6 +32,10 @@ import { Resizer } from '../systems/Resizer.js'
 function isDesktopOrTablet() {
   return window.innerWidth >= 768
 }
+
+// function isntMobile() {
+//   return window.innerWidth >= 478
+// }
 
 class World {
   // 1. Create an instance of the World app
@@ -95,6 +100,11 @@ class World {
 
   // BLOOM POST PROCESSING INIT
   initPostprocessing() {
+    let bloomStrength = gsap.utils.mapRange(0, 1440, 0, 1.2, window.innerWidth)
+    if (!isDesktopOrTablet()) {
+      bloomStrength = 1.2
+    }
+
     this.composer = new EffectComposer(this.renderer)
 
     const renderPass = new RenderPass(this.scene, this.camera)
@@ -102,7 +112,7 @@ class World {
     if (this.index == 0) {
       bloomPass = new UnrealBloomPass(
         new Vector2(window.innerWidth, window.innerHeight),
-        1.2, // strength
+        bloomStrength, // strength
         0.8, // radius
         0.658 // threshold
       )

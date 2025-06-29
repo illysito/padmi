@@ -48,11 +48,11 @@ async function createText(text, x, y, z) {
 
   const font = await loadFont(url_light)
   // console.log(font.data)
-
+  let scale = gsap.utils.mapRange(0, 1440, 0, 1.8, window.innerWidth)
   // create a geometry
   const textGeometry = new TextGeometry(text, {
     font: font,
-    size: 1.8,
+    size: scale,
     // size: 1.4,
     // size: 3.4,
     height: 0.05,

@@ -4,7 +4,8 @@ import SplitType from 'split-type'
 function buttons() {
   if (
     document.body.classList.contains('body__home') ||
-    document.body.classList.contains('body__contact')
+    document.body.classList.contains('body__contact') ||
+    document.body.classList.contains('body__aux')
   ) {
     // HERO BUTTON
     const button_wrapper = document.querySelector('.download-h-wrapper')
