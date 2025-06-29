@@ -108,10 +108,18 @@ function createPadmiCam(x, y, z, id) {
         scrollPositionScale = gsap.utils.mapRange(0, 6000, 0, 400, scrollY)
 
         // MOVE
-        if (scrollY >= 6000) {
-          scrollPosition = scrollY - 6000
+        if (isMobile()) {
+          if (scrollY >= 5200) {
+            scrollPosition = scrollY - 5200
+          } else {
+            scrollPosition = 0
+          }
         } else {
-          scrollPosition = 0
+          if (scrollY >= 6000) {
+            scrollPosition = scrollY - 6000
+          } else {
+            scrollPosition = 0
+          }
         }
         // console.log(scrollRotation)
       })

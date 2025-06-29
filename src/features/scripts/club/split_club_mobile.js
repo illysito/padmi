@@ -84,6 +84,7 @@ function splitClubMobile() {
           start: 'top 5%',
           end: 'top top',
           markers: false,
+          scrub: 1,
         },
       })
     })
@@ -106,19 +107,20 @@ function splitClubMobile() {
         stagger: 0.2,
         scrollTrigger: {
           trigger: feature,
-          start: 'top 5%',
+          start: 'top 10%',
           end: 'top top',
           markers: false,
+          scrub: 1,
         },
       })
     })
 
-    cam_feature_wrappers.forEach((wrapper, index) => {
+    cam_feature_wrappers.forEach((wrapper) => {
       gsap.to(wrapper, {
         scrollTrigger: {
           trigger: wrapper,
           start: 'top 25%',
-          end: 'top -70%',
+          end: 'top -100%',
           pin: wrapper,
           pinSpacer: true,
           anticipatePin: true,
@@ -130,7 +132,7 @@ function splitClubMobile() {
           trigger: wrapper,
           start: 'top 18%',
           end: 'top 10%',
-          scrub: true,
+          scrub: 1,
         },
       })
     })
