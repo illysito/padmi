@@ -19,6 +19,26 @@ function hero() {
     const world_container = document.querySelector('.world-container')
     const motto = document.querySelector('.motto-hero')
     const qr = document.querySelector('.qr')
+    const scroll_icon = document.querySelector('.scroll-icon-hero')
+
+    // SCROLL INVITATION
+    let count = 0
+    let hover_duration = 0.6
+    const maxRepeats = 11
+    gsap.to(scroll_icon, {
+      opacity: 0,
+      repeat: maxRepeats - 1, // Since the initial animation counts as 1
+      yoyo: true,
+      repeatDelay: hover_duration / 1.25,
+      duration: 0.6,
+      onRepeat: function () {
+        count++
+        // console.log(count)
+        if (count >= maxRepeats) {
+          gsap.set(scroll_icon, { opacity: 0 })
+        }
+      },
+    })
 
     // SPLIT
     const splitClaim = new SplitType(claim, { types: 'lines' })
