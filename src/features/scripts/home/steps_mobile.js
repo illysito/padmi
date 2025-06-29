@@ -53,13 +53,12 @@ function steps_mobile() {
   console.log(first_heading.textContent)
   const first_dot = first_heading.nextElementSibling
   gsap.set(first_heading, {
-    x: 16,
     color: '#ceff05',
     fontWeight: 500,
     duration: 0.4,
   })
   gsap.to(first_dot, {
-    scale: 1,
+    scale: 0,
     duration: 0.4,
     scrollTrigger: {
       trigger: first_dot,
@@ -83,13 +82,12 @@ function steps_mobile() {
       const d = h.nextElementSibling
       if (CLICKED[index] == 0) {
         gsap.to(h, {
-          x: 16,
           color: '#e5e7e1',
           fontWeight: 500,
           duration: 0.4,
         })
         gsap.to(d, {
-          scale: 1,
+          scale: 0,
           duration: 0.4,
         })
       }
@@ -125,14 +123,13 @@ function steps_mobile() {
         duration: 0.4,
       })
       gsap.to(h, {
-        x: 16,
         color: '#ceff05',
         fontWeight: 500,
         duration: 0.4,
         ease: 'power1.inOut',
       })
       gsap.to(d, {
-        scale: 1,
+        scale: 0,
         duration: 0.4,
       })
       gsap.to(wrappers, {

@@ -1,50 +1,52 @@
 import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
 
 function stats_mobile() {
-  const acc_blocks = document.querySelectorAll('.stat-block')
-  const titles = document.querySelectorAll('.acc-title')
-  const blocks = document.querySelectorAll('.stats_block')
+  const stats_wrapper = document.querySelector('.stats_wrapper-mob')
+  const cards = document.querySelectorAll('.stats_box_wrapper')
+  const left_arrow = document.querySelector('.arrow-left')
+  const right_arrow = document.querySelector('.arrow-right')
 
-  let duration = 0.4
+  console.log(cards)
 
-  const expandedHeights = []
-  let expandedHeight = window.innerHeight * 0.28 + 40
-  let collapsedHeight = 0
-
-  acc_blocks.forEach((block, index) => {
-    const rect = block.getBoundingClientRect()
-    expandedHeights[index] = rect.height
+  gsap.to(stats_wrapper, {
+    opacity: 1,
+    scrollTrigger: {
+      trigger: stats_wrapper,
+      start: 'top 75%',
+    },
   })
 
-  const rect = titles[0].getBoundingClientRect()
-  collapsedHeight = rect.height + 24
+  let currentIndex = 0
 
-  gsap.set(acc_blocks, {
-    height: collapsedHeight,
-  })
+  function handleCards() {
+    console.log(currentIndex)
+    left_arrow.style.pointerEvents = 'none'
+    right_arrow.style.pointerEvents = 'none'
 
-  titles.forEach((title, index) => {
-    title.addEventListener('click', () => {
-      // Collapse all
-      gsap.to(acc_blocks, {
-        height: collapsedHeight,
-        duration: duration,
-      })
-      gsap.to(blocks, {
-        opacity: 0,
-        duration: duration,
-      })
-      // Expand current title
-      gsap.to(acc_blocks[index], {
-        height: expandedHeight,
-        duration: duration,
-      })
-      // blocks[index].style.display = 'flex'
-      gsap.to(blocks[index], {
-        opacity: 1,
-        duration: duration,
+    cards.forEach((card, index) => {
+      gsap.to(card, {
+        opacity: index === currentIndex ? 1 : 0,
+        duration: 0.2,
+        ease: 'power1.inOut',
       })
     })
+
+    left_arrow.style.pointerEvents = 'auto'
+    right_arrow.style.pointerEvents = 'auto'
+  }
+
+  left_arrow.addEventListener('click', () => {
+    currentIndex -= 1
+    if (currentIndex < 0) currentIndex = 7
+    handleCards()
+  })
+  right_arrow.addEventListener('click', () => {
+    currentIndex += 1
+    if (currentIndex > 7) currentIndex = 0
+    handleCards()
   })
 }
 

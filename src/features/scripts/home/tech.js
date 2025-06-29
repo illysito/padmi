@@ -12,6 +12,7 @@ function tech() {
   const download_txt = document.querySelector('.download-cta')
   const starfield_container = document.querySelector('.starfield-container')
   const download_link = document.querySelector('.download-link-wrapper')
+  const download_link_pc = document.querySelector('.download-link-wrapper-pc')
 
   gsap.to(starfield_container, {
     opacity: 1,
@@ -51,18 +52,25 @@ function tech() {
     },
   })
 
-  gsap.to([download_txt, download_link.firstElementChild], {
-    opacity: 1,
-    yPercent: -100,
-    duration: 0.8,
-    ease: 'power1.out',
-    scrollTrigger: {
-      trigger: download_txt,
-      start: 'top 90%',
-      end: 'top 75%',
-      markers: false,
-    },
-  })
+  gsap.to(
+    [
+      download_txt,
+      download_link.firstElementChild,
+      download_link_pc.firstElementChild,
+    ],
+    {
+      opacity: 1,
+      yPercent: -100,
+      duration: 0.8,
+      ease: 'power1.out',
+      scrollTrigger: {
+        trigger: download_txt,
+        start: 'top 90%',
+        end: 'top 75%',
+        markers: false,
+      },
+    }
+  )
 
   tech_txt.forEach((desc) => {
     const splitDesc = new SplitType(desc, { types: 'lines' })

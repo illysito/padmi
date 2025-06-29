@@ -9,12 +9,13 @@ function contact() {
   const form = document.querySelector('.contact-form-wrapper')
   const heading = document.querySelector('.contact-heading')
   const contact_line = document.querySelector('.contact-p')
+  const contact_line_2 = document.querySelectorAll('.contact-p-2')
   const icon = document.querySelector('.send-icon')
   const icon_link = document.querySelectorAll('.social-link')
 
   const hover_duration = 0.4
 
-  gsap.to([nav, socials, form, contact_line, heading], {
+  gsap.to([nav, socials, form, contact_line, contact_line_2, heading], {
     opacity: 1,
     duration: 1.5,
     ease: 'power2.inOut',
@@ -40,6 +41,7 @@ function contact() {
     wrapper.appendChild(line)
   })
   gsap.from(splitH.lines, {
+    opacity: 1,
     yPercent: 100,
     duration: 1,
     ease: 'power1.out',
