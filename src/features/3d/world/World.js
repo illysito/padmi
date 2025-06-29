@@ -100,9 +100,12 @@ class World {
 
   // BLOOM POST PROCESSING INIT
   initPostprocessing() {
-    let bloomStrength = gsap.utils.mapRange(0, 1440, 0, 1.2, window.innerWidth)
+    let pixelRatioForBloom = window.devicePixelRatio || 1 // Not for renderer
+
+    let bloomStrength =
+      2 * gsap.utils.mapRange(0, 1440, 0, 1.2, window.innerWidth)
     if (!isDesktopOrTablet()) {
-      bloomStrength = 1.2
+      bloomStrength = 2 * 1.2
     }
 
     this.composer = new EffectComposer(this.renderer)
@@ -112,21 +115,21 @@ class World {
     if (this.index == 0) {
       bloomPass = new UnrealBloomPass(
         new Vector2(window.innerWidth, window.innerHeight),
-        bloomStrength, // strength
+        bloomStrength / pixelRatioForBloom, // strength (ALWAYS DIVIDE BY PIXEL RATIO to AVOID SHIT)
         0.8, // radius
         0.658 // threshold
       )
     } else if (this.index == 1) {
       bloomPass = new UnrealBloomPass(
         new Vector2(window.innerWidth, window.innerHeight),
-        0.26, // strength
+        0.52 / pixelRatioForBloom, // strength
         0.2, // radius
         0.8 // threshold
       )
     } else {
       bloomPass = new UnrealBloomPass(
         new Vector2(window.innerWidth, window.innerHeight),
-        0.0, // strength
+        0.0 / pixelRatioForBloom, // strength
         0.2, // radius
         0.8 // threshold
       )
