@@ -10,7 +10,9 @@ function claim_mobile() {
   const splitHeading = new SplitType(claim_heading, { types: 'chars' })
   splitHeading.chars.forEach((char) => {
     const wrapper = document.createElement('div')
-    wrapper.style.overflow = 'hidden'
+    wrapper.classList.add('char-wrapper')
+    wrapper.style.overflowX = 'visible'
+    wrapper.style.overflowY = 'visible'
     wrapper.style.display = 'inline-block'
     wrapper.style.lineHeight = '0.8em'
 
@@ -46,6 +48,7 @@ function claim_mobile() {
     ease: 'power1.inOut',
   })
   gsap.from(splitHeading.chars, {
+    opacity: 0,
     xPercent: -120,
     duration: 0.8,
     ease: 'power1.out',

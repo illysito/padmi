@@ -16,12 +16,12 @@ import splitClubMobile from './features/scripts/club/split_club_mobile'
 // CONTACT
 import contact from './features/scripts/contact/contact'
 // GENERAL
-import aux_buttons from './features/scripts/general/aux_buttons'
 import buttons from './features/scripts/general/buttons'
 import cookies from './features/scripts/general/cookies'
 import footer from './features/scripts/general/footer'
 import menu from './features/scripts/general/menu'
 import nav from './features/scripts/general/nav'
+import preloader from './features/scripts/general/preloader'
 // HOME
 import bento from './features/scripts/home/bento'
 import claim from './features/scripts/home/claim'
@@ -67,6 +67,14 @@ const world_3_container = document.querySelector('.world-3-container')
 const club_container = document.querySelector('.club-container')
 const particles_container = document.querySelector('.particles-container')
 const starfield_container = document.querySelector('.starfield-container')
+const preloader_section = document.querySelector('.preloader')
+
+function preload() {
+  console.log(localStorage.getItem('preloaderShown'))
+  if (!localStorage.getItem('preloaderShown') && preloader_section) {
+    preloader()
+  }
+}
 
 function runGeneralFunctions() {
   world_2(world_2_container)
@@ -76,12 +84,9 @@ function runGeneralFunctions() {
   // dark_mode()
 }
 
-function runHomeFunctions() {
-  // if (world_container) {
+async function runHomeFunctions() {
   world(world_container, 0) // INDEX 0 --> Paddle & Type
   world(starfield_container, 4)
-  // particles()
-  // }
   hero()
   split()
   if (isDesktopOrTablet()) {
@@ -148,9 +153,7 @@ function runLegalsFunctions() {
 
 function runAuxFunctions() {
   console.log('Aux!')
-  aux_buttons()
-  // world_2(world_2_container)
-  // world_3(world_3_container, 1)
+  preloader()
 }
 
 if (
@@ -162,6 +165,7 @@ if (
   }, 1200)
 }
 
+preload()
 if (!body.classList.contains('body__aux')) runGeneralFunctions()
 if (body.classList.contains('body__home')) runHomeFunctions()
 if (body.classList.contains('body__club')) runClubFunctions()

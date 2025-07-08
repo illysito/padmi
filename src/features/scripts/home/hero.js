@@ -26,17 +26,23 @@ function hero() {
     let hover_duration = 0.6
     const maxRepeats = 11
     gsap.to(scroll_icon, {
-      opacity: 0,
-      repeat: maxRepeats - 1, // Since the initial animation counts as 1
-      yoyo: true,
-      repeatDelay: hover_duration / 1.25,
+      opacity: 1,
       duration: 0.6,
-      onRepeat: function () {
-        count++
-        // console.log(count)
-        if (count >= maxRepeats) {
-          gsap.set(scroll_icon, { opacity: 0 })
-        }
+      onComplete: () => {
+        gsap.to(scroll_icon, {
+          opacity: 0,
+          repeat: maxRepeats - 1, // Since the initial animation counts as 1
+          yoyo: true,
+          repeatDelay: hover_duration / 1.25,
+          duration: 0.6,
+          onRepeat: function () {
+            count++
+            // console.log(count)
+            if (count >= maxRepeats) {
+              gsap.set(scroll_icon, { opacity: 0 })
+            }
+          },
+        })
       },
     })
 
