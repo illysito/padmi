@@ -9,7 +9,7 @@ function stats_mobile() {
   const left_arrow = document.querySelector('.arrow-left')
   const right_arrow = document.querySelector('.arrow-right')
 
-  console.log(cards)
+  // console.log(cards)
 
   gsap.to(stats_wrapper, {
     opacity: 1,
@@ -22,7 +22,7 @@ function stats_mobile() {
   let currentIndex = 0
 
   function handleCards() {
-    console.log(currentIndex)
+    // console.log(currentIndex)
     left_arrow.style.pointerEvents = 'none'
     right_arrow.style.pointerEvents = 'none'
 

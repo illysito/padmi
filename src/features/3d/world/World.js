@@ -75,10 +75,10 @@ class World {
       this.initStarfield(100)
     } else if (index == 4) {
       if (isDesktopOrTablet()) {
-        console.log('big ball')
+        // console.log('big ball')
         this.initBall(1, 100000)
       } else {
-        console.log('small ball')
+        // console.log('small ball')
         this.initBall(1, 50000)
       }
       this.initLights(-2, 2, 3, 20, 0xfffbf6, false)
@@ -101,7 +101,7 @@ class World {
   // BLOOM POST PROCESSING INIT
   initPostprocessing() {
     let pixelRatioForBloom = window.devicePixelRatio || 1 // Not for renderer
-    console.log(pixelRatioForBloom)
+    // console.log(pixelRatioForBloom)
 
     let bloomStrength =
       0.5 * gsap.utils.mapRange(0, 1440, 0, 1.2, window.innerWidth)
@@ -234,12 +234,12 @@ class World {
 
   start() {
     this.loop.start()
-    console.log('World ' + this.index + ' has resumed ')
+    // console.log('World ' + this.index + ' has resumed ')
   }
 
   stop() {
     this.loop.stop()
-    console.log('World ' + this.index + ' has stopped ')
+    // console.log('World ' + this.index + ' has stopped ')
   }
 }
 

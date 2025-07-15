@@ -70,7 +70,7 @@ const starfield_container = document.querySelector('.starfield-container')
 const preloader_section = document.querySelector('.preloader')
 
 function preload() {
-  console.log(localStorage.getItem('preloaderShown'))
+  // console.log(localStorage.getItem('preloaderShown'))
   if (!localStorage.getItem('preloaderShown') && preloader_section) {
     preloader()
   }
@@ -160,9 +160,10 @@ if (
   !body.classList.contains('body__legals') &&
   !body.classList.contains('body__aux')
 ) {
-  setTimeout(() => {
-    cookies()
-  }, 1200)
+  cookies()
+  // setTimeout(() => {
+
+  // }, 1200)
 }
 
 preload()

@@ -12,7 +12,7 @@ function steps_mobile() {
   const wrappers = document.querySelectorAll('.steps-txt-wrapper-mob')
   const images = document.querySelectorAll('.steps-iphone-img-mobile')
 
-  console.log(steps_heading)
+  // console.log(steps_heading)
 
   gsap.to(steps_title, {
     opacity: 1,
@@ -50,7 +50,7 @@ function steps_mobile() {
   })
 
   const first_heading = steps_wrappers[0].firstElementChild
-  console.log(first_heading.textContent)
+  // console.log(first_heading.textContent)
   const first_dot = first_heading.nextElementSibling
   gsap.set(first_heading, {
     color: '#ceff05',
