@@ -71,16 +71,16 @@ function preloader() {
     })
   }
 
-  // function isShown() {
-  //   localStorage.setItem('preloaderShown', true)
-  // }
+  function isShown() {
+    localStorage.setItem('preloaderShown', true)
+  }
 
   async function init() {
     createGrid()
     await counter()
     shuffleGrid(squaresArray)
     animateGrid()
-    // isShown()
+    isShown()
   }
   init()
 }

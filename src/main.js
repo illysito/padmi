@@ -73,6 +73,8 @@ function preload() {
   // console.log(localStorage.getItem('preloaderShown'))
   if (!localStorage.getItem('preloaderShown') && preloader_section) {
     preloader()
+  } else if (localStorage.getItem('preloaderShown') && preloader_section) {
+    preloader_section.style.zIndex = '-100'
   }
 }
 
