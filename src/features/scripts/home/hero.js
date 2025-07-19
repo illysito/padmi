@@ -7,8 +7,16 @@ gsap.registerPlugin(ScrollTrigger)
 function hero() {
   function isDesktopOrTablet() {
     return window.innerWidth >= 768
-    // return true
   }
+
+  function isPreloaderShown() {
+    return localStorage.getItem('preloaderShown')
+  }
+
+  function isCookiesAccepted() {
+    return localStorage.getItem('cookieSelectionConfirmedByUser')
+  }
+
   // ELEMENTS
   if (isDesktopOrTablet()) {
     const hero = document.querySelector('.hero')
@@ -24,27 +32,33 @@ function hero() {
     // SCROLL INVITATION
     let count = 0
     let hover_duration = 0.6
-    const maxRepeats = 11
-    gsap.to(scroll_icon, {
-      opacity: 1,
-      duration: 0.6,
-      onComplete: () => {
+    const interval = setInterval(() => {
+      if (isPreloaderShown() === 'true' && isCookiesAccepted() === 'true') {
+        console.log('arrow')
+        clearInterval(interval)
+        const maxRepeats = 11
         gsap.to(scroll_icon, {
-          opacity: 0,
-          repeat: maxRepeats - 1, // Since the initial animation counts as 1
-          yoyo: true,
-          repeatDelay: hover_duration / 1.25,
+          opacity: 1,
           duration: 0.6,
-          onRepeat: function () {
-            count++
-            // console.log(count)
-            if (count >= maxRepeats) {
-              gsap.set(scroll_icon, { opacity: 0 })
-            }
+          onComplete: () => {
+            gsap.to(scroll_icon, {
+              opacity: 0,
+              repeat: maxRepeats - 1, // Since the initial animation counts as 1
+              yoyo: true,
+              repeatDelay: hover_duration / 1.25,
+              duration: 0.6,
+              onRepeat: function () {
+                count++
+                // console.log(count)
+                if (count >= maxRepeats) {
+                  gsap.set(scroll_icon, { opacity: 0 })
+                }
+              },
+            })
           },
         })
-      },
-    })
+      }
+    }, 200)
 
     // SPLIT
     const splitClaim = new SplitType(claim, { types: 'lines' })

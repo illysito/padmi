@@ -29,12 +29,14 @@ function nav() {
     duration: 2,
     ease: 'power2.out',
   })
-  gsap.to(logo, {
-    yPercent: 100,
-    opacity: 1,
-    duration: 1.2,
-    ease: 'power2.inOut',
-  })
+  if (logo) {
+    gsap.to(logo, {
+      yPercent: 100,
+      opacity: 1,
+      duration: 1.2,
+      ease: 'power2.inOut',
+    })
+  }
   // HOME ANIMATION
   // if (body.classList.contains('body__home')) {
   //   gsap.to(nav_container, {

@@ -59,6 +59,10 @@ function isMobile() {
   return window.innerWidth <= 478
 }
 
+function isPreloaderShown() {
+  return localStorage.getItem('preloaderShown')
+}
+
 // MAIN! //
 const body = document.body
 const world_container = document.querySelector('.world-container')
@@ -70,10 +74,10 @@ const starfield_container = document.querySelector('.starfield-container')
 const preloader_section = document.querySelector('.preloader')
 
 function preload() {
-  // console.log(localStorage.getItem('preloaderShown'))
-  if (!localStorage.getItem('preloaderShown') && preloader_section) {
+  let shown = isPreloaderShown() === 'true'
+  if (!shown && preloader_section) {
     preloader()
-  } else if (localStorage.getItem('preloaderShown') && preloader_section) {
+  } else if (shown && preloader_section) {
     preloader_section.style.zIndex = '-100'
   }
 }
