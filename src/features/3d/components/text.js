@@ -1,12 +1,13 @@
 import gsap from 'gsap'
-import * as THREE from 'three'
 import {
   // Mesh,
   // MeshStandardMaterial,
   // MeshLambertMaterial,
   // MeshPhysicalMaterial,
   // MeshBasicMaterial,
-  PointsMaterial,
+  DynamicDrawUsage,
+  AdditiveBlending,
+  // PointsMaterial,
   Group,
   BufferGeometry,
   BufferAttribute,
@@ -100,7 +101,7 @@ async function createText(text, x, y, z) {
   const currentPositions = positions.slice()
   geometry.setAttribute(
     'aCurrentPosition',
-    new BufferAttribute(currentPositions, 3).setUsage(THREE.DynamicDrawUsage)
+    new BufferAttribute(currentPositions, 3).setUsage(DynamicDrawUsage)
   )
 
   const uniforms = {
@@ -115,7 +116,7 @@ async function createText(text, x, y, z) {
   }
 
   const material = new ShaderMaterial({
-    blending: THREE.AdditiveBlending,
+    blending: AdditiveBlending,
     uniforms,
     vertexShader: `
       attribute float aSize;

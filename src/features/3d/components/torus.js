@@ -1,7 +1,7 @@
 import {
   ShaderMaterial,
-  DoubleSide,
-  Color,
+  // DoubleSide,
+  // Color,
   TorusGeometry,
   TextureLoader,
   Mesh,

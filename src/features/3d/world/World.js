@@ -15,7 +15,7 @@ import { createGradPlane } from '../components/gradient_plane.js'
 import { createObject } from '../components/object.js'
 import { createPaddle } from '../components/paddle.js'
 import { createPadmiCam } from '../components/padmi_cam.js'
-import { createPlane } from '../components/plane.js'
+// import { createPlane } from '../components/plane.js'
 import { createLight } from '../components/point_light.js'
 import { createScene } from '../components/scene.js'
 import { createStarfield } from '../components/starfield.js'
@@ -158,12 +158,12 @@ class World {
   //   this.render()
   // }
 
-  async initPlane() {
-    const plane = await createPlane() // Await the result of createText
-    this.scene.add(plane)
-    this.loop.updatables.push(plane) // Add the loaded text to the scene
-    this.render()
-  }
+  // async initPlane() {
+  //   const plane = await createPlane() // Await the result of createText
+  //   this.scene.add(plane)
+  //   this.loop.updatables.push(plane) // Add the loaded text to the scene
+  //   this.render()
+  // }
 
   initGradPlane() {
     const gradPlane = createGradPlane()

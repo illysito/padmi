@@ -1,11 +1,13 @@
 import gsap from 'gsap'
-import * as THREE from 'three'
+// import * as THREE from 'three'
 import {
   // Mesh,
   // MeshStandardMaterial,
   // MeshLambertMaterial,
   // MeshPhysicalMaterial,
   // MeshBasicMaterial,
+  DynamicDrawUsage,
+  AdditiveBlending,
   SphereGeometry,
   PointsMaterial,
   Group,
@@ -57,7 +59,7 @@ function createBall(radius, cnt) {
   const currentPositions = positions.slice()
   geometry.setAttribute(
     'aCurrentPosition',
-    new BufferAttribute(currentPositions, 3).setUsage(THREE.DynamicDrawUsage)
+    new BufferAttribute(currentPositions, 3).setUsage(DynamicDrawUsage)
   )
 
   const uniforms = {
@@ -72,7 +74,7 @@ function createBall(radius, cnt) {
   }
 
   const material = new ShaderMaterial({
-    blending: THREE.AdditiveBlending,
+    blending: AdditiveBlending,
     uniforms,
     vertexShader: `
       #define NUM_OCTAVES 5
