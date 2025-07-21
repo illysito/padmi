@@ -82,10 +82,12 @@ function preload() {
   let shown = isPreloaderShown() === 'true'
   if (!shown && preloader_section) {
     preloader()
+    console.log('preloading!')
   } else if (shown && preloader_section) {
     preloader_section.style.zIndex = '-100'
   }
 }
+preload()
 
 // Needs STATIC IMPORT
 function runGeneralFunctions() {
@@ -95,7 +97,6 @@ function runGeneralFunctions() {
   ) {
     cookies()
   }
-  preload()
   world_2(world_2_container)
   nav()
   menu()
