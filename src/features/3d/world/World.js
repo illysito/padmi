@@ -8,19 +8,8 @@ import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js'
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js'
 import { FXAAShader } from 'three/examples/jsm/shaders/FXAAShader.js'
 
-import { createBall } from '../components/ball.js'
 import { createCamera } from '../components/camera.js'
-import { createDirLight } from '../components/directional_light.js'
-import { createGradPlane } from '../components/gradient_plane.js'
-import { createObject } from '../components/object.js'
-import { createPaddle } from '../components/paddle.js'
-import { createPadmiCam } from '../components/padmi_cam.js'
-// import { createPlane } from '../components/plane.js'
-import { createLight } from '../components/point_light.js'
 import { createScene } from '../components/scene.js'
-import { createStarfield } from '../components/starfield.js'
-import { createText } from '../components/text.js'
-import { createTransmissionPlane } from '../components/transmission_plane.js'
 import { Loop } from '../systems/Loop.js'
 import { createRenderer } from '../systems/Renderer.js'
 import { Resizer } from '../systems/Resizer.js'
@@ -85,11 +74,6 @@ class World {
       this.initStarfield(400)
     }
 
-    //prettier-ignore
-    // const resizer = new Resizer(container, this.camera, this.renderer)
-    // resizer.onResize = () => {
-    //   this.render()
-    // }
     // BLOOM RESIZER
     const resizer = new Resizer(container, this.camera, this.renderer)
     resizer.onResize = () => {
@@ -152,76 +136,54 @@ class World {
       this.composer.render()
     }
   }
-  // async initText() {
-  //   const type = await createText('PADMI') // Await the result of createText
-  //   scene.add(type) // Add the loaded text to the scene
-  //   this.render()
-  // }
 
-  // async initPlane() {
-  //   const plane = await createPlane() // Await the result of createText
-  //   this.scene.add(plane)
-  //   this.loop.updatables.push(plane) // Add the loaded text to the scene
-  //   this.render()
-  // }
-
-  initGradPlane() {
-    const gradPlane = createGradPlane()
-    this.scene.add(gradPlane)
-    this.loop.updatables.push(gradPlane)
-    this.render()
-  }
-
-  initTransmissionPlane() {
-    const transPlane = createTransmissionPlane()
-    this.scene.add(transPlane)
-    this.render()
-  }
-
-  initBall(radius, count) {
+  async initBall(radius, count) {
+    const { createBall } = await import('../components/ball.js')
     const ball = createBall(radius, count)
     this.scene.add(ball)
     this.loop.updatables.push(ball)
   }
 
   async initPaddle() {
+    const { createPaddle } = await import('../components/paddle.js')
     const paddle = await createPaddle()
     this.scene.add(paddle)
     this.loop.updatables.push(paddle)
   }
 
   async initPadmiCam(x, y, z, id) {
+    const { createPadmiCam } = await import('../components/padmi_cam.js')
     const cam = await createPadmiCam(x, y, z, id)
     this.scene.add(cam)
     this.loop.updatables.push(cam)
   }
 
-  async initObject() {
-    const object = await createObject()
-    this.scene.add(object)
-    this.loop.updatables.push(object)
-  }
-
   async initText(text) {
+    const { createText } = await import('../components/text.js')
     const type = await createText(text, 0, 0, 0)
     this.scene.add(type)
     this.loop.updatables.push(type)
   }
 
-  initStarfield(starCount) {
+  async initStarfield(starCount) {
+    const { createStarfield } = await import('../components/starfield.js')
     const starfield = createStarfield(starCount)
     this.scene.add(starfield)
     this.loop.updatables.push(starfield)
     this.render()
   }
 
-  initLights(x, y, z, int, color, isMove) {
+  async initLights(x, y, z, int, color, isMove) {
+    const { createLight } = await import('../components/point_light.js')
     const light = createLight(x, y, z, int, color, isMove)
     this.scene.add(light)
     if (isMove) this.loop.updatables.push(light)
   }
 
-  initDirLights(x, y, z) {
+  async initDirLights(x, y, z) {
+    const { createDirLight } = await import(
+      '../components/directional_light.js'
+    )
     const dirLight = createDirLight(x, y, z)
     this.scene.add(dirLight)
   }
