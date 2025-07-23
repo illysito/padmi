@@ -30,6 +30,7 @@ function steps() {
         trigger: h,
         start: 'top 80%',
         end: 'top 30%',
+        markers: false,
       },
     })
   })
