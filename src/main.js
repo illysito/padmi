@@ -77,6 +77,30 @@ const particles_container = document.querySelector('.particles-container')
 const starfield_container = document.querySelector('.starfield-container')
 const preloader_section = document.querySelector('.preloader')
 
+// Function to read device OS and redirects to AppStore or PlayStore
+const playStoreLink =
+  'https://play.google.com/store/apps/details?id=com.padmi.app&hl=es'
+const appleStoreLink = 'https://apps.apple.com/es/app/padmi/id6451104959'
+const downloadButtons = document.querySelectorAll('.is--download-link')
+function smartDownload() {
+  const isAndroid = /android/i.test(navigator.userAgent)
+  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent)
+
+  downloadButtons.forEach((button) => {
+    button.addEventListener('click', (e) => {
+      if (isAndroid) {
+        window.location.href = playStoreLink
+      } else if (isIOS) {
+        window.location.href = appleStoreLink
+      } else {
+        // Optional: Desktop or unknown platform fallback
+        window.location.href = 'https://padmi.es' // Or your landing page
+      }
+    })
+  })
+}
+smartDownload()
+
 // Needs STATIC IMPORT
 function preload() {
   let shown = isPreloaderShown() === 'true'

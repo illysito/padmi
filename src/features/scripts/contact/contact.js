@@ -2,7 +2,6 @@ import { gsap } from 'gsap'
 import SplitType from 'split-type'
 
 function contact() {
-  const cards = document.querySelectorAll('.social-card, .social-card-longer')
   const send = document.querySelector('.submit-button')
   const nav = document.querySelector('.nav-container')
   const socials = document.querySelector('.socials-wrapper')
@@ -53,26 +52,6 @@ function contact() {
   // CLICK
 
   // HOVER
-  cards.forEach((card) => {
-    card.addEventListener('mouseover', (event) => {
-      const card = event.currentTarget
-      gsap.to(card, {
-        backgroundColor: '#8b81e444',
-        duration: hover_duration,
-        borderRadius: 16,
-        ease: 'power2.out',
-      })
-    })
-    card.addEventListener('mouseleave', (event) => {
-      const card = event.currentTarget
-      gsap.to(card, {
-        backgroundColor: '#ffffff00',
-        duration: hover_duration,
-        borderRadius: 32,
-        ease: 'power2.out',
-      })
-    })
-  })
   send.addEventListener('mouseover', () => {
     gsap.to(send, {
       scale: 0.94,
