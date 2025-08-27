@@ -12,6 +12,7 @@ function highligths() {
   const highlight_section = document.querySelector('.highlights')
   const videos = document.querySelectorAll('.iphone-vid')
   const headings = document.querySelectorAll('.highlight-h')
+  const descriptions = document.querySelectorAll('.highlight-text-wrapper')
 
   if (isDesktopOrTablet()) {
     gsap.to(highlight_section, {
@@ -20,6 +21,15 @@ function highligths() {
         start: 'top top',
         end: 'bottom -100%',
         pin: true,
+      },
+    })
+    gsap.to(descriptions, {
+      opacity: 1,
+      scrollTrigger: {
+        trigger: highlight_section,
+        start: 'top 50%',
+        end: 'bottom -100%',
+        scrub: true,
       },
     })
   }
