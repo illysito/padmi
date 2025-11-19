@@ -25,6 +25,17 @@ function stats() {
     'Análisis de servicio',
     'Pad ID',
   ]
+  const titlesArrayEN = [
+    '',
+    'Percentage of errors and winners per hit',
+    'VS Players',
+    'Ball speed',
+    'Heatmap',
+    'Total hits',
+    'Metres covered',
+    'Service analysis',
+    'Pad ID',
+  ]
   const descriptionsArray = [
     'Padmi ofrece estadísticas en tiempo real con información detallada sobre tu partido, contándote cuándo eres un genio y cuáles son tus puntos flacos.',
     'Podrás observar cuántos intercambios han finalizado en winners y errores, además del porcentaje de bolas pasadas al otro lado de la red.',
@@ -36,12 +47,26 @@ function stats() {
     'Obtén datos detallados sobre la velocidad de tu saque, la efectividad de tus primeros y segundos servicios, y el número de dobles faltas.',
     'Tu cromo digital: toda tu información de rendimiento, estadísticas y nivel en un solo lugar. Personalizable y en constante evolución con cada partido.',
   ]
+  const descriptionsArrayEN = [
+    "Padmi offers real-time stats with detailed information about your match, telling you when you're playing brilliantly and where your weaknesses lie.",
+    'How many rallies ended in winners and errors, as well as the percentage of balls passed over the net.',
+    'Compare your performance with other players within the app and discover who dominates each aspect of the game.',
+    'We detect and record the speed of each hit with pinpoint accuracy, providing key information to optimise your performance.',
+    'Visualise your movement pattern during the match, with a detailed analysis of the areas you have covered the most.',
+    'Measures the total number of hits you have executed, providing you with a detailed breakdown of the volume and frequency of your game.',
+    'Total distance you have run on the court to analyse your effort and endurance during the match.',
+    'Detailed data on your serve, including the effectiveness of your first and second serves.',
+    'Your digital card: all your performance information, stats, and level in one place. Customisable and constantly evolving with each match.',
+  ]
   const boxesArray = Array.from(boxes)
   const line = document.querySelector('.stats-line')
   const dot = document.querySelector('.stats-dot')
 
   let isClicked = false
   let isHoverActive = false
+
+  const path = window.location.pathname // e.g. "/en/contact" or "/es/contact"
+  const isEnglish = path.split('/').includes('en')
 
   // functions
   function setInitialState() {
@@ -66,6 +91,11 @@ function stats() {
         start: 'top 80%',
       },
     })
+    if (!isEnglish) {
+      description.textContent = descriptionsArray[0]
+    } else {
+      description.textContent = descriptionsArrayEN[0]
+    }
   }
 
   const targetX = line.getBoundingClientRect().width
@@ -90,8 +120,13 @@ function stats() {
 
   // events
   function handleTitles(i) {
-    title.textContent = titlesArray[i + 1]
-    description.textContent = descriptionsArray[i + 1]
+    if (!isEnglish) {
+      title.textContent = titlesArray[i + 1]
+      description.textContent = descriptionsArray[i + 1]
+    } else {
+      title.textContent = titlesArrayEN[i + 1]
+      description.textContent = descriptionsArrayEN[i + 1]
+    }
   }
 
   function hoverIn(event, cardIndex) {

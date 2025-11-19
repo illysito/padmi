@@ -3,6 +3,10 @@ import maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 
 function map() {
+  // Detect lang
+  const path = window.location.pathname // e.g. "/en/contact" or "/es/contact"
+  const isEnglish = path.split('/').includes('en')
+
   // Detect touch devices
   let isTouch = false
 
@@ -505,9 +509,15 @@ function map() {
     let currentLong = cities[index - 1].lng.toFixed(2)
 
     domElements.coords.textContent = `${currentLat}º N ${currentLong}º W`
-    domElements.clubs_h.textContent = `Clubs en ${cities[index - 1].name}`
     domElements.courts_wrapper.innerHTML = ''
-    domElements.courts_h.textContent = `Pistas Padmi: `
+
+    if (!isEnglish) {
+      domElements.clubs_h.textContent = `Clubs en ${cities[index - 1].name}`
+      domElements.courts_h.textContent = `Pistas Padmi: `
+    } else {
+      domElements.clubs_h.textContent = `Clubs in ${cities[index - 1].name}`
+      domElements.courts_h.textContent = `Padmi Courts: `
+    }
   }
 
   // handle club on click
@@ -526,7 +536,11 @@ function map() {
       courtContainer.appendChild(courtName)
       domElements.courts_wrapper.appendChild(courtContainer)
     })
-    domElements.courts_h.textContent = `Pistas Padmi: ${clubs[index].courtNumber}`
+    if (!isEnglish) {
+      domElements.courts_h.textContent = `Pistas Padmi: ${clubs[index].courtNumber}`
+    } else {
+      domElements.courts_h.textContent = `Padmi Courts: ${clubs[index].courtNumber}`
+    }
   }
 
   // fetch cities data

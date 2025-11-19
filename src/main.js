@@ -3,6 +3,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
+console.log('LocalHost Working')
+
 // #region OLDER STATIC IMPORTS (Conserved for further debugging)
 // import world from './features/3d/world/universe'
 import world_2 from './features/3d/world/universe_2'
